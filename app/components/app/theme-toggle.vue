@@ -12,7 +12,7 @@ const isDark = computed({
 </script>
 
 <template>
-  <label class="swap swap-rotate mx-4">
+  <label class="swap swap-rotate">
     <!-- this hidden checkbox controls the state -->
     <input v-model="isDark" type="checkbox">
 

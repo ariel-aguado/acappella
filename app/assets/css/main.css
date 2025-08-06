@@ -4,3 +4,11 @@
     light --default,
     dark --prefersdark;
 }
+
+@theme {
+  --font-display: "Inter", "sans-serif";
+}
+
+:root {
+  font-family: var(--font-display);
+}
