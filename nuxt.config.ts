@@ -14,6 +14,7 @@ export default defineNuxtConfig({
     "@pinia/nuxt",
     "@nuxtjs/mdc",
     "@vueuse/nuxt",
+    "@nuxt/fonts",
   ],
   css: ["~/assets/css/main.css"],
   eslint: {
@@ -28,5 +29,16 @@ export default defineNuxtConfig({
   },
   colorMode: {
     dataValue: "theme",
+  },
+  fonts: {
+    families: [
+      {
+        name: "Inter",
+        provider: "google",
+        weights: [300, 400, 500, 700, 900],
+        styles: ["normal", "italic"],
+        subsets: ["latin"],
+      },
+    ],
   },
 });

@@ -10,11 +10,16 @@ import "swiper/css/virtual";
 // Swiper navigation module
 const swiperModules = [Navigation, Virtual];
 
+// Swiper instance
 const swiper = ref();
 
 // Song store
 const songStore = useSongStore();
 const { songs, currentSong, isLoading } = storeToRefs(songStore);
+
+// Font store
+const fontStore = useFontStore();
+const { fontSize } = storeToRefs(fontStore);
 
 // New song ID input
 const newSongId = ref<number | null>(null);
@@ -49,7 +54,7 @@ async function validateSongId() {
 }
 
 // Html elements
-const newSongInput = ref<HTMLInputElement | null>(null);
+const newSongInput = shallowRef<HTMLInputElement | null>(null);
 const songNumberModal = shallowRef<HTMLDialogElement>();
 const showDialog = ref(false);
 
@@ -107,34 +112,40 @@ async function onNavigateToSong() {
     <div v-if="isLoading">
       <span class="loading loading-dots loading-xl" />
     </div>
-    <Swiper
-      v-else
-      :modules="swiperModules"
-      :slides-per-view="1"
-      :space-between="50"
-      :navigation="true"
-      :virtual="true"
-      class="swiper"
-    >
-      <SwiperSlide v-for="song in songs" :key="song.id" :virtual-index="song.id">
-        <div class="h-[calc(100vh-64px-52px)] overlay overflow-auto p-4 pb-18">
-          <h2 v-if="currentSong" class="text-2xl">
-            <strong class="text-4xl">{{ song.songId }}.</strong> {{ song.title }}
-          </h2>
-          <MDCRenderer
-            v-if="song"
-            :body="song.lyric.body"
-            :data="song.lyric.data"
-            class="[&>p]:my-4 [&>p:has(em)]:flex [&>p:has(em)]:justify-center [&>p:has(em)]:leading-[1px] leading-6 mt-6"
-          />
-        </div>
-      </SwiperSlide>
-    </Swiper>
+    <div v-else class="max-w-screen md:max-w-5xl md:mx-auto">
+      <Swiper
+        :modules="swiperModules"
+        :slides-per-view="1"
+        :space-between="20"
+        :navigation="true"
+        :virtual="true"
+        class="swiper"
+      >
+        <SwiperSlide v-for="song in songs" :key="song.id" :virtual-index="song.id">
+          <div class="h-[calc(100vh-64px-52px)] overlay overflow-auto p-4 pb-18">
+            <h2
+              v-if="currentSong"
+              class="text-left md:text-center"
+              :style="{ fontSize: `${fontSize * 1.5}px`, lineHeight: `${fontSize * 1.5 * 1.2}px` }"
+            >
+              <strong :style="{ fontSize: `${fontSize * 2}px`, lineHeight: `${fontSize * 2 * 1.1}px` }">{{ song.songId }}.</strong> {{ song.title }}
+            </h2>
+            <MDCRenderer
+              v-if="song"
+              :body="song.lyric.body"
+              :data="song.lyric.data"
+              class="[&>p]:my-4 [&>p:has(em)]:flex [&>p:has(em)]:justify-center [&>p:has(em)]:!leading-[1px] text-left md:text-center mt-6"
+              :style="{ fontSize: `${fontSize}px`, lineHeight: `${fontSize * 1.6}px` }"
+            />
+          </div>
+        </SwiperSlide>
+      </Swiper>
+    </div>
 
     <!-- Show the song number modal -->
     <button
       type="button"
-      class="btn btn-primary btn-sm absolute w-12 h-12 aspect-square bottom-[20px] right-[20px] p-0 rounded-xl z-20"
+      class="btn btn-primary btn-sm absolute w-14 h-14 aspect-square bottom-[20px] right-[20px] p-0 rounded-xl z-20"
       @click="showUpSongNumberModal()"
     >
       <svg
@@ -185,6 +196,11 @@ async function onNavigateToSong() {
 </template>
 
 <style>
+html {
+  scrollbar-gutter: stable;
+  scrollbar-width: thin;
+}
+
 .swiper {
   width: 100%;
   height: 100%;
