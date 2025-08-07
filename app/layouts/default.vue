@@ -4,7 +4,10 @@ const { $pwa } = useNuxtApp();
 const showFontSidebar = ref(false);
 
 onMounted(() => {
-  if ($pwa.offlineReady) {
+  if (!$pwa?.isPWAInstalled) {
+    $pwa?.install();
+  }
+  if ($pwa?.offlineReady) {
     push.success("¡Nuevo contenido disponible!");
   }
 });
