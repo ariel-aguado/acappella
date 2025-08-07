@@ -4,7 +4,7 @@ const emit = defineEmits(["update:open"]);
 
 <template>
   <div
-    class="navbar h-[64px] w-full bg-primary shadow-[0_4px_20px_0_rgba(0,0,0,0.5)] text-primary-content py-0 px-4"
+    class="navbar w-full bg-primary shadow-[0_4px_20px_0_rgba(0,0,0,0.5)] text-primary-content py-0 px-4"
     style="backdrop-filter: blur(6px);"
   >
     <div class="navbar-start">

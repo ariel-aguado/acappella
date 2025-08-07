@@ -1,4 +1,9 @@
 <script lang="ts" setup>
+import {
+  outlinedIcons,
+  pastelTheme,
+} from "notivue";
+
 useHead({
   titleTemplate: c => c ? `${c} - Acappella` : "Acappella",
   link: [{ rel: "icon", href: "/icon.svg", type: "image/svg+xml" }],
@@ -10,6 +15,14 @@ useHead({
 
 <template>
   <NuxtLayout>
+    <NuxtPwaManifest />
     <NuxtPage />
+    <Notivue v-slot="item">
+      <Notification
+        :item="item"
+        :icons="outlinedIcons"
+        :theme="pastelTheme"
+      />
+    </Notivue>
   </NuxtLayout>
 </template>
