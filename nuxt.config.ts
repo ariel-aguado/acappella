@@ -43,9 +43,6 @@ export default defineNuxtConfig({
     ],
   },
   pwa: {
-    strategies: "injectManifest",
-    srcDir: "service-worker",
-    filename: "sw.ts",
     registerType: "autoUpdate",
     manifest: {
       name: "Acappella",
@@ -70,12 +67,6 @@ export default defineNuxtConfig({
           purpose: "any maskable",
         },
       ],
-    },
-    workbox: {
-      globPatterns: ["**/*.{js,css,html,png,svg,ico}"],
-    },
-    injectManifest: {
-      globPatterns: ["**/*.{js,css,html,png,svg,ico}"],
     },
     client: {
       installPrompt: true,
