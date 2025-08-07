@@ -47,5 +47,44 @@ export default defineNuxtConfig({
       },
     ],
   },
-  pwa: {},
+  pwa: {
+    manifest: {
+      name: "Acappella",
+      short_name: "Acappella",
+      theme_color: "#422ad5",
+      background_color: "#ffffff",
+      icons: [
+        {
+          src: "pwa-192x192.png",
+          sizes: "192x192",
+          type: "image/png",
+        },
+        {
+          src: "pwa-512x512.png",
+          sizes: "512x512",
+          type: "image/png",
+        },
+        {
+          src: "pwa-512x512.png",
+          sizes: "512x512",
+          type: "image/png",
+          purpose: "any maskable",
+        },
+      ],
+      screenshots: [
+        {
+          src: "screenshot-desktop.png",
+          sizes: "1280x800",
+          type: "image/png",
+          form_factor: "wide",
+        },
+        {
+          src: "screenshot-mobile.png",
+          sizes: "375x667",
+          type: "image/png",
+          // form_factor not set, counts as mobile
+        },
+      ],
+    },
+  },
 });
