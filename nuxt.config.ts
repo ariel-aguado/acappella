@@ -64,12 +64,13 @@ export default defineNuxtConfig({
           src: "pwa-512x512.png",
           sizes: "512x512",
           type: "image/png",
+          purpose: "any",
         },
         {
           src: "pwa-512x512.png",
           sizes: "512x512",
           type: "image/png",
-          purpose: "any maskable",
+          purpose: "maskable",
         },
       ],
       screenshots: [
@@ -86,12 +87,6 @@ export default defineNuxtConfig({
           // form_factor not set, counts as mobile
         },
       ],
-    },
-    workbox: {
-      globPatterns: ["**/*.{js,css,html,png,svg,ico}"],
-    },
-    injectManifest: {
-      globPatterns: ["**/*.{js,css,html,png,svg,ico}"],
     },
     client: {
       installPrompt: true,
