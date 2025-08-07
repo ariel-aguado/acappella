@@ -48,6 +48,7 @@ export default defineNuxtConfig({
     ],
   },
   pwa: {
+    registerType: "autoUpdate",
     manifest: {
       name: "Acappella",
       short_name: "Acappella",
@@ -85,6 +86,15 @@ export default defineNuxtConfig({
           // form_factor not set, counts as mobile
         },
       ],
+    },
+    workbox: {
+      globPatterns: ["**/*.{js,css,html,png,svg,ico}"],
+    },
+    injectManifest: {
+      globPatterns: ["**/*.{js,css,html,png,svg,ico}"],
+    },
+    client: {
+      installPrompt: true,
     },
   },
 });
