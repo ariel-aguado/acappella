@@ -16,8 +16,13 @@ export default defineNuxtConfig({
     "@vueuse/nuxt",
     "@nuxt/fonts",
     "@vite-pwa/nuxt",
+    "notivue/nuxt",
   ],
-  css: ["~/assets/css/main.css"],
+  css: [
+    "~/assets/css/main.css",
+    "notivue/notification.css",
+    "notivue/animations.css",
+  ],
   eslint: {
     config: {
       standalone: false,
@@ -42,41 +47,5 @@ export default defineNuxtConfig({
       },
     ],
   },
-  pwa: {
-    registerType: "autoUpdate",
-    manifest: {
-      name: "Acappella",
-      short_name: "Acappella",
-      theme_color: "#422ad5",
-      background_color: "#ffffff",
-      icons: [
-        {
-          src: "pwa-192x192.png",
-          sizes: "192x192",
-          type: "image/png",
-        },
-        {
-          src: "pwa-512x512.png",
-          sizes: "512x512",
-          type: "image/png",
-        },
-        {
-          src: "pwa-512x512.png",
-          sizes: "512x512",
-          type: "image/png",
-          purpose: "any maskable",
-        },
-      ],
-    },
-    client: {
-      installPrompt: true,
-    },
-    devOptions: {
-      enabled: true,
-      suppressWarnings: true,
-      navigateFallback: "/",
-      navigateFallbackAllowlist: [/^\/$/],
-      type: "module",
-    },
-  },
+  pwa: {},
 });

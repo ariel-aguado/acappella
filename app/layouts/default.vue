@@ -1,5 +1,13 @@
 <script lang="ts" setup>
+const { $pwa } = useNuxtApp();
+
 const showFontSidebar = ref(false);
+
+onMounted(() => {
+  if ($pwa.offlineReady) {
+    push.success("¡Nuevo contenido disponible!");
+  }
+});
 </script>
 
 <template>
