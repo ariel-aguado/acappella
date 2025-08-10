@@ -104,36 +104,36 @@ export default defineNuxtConfig({
             },
           },
         },
-        // {
-        //   urlPattern: ({ url }) => url.pathname.startsWith("/_nuxt/"),
-        //   handler: "CacheFirst",
-        //   options: {
-        //     cacheName: "nuxt-assets",
-        //     expiration: {
-        //       maxEntries: 100,
-        //       maxAgeSeconds: 60 * 60 * 24 * 30,
-        //     },
-        //   },
-        // },
-        // {
-        //   urlPattern: ({ url }) => url.pathname.startsWith("/api/"),
-        //   handler: "NetworkFirst",
-        //   options: {
-        //     cacheName: "api-cache",
-        //     networkTimeoutSeconds: 5,
-        //     expiration: {
-        //       maxEntries: 30,
-        //       maxAgeSeconds: 60 * 60 * 24,
-        //     },
-        //     cacheableResponse: {
-        //       statuses: [0, 200],
-        //     },
-        //   },
-        // },
+        {
+          urlPattern: ({ url }) => url.pathname.startsWith("/_nuxt/"),
+          handler: "CacheFirst",
+          options: {
+            cacheName: "nuxt-assets",
+            expiration: {
+              maxEntries: 100,
+              maxAgeSeconds: 60 * 60 * 24 * 30,
+            },
+          },
+        },
+        {
+          urlPattern: ({ url }) => url.pathname.startsWith("/api/"),
+          handler: "NetworkFirst",
+          options: {
+            cacheName: "api-cache",
+            networkTimeoutSeconds: 5,
+            expiration: {
+              maxEntries: 30,
+              maxAgeSeconds: 60 * 60 * 24,
+            },
+            cacheableResponse: {
+              statuses: [0, 200],
+            },
+          },
+        },
       ],
     },
     injectManifest: {
-      globPatterns: ["**/*.{js,css,html,png,svg,ico}"],
+      globPatterns: ["**/*.{js,css,html,png,svg,ico,woff2}"],
     },
     client: {
       installPrompt: true,
