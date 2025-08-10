@@ -16,7 +16,6 @@ useHead({
 <template>
   <NuxtLayout>
     <NuxtPwaManifest />
-    <NuxtLoadingIndicator />
     <NuxtPage />
     <Notivue v-slot="item">
       <Notification
