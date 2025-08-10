@@ -10,12 +10,9 @@ import "swiper/css/virtual";
 // Swiper navigation module
 const swiperModules = [Navigation, Virtual];
 
-// Swiper instance
-const swiper = ref();
-
 // Song store
 const songStore = useSongStore();
-const { songs, currentSong, isLoading } = storeToRefs(songStore);
+const { songs, songId, currentSong, isLoading } = storeToRefs(songStore);
 
 // Font store
 const fontStore = useFontStore();
@@ -23,6 +20,20 @@ const { fontSize } = storeToRefs(fontStore);
 
 // New song ID input
 const newSongId = ref<number | null>(null);
+
+// Html elements
+const newSongInput = shallowRef<HTMLInputElement | null>(null);
+const songNumberModal = shallowRef<HTMLDialogElement>();
+const showDialog = ref(false);
+
+// Swiper reference
+const swiper = shallowRef();
+
+// Init swiper instance
+function onSwiper(swiper: any) {
+  swiper.value = swiper;
+  swiper.value.slideTo(Number(songId.value) - 1, 0);
+};
 
 // New song schema validation
 const validationSchema = z.object({
@@ -53,11 +64,6 @@ async function validateSongId() {
   });
 }
 
-// Html elements
-const newSongInput = shallowRef<HTMLInputElement | null>(null);
-const songNumberModal = shallowRef<HTMLDialogElement>();
-const showDialog = ref(false);
-
 function navigateToSong() {
   // Initialize the swiper for the first time
   if (!swiper.value) {
@@ -72,6 +78,13 @@ function navigateToSong() {
 
   // Reset new song ID
   newSongId.value = null;
+}
+
+async function onActiveIndexChange(swiper: any) {
+  setTimeout(() => {
+    // Update the current song index
+    songId.value = swiper.activeIndex + 1;
+  }, 50);
 }
 
 // Function to show the song number modal
@@ -114,14 +127,20 @@ async function onNavigateToSong() {
     </div>
     <div v-else class="max-w-screen md:max-w-5xl md:mx-auto">
       <Swiper
+        class="swiper"
         :modules="swiperModules"
         :slides-per-view="1"
         :space-between="20"
         :navigation="true"
         :virtual="true"
-        class="swiper"
+        @active-index-change="onActiveIndexChange"
+        @swiper="onSwiper"
       >
-        <SwiperSlide v-for="song in songs" :key="song.id" :virtual-index="song.id">
+        <SwiperSlide
+          v-for="song in songs"
+          :key="song.id"
+          :virtual-index="song.id"
+        >
           <div class="h-[calc(100vh-64px-52px)] overlay overflow-auto p-4 pb-18">
             <h2
               v-if="currentSong"
