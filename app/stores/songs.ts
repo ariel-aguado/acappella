@@ -1,15 +1,23 @@
-import type { Song } from "~/lib/db/schema";
+import type { Song } from "~~/lib/db/schema";
 
 export const useSongStore = defineStore("useSongStore", () => {
-  const { data, status, refresh } = useFetch("/api/songs", {
-    lazy: true,
-  });
-
-  const isLoading = ref(true);
-  const songs = ref<Song[]>([]);
-  const songId = ref<number>(1);
-  const currentSong = ref<Song>();
+  const isLoading = ref(false);
+  const songs = useLocalStorage<Song[]>("songs", []);
+  const songId = useLocalStorage<number>("songId", 1);
+  const currentSong = useLocalStorage<Song>("currentSong", {} as Song);
+  const songData = ref<Song[]>([]);
   const songsCount = computed(() => songs.value.length);
+
+  if (songs.value.length === 0) {
+    getSongs();
+  }
+
+  async function getSongs() {
+    isLoading.value = true;
+    const data = await $fetch("/api/songs");
+    songData.value = data;
+    isLoading.value = false;
+  }
 
   function getSong(songId: number) {
     let song = null;
@@ -20,41 +28,22 @@ export const useSongStore = defineStore("useSongStore", () => {
     return song;
   }
 
-  watchEffect(async () => {
-    if (data.value) {
+  watch(() => songData.value, (newData) => {
+    if (newData) {
       isLoading.value = false;
-      songs.value = (data.value as any[]).map((s: any) => ({
-        ...s,
-        lyric: {
-          ...s.lyric,
-          data: {
-            title: s.lyric?.data?.title ?? "",
-            description: s.lyric?.data?.description ?? "",
-            ...(s.lyric?.data ?? {}),
+      if (songs.value.length === 0) {
+        songs.value = (songData.value as any[]).map((s: any) => ({
+          ...s,
+          lyric: {
+            ...s.lyric,
+            data: {
+              title: s.lyric?.data?.title ?? "",
+              description: s.lyric?.data?.description ?? "",
+              ...(s.lyric?.data ?? {}),
+            },
           },
-        },
-      }));
-      currentSong.value = songs.value[0];
-    }
-
-    isLoading.value = status.value === "pending";
-  });
-
-  watch(() => songId.value, async (newSongId) => {
-    if (newSongId) {
-      const newSong = getSong(newSongId);
-
-      if (newSong) {
-        currentSong.value = newSong;
-        await navigateTo(`/${newSongId}`);
+        }));
       }
-      else {
-        currentSong.value = songs.value[0];
-        await navigateTo("/");
-      }
-    }
-    else {
-      currentSong.value = undefined;
     }
   });
 
@@ -64,7 +53,6 @@ export const useSongStore = defineStore("useSongStore", () => {
     currentSong,
     songsCount,
     isLoading,
-    refresh,
     getSong,
   };
 });
