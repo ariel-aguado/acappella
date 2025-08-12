@@ -32,7 +32,7 @@ const allSongs = new Fuse(toValue(songs), {
   ...searchOptions,
 });
 
-const searchResult = computed(() => allSongs.search(toValue(query)).slice(0, 10));
+const searchResult = computed(() => allSongs.search(toValue(query))); // .slice(0, 10));
 
 function handleSongLines(lines: LyricLine[]) {
   const allLines = new Fuse(lines, {

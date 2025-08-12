@@ -21,23 +21,45 @@ export async function transformSongs(songs: SongFromDB[]): Promise<Song[]> {
 
 function lyricToLines(content: string): Promise<LyricLine[]> {
   return new Promise((resolve) => {
-    // Split the content into lines
     const lines = content.split("\n");
+    let inChorus = false;
 
-    // Process lines according to the conditions
     const parsedLines = lines.reduce((result: LyricLine[], line) => {
-      // Skip lines that match any of the exclusion criteria
+      const trimmedLine = line.trim();
+
+      // Handle CORO label (keep but remove asterisks)
+      if (trimmedLine.startsWith("**CORO:")) {
+        inChorus = true;
+        // Remove both leading and trailing asterisks from CORO label
+        const coroLabel = trimmedLine.replace(/^\*\*CORO:\s*\*?$/, "CORO:");
+        result.push({ line: coroLabel });
+        return result;
+      }
+
+      // Skip other excluded lines
       if (
-        (line.startsWith("(") && line.endsWith(")")) // First line with references
-        || /^\*\d+\*$/.test(line.trim()) // Number dividing lines
-        || line.trim().startsWith("**CORO:") // CORO label
-        || line.trim() === "" // Empty lines
+        (line.startsWith("(") && line.endsWith(")"))
+        || /^\*\d+\*$/.test(trimmedLine)
+        || trimmedLine === ""
       ) {
         return result;
       }
 
-      // Add the line as an object to the result array
-      result.push({ line: line.trim() });
+      // Process chorus lines (remove trailing asterisks)
+      let processedLine = trimmedLine;
+      if (inChorus) {
+        processedLine = processedLine.replace(/\*+$/, "");
+
+        // Check for end of chorus (line that had trailing asterisks)
+        if (line.trim().endsWith("**")) {
+          inChorus = false;
+        }
+      }
+
+      if (processedLine) {
+        result.push({ line: processedLine });
+      }
+
       return result;
     }, []);
 
