@@ -32,7 +32,7 @@ const allSongs = new Fuse(toValue(songs), {
   ...searchOptions,
 });
 
-const result = computed(() => allSongs.search(toValue(query)).slice(0, 10));
+const searchResult = computed(() => allSongs.search(toValue(query)).slice(0, 10));
 
 function handleSongLines(lines: LyricLine[]) {
   const allLines = new Fuse(lines, {
@@ -95,6 +95,7 @@ async function setQuery(history: string) {
 
 <template>
   <div class="flex flex-col h-[calc(100vh-64px-52px)]">
+    <!-- Search results -->
     <div class="sticky top-0 z-10 shadow-md p-4 dark:bg-black/50 backdrop-blur-sm">
       <span>Introduzca cualquier palabra:</span>
       <label class="input w-full mt-2">
@@ -111,15 +112,14 @@ async function setQuery(history: string) {
         >
       </label>
     </div>
-
-    <div v-if="query.length && result.length" class="context flex flex-col overflow-y-auto px-4">
-      <div v-for="song in result" :key="song.item.id" class="[&:not(:first-child)]:border-t [&:not(:first-child)]:border-base-300">
+    <div v-if="query.length && searchResult.length" class="context flex flex-col overflow-y-auto px-4">
+      <div v-for="song in searchResult" :key="song.item.id" class="[&:not(:first-child)]:border-t [&:not(:first-child)]:border-base-300">
         <button
           type="button"
-          class="h-auto btn btn-ghost flex items-center gap-2 py-2 px-0"
+          class="w-full h-auto btn btn-ghost flex justify-start items-center gap-2 py-2 px-0"
           @click="navigateToSong(song.item.songId)"
         >
-          <div class="flex justify-center items-center bg-secondary text-white aspect-square w-10 h-10 p-2 rounded-full">
+          <div class="flex justify-center items-center bg-secondary text-lg text-white aspect-square w-12 h-12 p-2 rounded-full">
             {{ song.item.songId }}
           </div>
           <div>{{ song.item.title }}</div>
@@ -133,14 +133,16 @@ async function setQuery(history: string) {
         </div>
       </div>
     </div>
+    <!-- Empty state -->
     <div
-      v-else-if="query.length && !result.length"
-      class="h-full flex flex-col justify-center items-center"
+      v-else-if="query.length && !searchResult.length"
+      class="flex flex-col justify-center items-center mt-8"
     >
       <img src="/img/empty-state.webp" alt="Empty state" class="w-[100px] h-auto">
       <span class="text-xl font-bold mt-4">No se encontraron resultados</span>
       <span>Intenta otra búsqueda</span>
     </div>
+    <!-- Search history -->
     <div v-else-if="searchHistory.length" class="flex flex-col gap-2 px-4">
       <div class="flex justify-between items-center border-b-2 border-base-300 py-4">
         <span class="text-base font-normal">Búsquedas recientes</span>
@@ -159,7 +161,7 @@ async function setQuery(history: string) {
       >
         <button
           type="button"
-          class="btn btn-ghost btn-sm flex items-center gap-2 px-0"
+          class="flex-1 btn btn-ghost btn-sm flex justify-start items-center gap-2 px-0"
           @click="setQuery(history)"
         >
           <Icon name="carbon:recently-viewed" size="20" class="text-secondary" />
