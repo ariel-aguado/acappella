@@ -12,3 +12,19 @@
 :root {
   font-family: var(--font-display);
 }
+
+/* Transición estilo Android */
+.android-enter-active,
+.android-leave-active {
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.android-enter-from {
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.android-leave-to {
+  opacity: 0;
+  transform: translateY(-20px);
+}

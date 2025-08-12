@@ -151,8 +151,8 @@ async function onNavigateToSong() {
             </h2>
             <MDCRenderer
               v-if="song"
-              :body="song.lyric.body"
-              :data="song.lyric.data"
+              :body="song.lyricParsed.body"
+              :data="song.lyricParsed.data"
               class="[&>p]:my-4 [&>p:has(em)]:flex [&>p:has(em)]:justify-center [&>p:has(em)]:!leading-[1px] text-left md:text-center mt-6"
               :style="{ fontSize: `${fontSize}px`, lineHeight: `${fontSize * 1.6}px` }"
             />
@@ -164,7 +164,7 @@ async function onNavigateToSong() {
     <!-- Show the song number modal -->
     <button
       type="button"
-      class="btn btn-primary btn-sm absolute w-14 h-14 aspect-square bottom-[20px] right-[20px] p-0 rounded-xl z-20"
+      class="btn btn-secondary btn-sm absolute w-14 h-14 aspect-square bottom-[20px] right-[20px] p-0 rounded-xl z-20"
       @click="showUpSongNumberModal()"
     >
       <svg
@@ -179,10 +179,15 @@ async function onNavigateToSong() {
     <transition name="modal-fade">
       <dialog v-if="showDialog" ref="songNumberModal" class="modal">
         <div class="modal-box">
-          <h3 class="text-lg font-bold">
-            Elija un himno
-          </h3>
-          <p class="py-4">
+          <div class="flex justify-between items-center">
+            <h3 class="text-lg font-bold">
+              Elija un himno
+            </h3>
+            <button class="btn btn-ghost rounded-full p-0 w-8 h-8" @click="showDialog = false">
+              <Icon name="tabler:x" size="20" />
+            </button>
+          </div>
+          <p class="mt-2">
             Por favor, escriba el número del himno:
           </p>
           <div class="modal-action w-full mt-2">
@@ -202,7 +207,7 @@ async function onNavigateToSong() {
                 <button type="button" class="btn btn-ghost" @click="cancelSongNumberModal">
                   Cancelar
                 </button>
-                <button type="submit" class="btn">
+                <button type="submit" class="btn btn-secondary">
                   OK
                 </button>
               </div>

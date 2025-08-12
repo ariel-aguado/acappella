@@ -20,6 +20,7 @@ const emit = defineEmits(["update:open"]);
     </div>
     <div class="navbar-end flex items-center gap-2">
       <button
+        v-if="$route.path === '/'"
         class="btn btn-circle btn-ghost"
         aria-label="Ajustar fuente"
         @click="emit('update:open')"
