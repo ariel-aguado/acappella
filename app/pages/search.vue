@@ -32,7 +32,7 @@ const allSongs = new Fuse(toValue(songs), {
   ...searchOptions,
 });
 
-const searchResult = computed(() => allSongs.search(toValue(query))); // .slice(0, 10));
+const searchResult = computed(() => allSongs.search(toValue(query)).slice(0, 15));
 
 function handleSongLines(lines: LyricLine[]) {
   const allLines = new Fuse(lines, {
@@ -96,7 +96,7 @@ async function setQuery(history: string) {
 <template>
   <div class="flex flex-col h-[calc(100vh-64px-52px)]">
     <!-- Search results -->
-    <div class="sticky top-0 z-10 shadow-md p-4 dark:bg-black/50 backdrop-blur-sm">
+    <div class="sticky top-0 z-10 shadow-md p-4 bg-base-100 dark:bg-content backdrop-blur-sm">
       <span>Introduzca cualquier palabra:</span>
       <label class="input w-full mt-2">
         <Icon name="carbon:search" size="16" class="text-secondary" />
