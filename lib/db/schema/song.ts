@@ -24,8 +24,15 @@ export const InsertSong = createInsertSchema(song, {
   createdAt: true,
 });
 
-export type SongFromDB = InferSelectModel<typeof song>;
-export type Song = Omit<SongFromDB, "lyric"> & {
-  lyric: MDCParserResult;
+export type LyricLine = {
+  line: string;
 };
+export type SongFromDB = InferSelectModel<typeof song>;
+export type Song = SongFromDB & {
+  lyricParsed: MDCParserResult;
+  lyricLines: LyricLine[];
+};
+// export type Song = Omit<SongFromDB, "lyric"> & {
+//   lyric: MDCParserResult;
+// };
 export type InsertSong = z.infer<typeof InsertSong>;

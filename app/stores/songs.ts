@@ -5,6 +5,7 @@ export const useSongStore = defineStore("useSongStore", () => {
   const songs = useLocalStorage<Song[]>("songs", []);
   const songId = useLocalStorage<number>("songId", 1);
   const currentSong = useLocalStorage<Song>("currentSong", {} as Song);
+  const searchHistory = useLocalStorage<string[]>("searchHistory", []);
   const songData = ref<Song[]>([]);
   const songsCount = computed(() => songs.value.length);
 
@@ -34,12 +35,12 @@ export const useSongStore = defineStore("useSongStore", () => {
       if (songs.value.length === 0) {
         songs.value = (songData.value as any[]).map((s: any) => ({
           ...s,
-          lyric: {
-            ...s.lyric,
+          lyricParsed: {
+            ...s.lyricParsed,
             data: {
-              title: s.lyric?.data?.title ?? "",
-              description: s.lyric?.data?.description ?? "",
-              ...(s.lyric?.data ?? {}),
+              title: s.lyricParsed?.data?.title ?? "",
+              description: s.lyricParsed?.data?.description ?? "",
+              ...(s.lyricParsed?.data ?? {}),
             },
           },
         }));
@@ -51,6 +52,7 @@ export const useSongStore = defineStore("useSongStore", () => {
     songId,
     songs,
     currentSong,
+    searchHistory,
     songsCount,
     isLoading,
     getSong,

@@ -8,7 +8,7 @@ const route = useRoute();
       <li>
         <button
           type="button"
-          class="btn btn-sm rounded-full px-4"
+          class="btn btn-soft btn-primary btn-sm rounded-full px-4"
           :class="{
             'bg-primary text-white': route.path === '/',
             'bg-soft text-primary': route.path !== '/',
@@ -21,7 +21,7 @@ const route = useRoute();
       <li>
         <button
           type="button"
-          class="btn btn-sm rounded-full px-4"
+          class="btn btn-soft btn-primary btn-sm rounded-full px-4"
           :class="{
             'bg-primary text-white': route.path === '/search',
             'bg-soft text-primary': route.path !== '/search',

@@ -28,6 +28,8 @@
     "drizzle-orm": "^0.44.4",
     "drizzle-zod": "^0.8.2",
     "eslint": "^9.32.0",
+    "fuse.js": "^7.1.0",
+    "mark.js": "^8.11.1",
     "nanoid": "^5.1.5",
     "notivue": "^2.4.5",
     "nuxt": "^4.0.2",

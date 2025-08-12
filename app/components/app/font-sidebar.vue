@@ -53,10 +53,10 @@ function stopDrag() {
         <!-- Handle para arrastrar/cerrar -->
         <div class="w-16 h-2 bg-base-300 rounded-full mt-2 mb-4 cursor-grab" @mousedown="startDrag" @touchstart="startDrag" />
         <div class="w-full flex gap-4 mb-4 px-4">
-          <button class="flex-1 btn btn-outline btn-primary btn-sm rounded-full" @click="decreaseFont">
+          <button class="flex-1 btn btn-secondary btn-sm rounded-full" @click="decreaseFont">
             A-
           </button>
-          <button class="flex-1 btn btn-outline btn-primary btn-sm rounded-full text-2xl" @click="increaseFont">
+          <button class="flex-1 btn btn-secondary btn-sm rounded-full text-2xl" @click="increaseFont">
             A+
           </button>
         </div>

@@ -11,7 +11,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="flex flex-col h-screen max-h-screen relative overflow-hidden">
+  <div class="flex flex-col h-screen max-h-screen relative">
     <AppNavBar @update:open="showFontSidebar = !showFontSidebar" />
     <main class="flex-1 flex flex-col">
       <slot />
