@@ -12,11 +12,11 @@ onMounted(() => {
 
 <template>
   <div class="flex flex-col h-screen max-h-screen relative">
-    <AppNavBar @update:open="showFontSidebar = !showFontSidebar" />
+    <AppOptionsBar @update:open="showFontSidebar = !showFontSidebar" />
     <main class="flex-1 flex flex-col">
       <slot />
     </main>
-    <AppOptionsBar />
+    <AppNavBar />
     <AppFontSidebar :open="showFontSidebar" @update:open="showFontSidebar = $event" />
   </div>
 </template>
