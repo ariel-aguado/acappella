@@ -141,7 +141,7 @@ async function onNavigateToSong() {
           :key="song.id"
           :virtual-index="song.id"
         >
-          <div class="h-[calc(100vh-64px-52px)] overlay overflow-auto p-4 pb-18">
+          <div class="h-[calc(100dvh-64px-52px)] overflow-y-auto p-4 pb-18">
             <h2
               v-if="currentSong"
               class="text-left md:text-center"
