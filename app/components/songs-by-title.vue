@@ -169,7 +169,7 @@ function onPointerUp(e) {
           {{ song.songId }}
         </div>
         <div class="flex flex-col items-start">
-          <span>{{ song.title }}</span>
+          <span class="text-start">{{ song.title }}</span>
           <p class="text-start line-clamp-1">
             {{ song.firstLine }}
           </p>
@@ -178,7 +178,7 @@ function onPointerUp(e) {
     </div>
   </div>
   <!-- Sidebar of song ids -->
-  <div id="sidebar" class="sticky top-0 z-50 flex flex-col items-center bg-secondary w-8 h-full rounded-t-full rounded-b-full py-4">
+  <div id="sidebar" class="sticky top-0 z-50 flex flex-col items-center bg-secondary w-7 h-full rounded-t-full rounded-b-full py-4">
     <div
       v-for="initial in generateSidebarInitials(songs)"
       :key="`sidebar-initial-${initial}`"
@@ -186,7 +186,7 @@ function onPointerUp(e) {
       class="sidebar-item flex-1 flex justify-center items-center w-full"
       @click="scrollToSong(initial)"
     >
-      <span class="flex text-sm">{{ initial }}</span>
+      <span class="flex text-sm text-white">{{ initial }}</span>
     </div>
   </div>
 </template>
