@@ -8,15 +8,15 @@ const emit = defineEmits(["update:open"]);
     style="backdrop-filter: blur(6px);"
   >
     <div class="navbar-start">
-      <NuxtLink to="/" class="btn btn-ghost text-xl flex items-center gap-1 px-0">
+      <div class="text-xl flex items-center gap-1 px-0">
         <Icon name="tabler:brand-netease-music" size="44" />
         <div class="flex flex-col items-start">
-          <span class="leading-6">
+          <span class="leading-6 font-bold">
             Acappella
           </span>
           <span class="text-xs font-normal">Himnos Montevideo</span>
         </div>
-      </NuxtLink>
+      </div>
     </div>
     <div class="navbar-end flex items-center gap-2">
       <button

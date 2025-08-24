@@ -31,6 +31,13 @@ export type SongFromDB = InferSelectModel<typeof song>;
 export type Song = SongFromDB & {
   lyricParsed: MDCParserResult;
   lyricLines: LyricLine[];
+  favorite: boolean;
+};
+export type FilteredSong = {
+  songId: number;
+  title: string;
+  firstLine: string;
+  favorite: boolean;
 };
 // export type Song = Omit<SongFromDB, "lyric"> & {
 //   lyric: MDCParserResult;
