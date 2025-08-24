@@ -116,12 +116,10 @@ async function setQuery(history: string) {
         <div class="flex-1 flex justify-between items-center gap-2">
           <div
             class="w-full h-auto flex justify-start items-center gap-2 py-3 pl-4"
+            @click="songStore.navigateToSong(song.item.songId)"
           >
             <!-- Song number -->
-            <div
-              class="flex justify-center items-center bg-secondary font-bold text-xl text-white aspect-square w-12 h-12 p-2 rounded-full"
-              @click="songStore.navigateToSong(song.item.songId)"
-            >
+            <div class="flex justify-center items-center bg-secondary font-bold text-xl text-white aspect-square w-12 h-12 p-2 rounded-full">
               {{ song.item.songId }}
             </div>
             <p class="text-start font-bold">
