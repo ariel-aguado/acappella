@@ -8,8 +8,8 @@ async function updateSongsData() {
 </script>
 
 <template>
-  <div class="w-full flex flex-col h-[calc(100dvh-64px-52px)] p-4">
-    <div style="width: 100%; height: 300px; position: relative" class="rounded-xl overflow-hidden border border-primary/50">
+  <div class="w-full flex flex-col h-[calc(100dvh-64px-52px)] overflow-y-auto p-4">
+    <div class="w-full min-h-[300px] flex justify-center items-center rounded-xl overflow-hidden border border-primary/50 relative">
       <DarkVeil
         :hue-shift="0"
         :noise-intensity="0"
@@ -19,8 +19,8 @@ async function updateSongsData() {
         :warp-amount="0"
         :resolution-scale="1"
       />
-      <div class="absolute inset-0 flex-1 flex flex-col justify-center items-center text-white border border-white/40 rounded-xl">
-        <Icon name="tabler:brand-netease-music" size="128" />
+      <div class="absolute top-0 h-full flex-1 flex flex-col justify-center items-center text-white rounded-xl">
+        <Icon name="tabler:brand-netease-music" size="128" class="min-h-[128px]" />
         <div class="flex flex-col items-center gap-4 p-4">
           <span class="leading-6 font-bold text-5xl">
             Acappella
