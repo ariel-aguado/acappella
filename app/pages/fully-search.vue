@@ -5,7 +5,7 @@ import Fuse from "fuse.js";
 import Mark from "mark.js";
 
 const songStore = useSongStore();
-const { songs, songId, searchHistory } = storeToRefs(songStore);
+const { songs, searchHistory } = storeToRefs(songStore);
 
 const query = ref("");
 const queryRef = shallowRef();
@@ -43,11 +43,6 @@ function handleSongLines(lines: LyricLine[]) {
   });
 
   return allLines.search(toValue(query));
-}
-
-function navigateToSong(id: number) {
-  songId.value = id;
-  navigateTo("/");
 }
 
 function performMark() {
@@ -112,22 +107,43 @@ async function setQuery(history: string) {
         >
       </label>
     </div>
-    <div v-if="query.length && searchResult.length" class="context flex flex-col overflow-y-auto px-4">
-      <div v-for="song in searchResult" :key="song.item.id" class="[&:not(:first-child)]:border-t [&:not(:first-child)]:border-base-300">
-        <button
-          type="button"
-          class="w-full h-auto btn btn-ghost flex justify-start items-center gap-2 py-2 px-0"
-          @click="navigateToSong(song.item.songId)"
-        >
-          <div class="flex justify-center items-center bg-secondary text-lg text-white aspect-square w-12 h-12 p-2 rounded-full">
-            {{ song.item.songId }}
+    <div v-if="query.length && searchResult.length" class="context flex flex-col overflow-y-auto">
+      <div
+        v-for="song in searchResult"
+        :key="song.item.id"
+        class="[&:not(:first-child)]:border-t [&:not(:first-child)]:border-base-300"
+      >
+        <div class="flex-1 flex justify-between items-center gap-2">
+          <div
+            class="w-full h-auto flex justify-start items-center gap-2 py-3 pl-4"
+          >
+            <!-- Song number -->
+            <div
+              class="flex justify-center items-center bg-secondary font-bold text-xl text-white aspect-square w-12 h-12 p-2 rounded-full"
+              @click="songStore.navigateToSong(song.item.songId)"
+            >
+              {{ song.item.songId }}
+            </div>
+            <p class="text-start font-bold">
+              {{ song.item.title }}
+            </p>
           </div>
-          <div>{{ song.item.title }}</div>
-        </button>
+          <!-- Favorite -->
+          <label class="swap p-4">
+            <!-- this hidden checkbox controls the state -->
+            <input type="checkbox" :checked="song.item.favorite" @change="songStore.toggleFavorite(song.item)">
+
+            <!-- favorite on icon -->
+            <Icon name="tabler:heart-filled" size="28" class="swap-on fill-current text-secondary" />
+
+            <!-- favorite off icon -->
+            <Icon name="tabler:heart" size="28" class="swap-off fill-current text-secondary" />
+          </label>
+        </div>
         <div
           v-for="(songLine, index) in handleSongLines(song.item.lyricLines)"
           :key="`line-${index}`"
-          class="[&:not(:first-child)]:border-t [&:not(:first-child)]:border-base-300 py-1"
+          class="[&:not(:first-child)]:border-t [&:not(:first-child)]:border-base-300 py-1 px-4"
         >
           {{ songLine.item.line }}
         </div>

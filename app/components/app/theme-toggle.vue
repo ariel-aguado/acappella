@@ -17,9 +17,9 @@ const isDark = computed({
     <input v-model="isDark" type="checkbox">
 
     <!-- sun icon -->
-    <Icon name="tabler:sun" class="swap-on" size="24" />
+    <Icon name="tabler:sun" class="swap-on" size="28" />
 
     <!-- moon icon -->
-    <Icon name="tabler:moon-filled" class="swap-off" size="24" />
+    <Icon name="tabler:moon-filled" class="swap-off" size="28" />
   </label>
 </template>
