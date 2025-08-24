@@ -98,6 +98,11 @@ export const useSongStore = defineStore("useSongStore", () => {
     }
   }
 
+  async function updateSongsData() {
+    songs.value = [];
+    await getSongs();
+  }
+
   watch(() => songData.value, (newData) => {
     if (newData) {
       isLoading.value = false;
@@ -137,5 +142,6 @@ export const useSongStore = defineStore("useSongStore", () => {
     generateAnchorsFromSongIds,
     generateAnchorFromInitials,
     toggleFavorite,
+    updateSongsData,
   };
 });

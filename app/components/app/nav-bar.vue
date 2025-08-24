@@ -37,11 +37,24 @@ const route = useRoute();
           class="btn btn-soft btn-primary btn-sm rounded-full px-4"
           :class="{
             'bg-primary text-white': route.path === '/fully-search',
-            'bg-soft text-primary': route.path !== '/fullysearch',
+            'bg-soft text-primary': route.path !== '/fully-search',
           }"
           @click="navigateTo('/fully-search')"
         >
           <Icon name="tabler:search" size="24" />
+        </button>
+      </li>
+      <li>
+        <button
+          type="button"
+          class="btn btn-soft btn-primary btn-sm rounded-full px-4"
+          :class="{
+            'bg-primary text-white': route.path === '/about',
+            'bg-soft text-primary': route.path !== '/about',
+          }"
+          @click="navigateTo('/about')"
+        >
+          <Icon name="tabler:music-cog" size="24" />
         </button>
       </li>
     </ul>
