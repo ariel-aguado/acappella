@@ -7,11 +7,11 @@ export const useSongStore = defineStore("useSongStore", () => {
   const filteredSongsByTitle = ref<FilteredSong[]>([]);
   const filteredSongIdsByNumber = ref<number[]>([]);
   const filteredSongIdsByTitle = ref<string[]>([]);
-  const filteredSongIdsByFavorite = ref<string[]>([]);
+  const favoriteSongs = useLocalStorage<number[]>("favoriteSongs", []);
   const songId = useLocalStorage<number>("songId", 1);
   const currentSong = useLocalStorage<Song>("currentSong", {} as Song);
   const searchHistory = useLocalStorage<string[]>("searchHistory", []);
-  const songData = ref<Song[]>([]);
+  const songsData = ref<Song[]>([]);
   const songsCount = computed(() => songs.value.length);
   const currentTab = ref("byNumber");
 
@@ -22,7 +22,7 @@ export const useSongStore = defineStore("useSongStore", () => {
   async function getSongs() {
     isLoading.value = true;
     const data = await $fetch("/api/songs");
-    songData.value = data;
+    songsData.value = data;
     isLoading.value = false;
   }
 
@@ -94,6 +94,7 @@ export const useSongStore = defineStore("useSongStore", () => {
 
     const songIndex = songs.value.findIndex((s: any) => s.songId === song.songId);
     if (songIndex !== -1 && songs.value[songIndex]) {
+      favoriteSongs.value.push(song.songId);
       songs.value[songIndex].favorite = !songs.value[songIndex].favorite;
     }
   }
@@ -103,22 +104,25 @@ export const useSongStore = defineStore("useSongStore", () => {
     await getSongs();
   }
 
-  watch(() => songData.value, (newData) => {
+  watch(() => songsData.value, (newData) => {
     if (newData) {
       isLoading.value = false;
       if (songs.value.length === 0) {
-        songs.value = (songData.value as any[]).map((s: any) => ({
-          ...s,
-          lyricParsed: {
-            ...s.lyricParsed,
-            data: {
-              title: s.lyricParsed?.data?.title ?? "",
-              description: s.lyricParsed?.data?.description ?? "",
-              ...(s.lyricParsed?.data ?? {}),
+        songs.value = (songsData.value as any[]).map((s: any) => {
+          const isFavorite = favoriteSongs.value.includes(s.songId);
+          return {
+            ...s,
+            lyricParsed: {
+              ...s.lyricParsed,
+              data: {
+                title: s.lyricParsed?.data?.title ?? "",
+                description: s.lyricParsed?.data?.description ?? "",
+                ...(s.lyricParsed?.data ?? {}),
+              },
             },
-          },
-          favorite: false,
-        }));
+            favorite: isFavorite,
+          };
+        });
       }
     }
   });
@@ -130,7 +134,7 @@ export const useSongStore = defineStore("useSongStore", () => {
     filteredSongsByTitle,
     filteredSongIdsByNumber,
     filteredSongIdsByTitle,
-    filteredSongIdsByFavorite,
+    favoriteSongs,
     currentSong,
     searchHistory,
     songsCount,

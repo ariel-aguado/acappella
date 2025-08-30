@@ -4,6 +4,8 @@ const emit = defineEmits(["update:open"]);
 
 const dragging = ref(false);
 const startY = ref(0);
+const lastY = ref(0);
+const dragDelta = ref(0);
 
 const fontStore = useFontStore();
 
@@ -14,31 +16,60 @@ function decreaseFont() {
   fontStore.decreaseFont();
 }
 
-function startDrag(e: MouseEvent | TouchEvent) {
-  dragging.value = true;
-  startY.value = "touches" in e ? e.touches[0].clientY : e.clientY;
-  document.addEventListener("mousemove", onDrag);
-  document.addEventListener("mouseup", stopDrag);
-  document.addEventListener("touchmove", onDrag);
-  document.addEventListener("touchend", stopDrag);
-}
-function onDrag(e: MouseEvent | TouchEvent) {
-  if (!dragging.value)
+function onTouchStart(e: TouchEvent) {
+  if (e.touches.length !== 1 || !e.touches[0])
     return;
-  const y = "touches" in e ? e.touches[0].clientY : e.clientY;
-  const delta = y - startY.value;
-  // Si el usuario arrastra hacia abajo más de 60px, cerrar
-  if (delta > 60) {
+  dragging.value = true;
+  startY.value = e.touches[0].clientY;
+  lastY.value = startY.value;
+  dragDelta.value = 0;
+  document.body.style.overflow = "hidden";
+}
+
+function onTouchMove(e: TouchEvent) {
+  if (!dragging.value || e.touches.length !== 1 || !e.touches[0])
+    return;
+  const y = e.touches[0].clientY;
+  dragDelta.value = y - startY.value;
+  lastY.value = y;
+  if (dragDelta.value > 60) {
     emit("update:open", false);
-    stopDrag();
+    onTouchEnd();
   }
 }
-function stopDrag() {
+
+function onTouchEnd() {
   dragging.value = false;
-  document.removeEventListener("mousemove", onDrag);
-  document.removeEventListener("mouseup", stopDrag);
-  document.removeEventListener("touchmove", onDrag);
-  document.removeEventListener("touchend", stopDrag);
+  dragDelta.value = 0;
+  document.body.style.overflow = "";
+}
+
+function onMouseDown(e: MouseEvent) {
+  dragging.value = true;
+  startY.value = e.clientY;
+  lastY.value = startY.value;
+  dragDelta.value = 0;
+  document.addEventListener("mousemove", onMouseMove);
+  document.addEventListener("mouseup", onMouseUp);
+  document.body.style.overflow = "hidden";
+}
+function onMouseMove(e: MouseEvent) {
+  if (!dragging.value)
+    return;
+  const y = e.clientY;
+  dragDelta.value = y - startY.value;
+  lastY.value = y;
+  if (dragDelta.value > 60) {
+    emit("update:open", false);
+    onMouseUp();
+  }
+}
+function onMouseUp() {
+  dragging.value = false;
+  dragDelta.value = 0;
+  document.removeEventListener("mousemove", onMouseMove);
+  document.removeEventListener("mouseup", onMouseUp);
+  document.body.style.overflow = "";
 }
 </script>
 
@@ -51,8 +82,15 @@ function stopDrag() {
         class="fixed left-0 bottom-0 w-full bg-base-200 shadow-lg z-50 flex flex-col items-center rounded-t-2xl border-t border-base-300"
       >
         <!-- Handle para arrastrar/cerrar -->
-        <div class="w-16 h-2 bg-base-300 rounded-full mt-2 mb-4 cursor-grab" @mousedown="startDrag" @touchstart="startDrag" />
-        <div class="w-full flex gap-4 mb-4 px-4">
+        <div
+          class="w-16 h-2 bg-base-300 rounded-full mt-2 mb-4 cursor-grab"
+          @mousedown="onMouseDown"
+          @touchstart="onTouchStart"
+          @touchmove.prevent="onTouchMove"
+          @touchend="onTouchEnd"
+        />
+        <span class="w-full px-4">Ajustar tamaño de letra:</span>
+        <div class="w-full flex gap-4 mt-4 mb-8 px-4">
           <button class="flex-1 btn btn-secondary btn-sm rounded-full" @click="decreaseFont">
             A-
           </button>
