@@ -205,7 +205,7 @@ watch(
   <div class="flex flex-col h-[calc(100dvh-64px-52px)] max-w-screen md:max-w-5xl md:mx-auto">
     <div class="flex justify-end items-center gap-2 p-4">
       <Transition name="slide-down">
-        <span v-if="isFiltering" class="px-2 mr-auto">Introduzca cualquier palabra:</span>
+        <span v-if="isFiltering" class="px-2 mr-auto">Buscar por título:</span>
       </Transition>
 
       <!-- Filter -->
@@ -226,7 +226,7 @@ watch(
       <!-- Favorite -->
       <label class="swap">
         <!-- this hidden checkbox controls the state -->
-        <input v-model="isFavorites" type="checkbox" @change="onFilterFavorites">
+        <input v-model="isFavorites" type="checkbox">
 
         <!-- favorite on icon -->
         <Icon name="tabler:heart-filled" size="28" class="swap-on fill-current text-primary" />
