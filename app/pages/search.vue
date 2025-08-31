@@ -107,6 +107,8 @@ async function onFavoriteOff(favoriteOff: boolean) {
 }
 
 onMounted(() => {
+  currentTab.value = "byNumber";
+
   songsFiltered.value = songs.value.map(s => ({
     songId: s.songId,
     title: s.title,

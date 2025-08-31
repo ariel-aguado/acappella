@@ -35,10 +35,10 @@ async function updateSongsData() {
       </div>
     </div>
     <div>
-      <h2 class="text-3xl font-bold mt-8">
+      <h2 class="text-3xl font-bold text-left md:text-center mt-8">
         Acerca de Acappella
       </h2>
-      <p class="mt-4 leading-8">
+      <p class="md:max-w-2xl md:mx-auto text-left md:text-center mt-4 leading-8">
         La aplicación "Acappella" fue creada con el firme propósito de proveer a la Iglesia de Cristo en Montevideo una tecnología dedicada para exaltar el nombre del Señor nuestro Dios, a quien pertenece toda alabanza y honra por la eternidad. Amén.
       </p>
     </div>
