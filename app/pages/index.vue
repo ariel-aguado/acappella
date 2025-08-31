@@ -1,14 +1,13 @@
 <script setup lang="ts">
-import { Navigation, Virtual } from "swiper/modules";
+import { Navigation } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/vue";
 import { z } from "zod";
 // Swiper styles
 import "swiper/css";
 import "swiper/css/navigation";
-import "swiper/css/virtual";
 
 // Swiper navigation module
-const swiperModules = [Navigation, Virtual];
+const swiperModules = [Navigation];
 
 // Song store
 const songStore = useSongStore();
@@ -125,23 +124,21 @@ async function onNavigateToSong() {
     <div v-if="isLoading">
       <span class="loading loading-dots loading-xl" />
     </div>
-    <div v-else class="max-w-screen md:max-w-5xl md:mx-auto">
+    <div v-else class="max-w-screen">
       <Swiper
         class="swiper"
         :modules="swiperModules"
         :slides-per-view="1"
-        :space-between="20"
+        :space-between="0"
         :navigation="true"
-        :virtual="true"
         @active-index-change="onActiveIndexChange"
         @swiper="onSwiper"
       >
         <SwiperSlide
           v-for="song in songs"
           :key="song.id"
-          :virtual-index="song.id"
         >
-          <div class="h-[calc(100dvh-64px-52px)] overflow-y-auto p-4 pb-18">
+          <div class="max-w-[calc(100dvw)] h-[calc(100dvh-64px-52px)] overflow-y-auto p-4 pb-18">
             <h2
               v-if="currentSong"
               class="text-left md:text-center"
@@ -220,11 +217,6 @@ async function onNavigateToSong() {
 </template>
 
 <style>
-html {
-  scrollbar-gutter: stable;
-  scrollbar-width: thin;
-}
-
 .swiper {
   width: 100%;
   height: 100%;
