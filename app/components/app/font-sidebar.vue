@@ -79,7 +79,7 @@ function onMouseUp() {
     <transition name="slide-up">
       <div
         v-if="props.open"
-        class="fixed left-0 bottom-0 w-full bg-base-200 shadow-lg z-50 flex flex-col items-center rounded-t-2xl border-t border-base-300"
+        class="fixed left-0 bottom-0 w-full bg-base-200 shadow-[0_-4px_22px_0_rgba(0,0,0,0.35)] z-50 flex flex-col items-center rounded-t-2xl border-t border-base-300"
       >
         <!-- Handle para arrastrar/cerrar -->
         <div
