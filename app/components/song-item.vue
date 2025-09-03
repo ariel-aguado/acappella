@@ -11,17 +11,22 @@ const songStore = useSongStore();
 
 <template>
   <div
-    class="w-full h-auto flex justify-start items-center gap-2 py-2 pl-4 pr-0"
+    class="w-full h-auto flex justify-start items-center hover:cursor-pointer gap-2 py-2 pl-4 pr-0"
   >
     <!-- Song number -->
-    <div
-      class="flex justify-center items-center bg-secondary font-bold text-xl text-white aspect-square w-12 h-12 p-2 rounded-full"
+    <button
+      type="button"
+      class="flex justify-center items-center bg-secondary hover:cursor-pointer font-bold text-xl text-white aspect-square w-12 h-12 p-2 rounded-full"
       @click="songStore.navigateToSong(song.songId)"
     >
       {{ song.songId }}
-    </div>
+    </button>
     <div class="flex-1 flex justify-between items-center gap-2">
-      <div class="flex-1 flex flex-col items-start" @click="songStore.navigateToSong(song.songId)">
+      <button
+        type="button"
+        class="flex-1 flex flex-col items-start hover:cursor-pointer"
+        @click="songStore.navigateToSong(song.songId)"
+      >
         <!-- Title -->
         <p class="text-start font-bold">
           {{ song.title }}
@@ -30,7 +35,7 @@ const songStore = useSongStore();
         <p class="text-start text-sm clamped-line">
           {{ song.firstLine }}
         </p>
-      </div>
+      </button>
       <!-- Favorite -->
       <label class="swap p-4">
         <!-- this hidden checkbox controls the state -->
@@ -45,3 +50,13 @@ const songStore = useSongStore();
     </div>
   </div>
 </template>
+
+<style scoped>
+.clamped-line {
+  display: -webkit-box; /* Necesario para Safari/WebKit */
+  -webkit-box-orient: vertical; /* Orientación vertical */
+  -webkit-line-clamp: 1; /* Número de líneas que quieres mostrar */
+  overflow: hidden; /* Oculta el texto sobrante */
+  text-overflow: ellipsis; /* Añade los puntos suspensivos (…) */
+}
+</style>
