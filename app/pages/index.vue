@@ -229,28 +229,4 @@ async function onNavigateToSong() {
 .swiper-button-next {
   display: none;
 }
-
-.modal {
-  backdrop-filter: blur(8px);
-  transition:
-    opacity 0.2s,
-    transform 0.2s;
-}
-
-.modal-fade-enter-active,
-.modal-fade-leave-active {
-  transition:
-    opacity 0.2s,
-    transform 0.2s;
-}
-.modal-fade-enter-from,
-.modal-fade-leave-to {
-  opacity: 0;
-  transform: scale(0.95);
-}
-.modal-fade-enter-to,
-.modal-fade-leave-from {
-  opacity: 1;
-  transform: scale(1);
-}
 </style>

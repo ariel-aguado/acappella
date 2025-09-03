@@ -204,7 +204,7 @@ watch(
 </script>
 
 <template>
-  <div class="flex flex-col h-[calc(100dvh-64px-52px)] max-w-screen md:max-w-5xl md:mx-auto">
+  <div class="flex flex-col h-[calc(100dvh-64px-52px)] max-w-screen min-w-0 md:min-w-2xl md:max-w-2xl md:mx-auto">
     <div class="flex justify-end items-center gap-2 p-4">
       <Transition name="slide-down">
         <span v-if="isFiltering" class="px-2 mr-auto">Buscar por título:</span>
@@ -304,14 +304,7 @@ watch(
   </div>
 </template>
 
-<style>
-.clamped-line {
-  display: -webkit-box; /* Necesario para Safari/WebKit */
-  -webkit-box-orient: vertical; /* Orientación vertical */
-  -webkit-line-clamp: 1; /* Número de líneas que quieres mostrar */
-  overflow: hidden; /* Oculta el texto sobrante */
-  text-overflow: ellipsis; /* Añade los puntos suspensivos (…) */
-}
+<style scoped>
 .tabs-border {
   & .tab {
     &:before {
@@ -320,12 +313,7 @@ watch(
     }
   }
 }
-/* evita que el navegador intercepte gestos (zoom, scroll nativo) sobre la barra */
-#sidebar {
-  touch-action: none;
-  -webkit-user-select: none;
-  user-select: none;
-}
+
 /* Slide down transition for search input */
 .slide-down-enter-active {
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);

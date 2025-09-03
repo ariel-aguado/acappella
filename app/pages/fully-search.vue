@@ -89,9 +89,9 @@ async function setQuery(history: string) {
 </script>
 
 <template>
-  <div class="flex flex-col h-[calc(100dvh-64px-52px)]">
+  <div class="flex flex-col h-[calc(100dvh-64px-52px)] max-w-screen min-w-0 md:min-w-2xl md:max-w-2xl md:mx-auto md:pt-8">
     <!-- Search results -->
-    <div class="sticky top-0 z-10 shadow-md p-4 bg-base-100 dark:bg-content backdrop-blur-sm">
+    <div class="sticky top-0 z-10 shadow-md md:shadow-none p-4 bg-base-100 dark:bg-content backdrop-blur-sm">
       <span>Introduzca cualquier palabra:</span>
       <label class="input w-full mt-2">
         <Icon name="carbon:search" size="16" class="text-secondary" />
@@ -113,31 +113,8 @@ async function setQuery(history: string) {
         :key="song.item.id"
         class="[&:not(:first-child)]:border-t [&:not(:first-child)]:border-base-300"
       >
-        <div class="flex-1 flex justify-between items-center gap-2">
-          <div
-            class="w-full h-auto flex justify-start items-center gap-2 py-3 pl-4"
-            @click="songStore.navigateToSong(song.item.songId)"
-          >
-            <!-- Song number -->
-            <div class="flex justify-center items-center bg-secondary font-bold text-xl text-white aspect-square w-12 h-12 p-2 rounded-full">
-              {{ song.item.songId }}
-            </div>
-            <p class="text-start font-bold">
-              {{ song.item.title }}
-            </p>
-          </div>
-          <!-- Favorite -->
-          <label class="swap p-4">
-            <!-- this hidden checkbox controls the state -->
-            <input type="checkbox" :checked="song.item.favorite" @change="songStore.toggleFavorite(song.item)">
-
-            <!-- favorite on icon -->
-            <Icon name="tabler:heart-filled" size="28" class="swap-on fill-current text-secondary" />
-
-            <!-- favorite off icon -->
-            <Icon name="tabler:heart" size="28" class="swap-off fill-current text-secondary" />
-          </label>
-        </div>
+        <SongItem :song="song.item" @favorite-off="songStore.toggleFavorite($event)" />
+        <!-- Lyrics -->
         <div
           v-for="(songLine, index) in handleSongLines(song.item.lyricLines)"
           :key="`line-${index}`"

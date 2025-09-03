@@ -13,7 +13,14 @@
   font-family: var(--font-display);
 }
 
-/* Transición estilo Android */
+.modal {
+  backdrop-filter: blur(8px);
+  transition:
+    opacity 0.2s,
+    transform 0.2s;
+}
+
+/* Android style transition */
 .android-enter-active,
 .android-leave-active {
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
@@ -27,4 +34,22 @@
 .android-leave-to {
   opacity: 0;
   transform: translateY(-20px);
+}
+
+/* Modal transition */
+.modal-fade-enter-active,
+.modal-fade-leave-active {
+  transition:
+    opacity 0.2s,
+    transform 0.2s;
+}
+.modal-fade-enter-from,
+.modal-fade-leave-to {
+  opacity: 0;
+  transform: scale(0.95);
+}
+.modal-fade-enter-to,
+.modal-fade-leave-from {
+  opacity: 1;
+  transform: scale(1);
 }

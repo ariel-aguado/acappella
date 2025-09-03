@@ -10,7 +10,7 @@ const route = useRoute();
           type="button"
           class="btn btn-soft btn-primary btn-sm rounded-full px-4"
           :class="{
-            'bg-primary text-white': route.path === '/',
+            'bg-primary text-white': route.path === '/' || route.path === '/fullscreen',
             'bg-soft text-primary': route.path !== '/',
           }"
           @click="navigateTo('/')"
