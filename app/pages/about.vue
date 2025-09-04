@@ -8,7 +8,7 @@ async function updateSongsData() {
 </script>
 
 <template>
-  <div class="w-full flex flex-col h-[calc(100dvh-64px-52px)] overflow-y-auto p-4">
+  <div class="w-full flex flex-col h-[calc(100dvh-64px-52px)] overflow-y-auto max-w-screen min-w-0 md:min-w-2xl md:max-w-2xl md:mx-auto p-4">
     <div class="w-full min-h-[300px] flex justify-center items-center rounded-xl overflow-hidden border border-primary/50 relative">
       <DarkVeil
         :hue-shift="0"
