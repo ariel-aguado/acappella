@@ -4,7 +4,7 @@ import { z } from "zod";
 
 // Song store
 const songStore = useSongStore();
-const { songs, songId } = storeToRefs(songStore);
+const { songs, songId, isLoading } = storeToRefs(songStore);
 
 // Reactive Mouse Position
 const { x, y } = useMouse();
@@ -17,14 +17,23 @@ const Reveal = ref<any>(null);
 const revealStyle = shallowRef<HTMLLinkElement | null>(null);
 // let themeStyle: HTMLLinkElement | null = null;
 
-const isFabNavVisible = ref(false);
 const songNumberModal = shallowRef<HTMLDialogElement>();
 const newSongInput = shallowRef<HTMLInputElement | null>(null);
-const showDialog = ref(false);
 const newSongId = ref<number | null>(null);
-const isLoading = ref(false);
+const stanzaLineCounts = ref<number[]>([]);
+const isSongNumberDialogVisible = ref(false);
+const isFabNavVisible = ref(false);
 
-const stanzas = computed(() => parseSong(songs.value[songId.value - 1].lyric));
+// Font size manual override por slide
+const baseFontSizes = [48, 46, 42, 40, 36];
+const fontSizes = ref<number[]>([]);
+
+const stanzas = computed(() => {
+  const song = songs.value?.[songId.value - 1];
+  if (!song || !song.lyric)
+    return [];
+  return parseSong(song.lyric);
+});
 
 // New song schema validation
 const validationSchema = z.object({
@@ -48,6 +57,7 @@ const { validatePartial, isValid, getError, errors } = useValidation(
   },
 );
 
+// Load RevealJS Css
 function loadRevealCss() {
   revealStyle.value = document.createElement("link");
   revealStyle.value.rel = "stylesheet";
@@ -60,6 +70,7 @@ function loadRevealCss() {
   // document.head.appendChild(themeStyle);
 }
 
+// Unload RevealJS Css
 function unloadRevealCss() {
   if (revealStyle.value && revealStyle.value.parentNode) {
     revealStyle.value.parentNode.removeChild(revealStyle.value);
@@ -69,46 +80,59 @@ function unloadRevealCss() {
   // }
 }
 
+// Parse song
 function parseSong(text: string): string[] {
-  // Procesar texto como antes
   const verses = text
-    .replace(/^\([^)]*\)\s*/m, "") // Eliminar cita bíblica inicial
-    .replace(/\*\d+\*\s*/g, "") // Eliminar divisores numéricos
+    .replace(/^\([^)]*\)\s*/m, "") // Delete initial Bible quote
+    .replace(/\*\d+\*\s*/g, "") // Remove numerical divisors
     .trim()
-    .split(/\n\s*\n/) // Separar estrofas
-    .map(verse => verse.trim()) // Limpiar espacios
-    .filter(Boolean); // Filtrar vacíos
+    .split(/\n\s*\n/) // Split stanzas
+    .map(verse => verse.trim()) // Clean spaces
+    .filter(Boolean); // Filter spaces
 
-  // Buscar y extraer el coro
-  const coroIndex = verses.findIndex(v => v.startsWith("**CORO"));
-  if (coroIndex === -1)
+  // Search and extract the chorus
+  const chorusIndex = verses.findIndex(v => v.startsWith("**CORO"));
+  if (chorusIndex === -1) {
+    // Calculate lines per verse if there is no chorus
+    stanzaLineCounts.value = verses.map(v => v.split(/\n+/).filter(line => line.trim().length > 0).length);
+    // You can use stanzaLineCounts wherever you need it
+    // Set the fontSize for each stanza based on lines
+    fontSizes.value = stanzaLineCounts.value.map(lines => getDefaultFontSize(lines));
     return verses;
-
-  const coro = verses[coroIndex];
-  const estrofas = verses.filter((_, i) => i !== coroIndex);
-
-  // Intercalar el coro después de cada estrofa
-  const intercalado: string[] = [];
-  for (let i = 0; i < estrofas.length; i++) {
-    intercalado.push(estrofas[i]);
-    if (i < estrofas.length - 1) {
-      intercalado.push(coro);
-    }
   }
 
-  // Opcional: añadir el coro al final también
-  intercalado.push(coro);
+  const chorus = verses[chorusIndex];
+  const stanzas = verses.filter((_, i) => i !== chorusIndex);
+
+  // Insert the chorus after each verse
+  const intercalado: string[] = [];
+
+  for (let i = 0; i < stanzas.length; i++) {
+    intercalado.push(stanzas[i]);
+    stanzaLineCounts.value.push(stanzas[i].split(/\n+/).filter(line => line.trim().length > 0).length);
+    if (i < stanzas.length - 1) {
+      intercalado.push(chorus);
+      stanzaLineCounts.value.push(chorus.split(/\n+/).filter(line => line.trim().length > 0).length);
+    }
+  }
+  // Add the chorus at the end
+  intercalado.push(chorus);
+  stanzaLineCounts.value.push(chorus.split(/\n+/).filter(line => line.trim().length > 0).length);
+
+  // Set the fontSize for each stanza based on lines
+  fontSizes.value = stanzaLineCounts.value.map(lines => getDefaultFontSize(lines));
 
   return intercalado;
 }
 
-// Function to validate the new song ID
+// Validate the new song ID
 async function validateSongId() {
   await validatePartial({
     newSongId: newSongId.value,
   });
 }
 
+// Navigate to the selected song
 async function navigateToSong() {
   // Update the current song index
   songId.value = JSON.parse(JSON.stringify(newSongId.value));
@@ -118,24 +142,9 @@ async function navigateToSong() {
 
   // Reset new song ID
   newSongId.value = null;
-
-  // Forzar actualización de RevealJS
-  const revealModule = await import("reveal.js");
-  const RevealDefault = revealModule.default;
-  Reveal.value = new RevealDefault();
-
-  await Reveal.value.initialize({
-    slideNumber: "c/t",
-    progress: false,
-    hash: true,
-    disableLayout: false,
-  });
-
-  Reveal.value.layout();
-  Reveal.value.slide(0);
 }
 
-// Function to handle navigation to the song
+// Handle navigation to the song
 async function onNavigateToSong() {
   // Validate the song ID
   await validateSongId();
@@ -145,31 +154,71 @@ async function onNavigateToSong() {
     // Reset validation errors
     errors.value = {};
     navigateToSong();
+    recreateRevealInstance();
   }
 }
 
-// Function to hide the song number modal
+// Hide the song number modal
 function cancelSongNumberModal() {
   newSongId.value = null;
-  showDialog.value = false;
+  isSongNumberDialogVisible.value = false;
   setTimeout(() => {
     songNumberModal.value?.close();
   }, 200); // Wait for animation
 }
 
-// Function to show the song number modal
+// Show the song number modal
 async function showUpSongNumberModal() {
   errors.value = {};
-  showDialog.value = true;
+  isSongNumberDialogVisible.value = true;
   setTimeout(() => {
     songNumberModal.value?.showModal();
     newSongInput.value?.focus();
   }, 50);
 }
 
-onMounted(async () => {
-  loadRevealCss();
+// Navigate to next song
+async function navigateToNextSong() {
+  newSongId.value = songId.value + 1;
+  // Reset stanzas and font sizes
+  stanzaLineCounts.value = [];
+  fontSizes.value = [];
+  navigateToSong();
+  recreateRevealInstance();
+}
 
+// Navigate to prev song
+async function navigateToPrevSong() {
+  newSongId.value = songId.value - 1;
+  // Reset stanzas and font sizes
+  stanzaLineCounts.value = [];
+  fontSizes.value = [];
+  navigateToSong();
+  recreateRevealInstance();
+}
+
+// Get font size based on stanza lines
+function getDefaultFontSize(lines: number): number {
+  if (lines <= 8)
+    return baseFontSizes[0];
+  if (lines === 9)
+    return baseFontSizes[1];
+  if (lines === 10)
+    return baseFontSizes[2];
+  if (lines === 11)
+    return baseFontSizes[3];
+  return baseFontSizes[4];
+}
+
+// Re-create the RevealJS instance
+async function recreateRevealInstance() {
+  // Destroy the current RevealJS instance if it exists
+  if (Reveal.value) {
+    Reveal.value.destroy();
+    Reveal.value = null;
+  }
+
+  // Create a new RevealJS instance on the new song
   const revealModule = await import("reveal.js");
   const RevealDefault = revealModule.default;
   Reveal.value = new RevealDefault();
@@ -179,15 +228,80 @@ onMounted(async () => {
     progress: false,
     hash: true,
     disableLayout: false,
+    keyboard: {
+      38: null, // arrow up
+      40: null, // arrow down
+      71: null, // g
+      78: null, // n
+      80: null, // p
+    },
   });
 
-  setTimeout(() => {
-    Reveal.value.layout();
-  }, 500);
+  Reveal.value.layout();
+  Reveal.value.slide(0);
+}
+
+// Increase font size with up key
+onKeyStroke("ArrowUp", () => {
+  const slideIndex = Reveal.value?.getIndices().h ?? 0;
+  fontSizes.value[slideIndex] = fontSizes.value[slideIndex] + 2;
+});
+
+// Decrease font size with down key
+onKeyStroke("ArrowDown", () => {
+  const slideIndex = Reveal.value?.getIndices().h ?? 0;
+  fontSizes.value[slideIndex] = Math.max(fontSizes.value[slideIndex] - 2, 12);
+});
+
+// Go to next song with n key
+onKeyStroke("n", () => {
+  navigateToNextSong();
+}, { target: document, dedupe: true });
+
+// Go to prev song with p key
+onKeyStroke("p", () => {
+  navigateToPrevSong();
+}, { target: document, dedupe: true });
+
+// Show up number modal with g key
+onKeyStroke("g", () => {
+  showUpSongNumberModal();
+}, { target: document, dedupe: true });
+
+onMounted(async () => {
+  await songStore.getSongs();
+
+  if (!isLoading.value) {
+    await nextTick(); // Wait the DOM to be updated
+
+    loadRevealCss();
+
+    const revealModule = await import("reveal.js");
+    const RevealDefault = revealModule.default;
+    Reveal.value = new RevealDefault();
+
+    await Reveal.value.initialize({
+      slideNumber: "c/t",
+      progress: false,
+      hash: true,
+      disableLayout: false,
+      keyboard: {
+        38: null, // arrow up
+        40: null, // arrow down
+        71: null, // g
+        78: null, // n
+        80: null, // p
+      },
+    });
+
+    setTimeout(() => {
+      Reveal.value.layout();
+    }, 500);
+  }
 });
 
 onBeforeUnmount(() => {
-  isLoading.value = true;
+  // isLoading.value = true;
   setTimeout(() => {
     unloadRevealCss();
     Reveal.value.destroy();
@@ -216,21 +330,18 @@ watchEffect(() => {
   <div v-else class="reveal">
     <div class="slides">
       <section
-        v-for="stanza in stanzas"
-        :key="stanza"
+        v-for="(stanza, index) in stanzas"
+        :key="`stanza-${index + 1}`"
         class="h-full !perspective-distant !flex flex-col justify-between"
         data-background-image="/img/background-fullscreen.webp"
         data-background-size="cover"
       >
-        <p
-          class="r-fit-text font-bold text-9xl text-white text-shadow-lg text-shadow-black/50"
-          :class="{
-            'leading-22': stanzas.length > 1,
-            'leading-20': stanzas.length === 1,
-          }"
+        <div
+          class="font-bold [&>p>strong]:font-bold text-white text-shadow-ultra text-shadow-black/50 mt-3"
+          :style="{ fontSize: `${fontSizes[index]}px`, lineHeight: '1.4' }"
           v-html="marked.parse(stanza)"
         />
-        <p class="r-fit-text font-bold text-4xl text-white text-shadow-lg text-shadow-black/50">
+        <p class="font-bold text-4xl text-white text-shadow-ultra text-shadow-black/50">
           <span>{{ songId }}.</span>
           {{ songs[songId - 1]?.title ?? '' }}
         </p>
@@ -250,6 +361,16 @@ watchEffect(() => {
       </div>
 
       <!-- buttons that show up when FAB is open -->
+      <button :disabled="songs.length === songId" class="btn btn-circle btn-lg" @click="navigateToNextSong()">
+        <Icon name="tabler:player-track-next-filled" size="24" />
+      </button>
+      <button
+        :disabled="songId === 1"
+        class="btn btn-circle btn-lg"
+        @click="navigateToPrevSong()"
+      >
+        <Icon name="tabler:player-track-prev-filled" size="24" />
+      </button>
       <button class="btn btn-circle btn-lg" @click="showUpSongNumberModal()">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -264,6 +385,9 @@ watchEffect(() => {
       <button class="btn btn-circle btn-lg" @click="navigateTo('/fully-search')">
         <Icon name="tabler:search" size="24" />
       </button>
+      <button class="btn btn-circle btn-lg" @click="navigateTo('/fully-search')">
+        <Icon name="tabler:search" size="24" />
+      </button>
       <button class="btn btn-circle btn-lg" @click="navigateTo('/about')">
         <Icon name="tabler:music-cog" size="24" />
       </button>
@@ -271,13 +395,13 @@ watchEffect(() => {
 
     <!-- Song number modal with transition -->
     <transition name="modal-fade">
-      <dialog v-if="showDialog" ref="songNumberModal" class="modal">
+      <dialog v-if="isSongNumberDialogVisible" ref="songNumberModal" class="modal">
         <div class="modal-box">
           <div class="flex justify-between items-center">
             <h3 class="text-lg font-bold">
               Elija un himno
             </h3>
-            <button class="btn btn-ghost rounded-full p-0 w-8 h-8" @click="showDialog = false">
+            <button class="btn btn-ghost rounded-full p-0 w-8 h-8" @click="isSongNumberDialogVisible = false">
               <Icon name="tabler:x" size="20" />
             </button>
           </div>
@@ -296,7 +420,7 @@ watchEffect(() => {
                   'input-error': !!getError('newSongId'),
                 }"
               >
-              <small class="leading-4 label text-error">{{ getError('newSongId') }}</small>
+              <small class="leading-4 label text-error mt-2">{{ getError('newSongId') }}</small>
               <div class="flex justify-end gap-2 mt-4">
                 <button type="button" class="btn btn-ghost" @click="cancelSongNumberModal">
                   Cancelar
@@ -312,3 +436,25 @@ watchEffect(() => {
     </transition>
   </div>
 </template>
+
+<style>
+.reveal .slide-number {
+  right: 100px !important;
+  bottom: 22px !important;
+  padding: 12px !important;
+}
+
+.text-shadow-ultra {
+  text-shadow:
+    -2px 2px 0 rgba(0, 0, 0, 1),
+    -2px -2px 0 rgba(0, 0, 0, 1),
+    2px -2px 0 rgba(0, 0, 0, 1),
+    -2px 1px 0 rgba(0, 0, 0, 1),
+    -2px 4px 0 rgba(0, 0, 0, 1),
+    1px 1px 0 rgba(0, 0, 0, 1),
+    2px 2px 0 rgba(0, 0, 0, 1),
+    3px 3px 1px rgba(0, 0, 0, 0.8),
+    4px 4px 2px rgba(0, 0, 0, 0.7),
+    5px 5px 3px rgba(0, 0, 0, 0.6);
+}
+</style>
