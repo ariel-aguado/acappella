@@ -117,6 +117,10 @@ async function onNavigateToSong() {
     navigateToSong();
   }
 }
+
+onMounted(async () => {
+  await songStore.getSongs();
+});
 </script>
 
 <template>

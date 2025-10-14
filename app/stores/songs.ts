@@ -15,14 +15,12 @@ export const useSongStore = defineStore("useSongStore", () => {
   const songsCount = computed(() => songs.value.length);
   const currentTab = ref("byNumber");
 
-  if (songs.value.length === 0) {
-    getSongs();
-  }
-
   async function getSongs() {
     isLoading.value = true;
-    const data = await $fetch("/api/songs");
-    songsData.value = data;
+    if (songs.value.length === 0) {
+      const data = await $fetch("/api/songs");
+      songsData.value = data;
+    }
     isLoading.value = false;
   }
 
@@ -140,6 +138,7 @@ export const useSongStore = defineStore("useSongStore", () => {
     songsCount,
     isLoading,
     currentTab,
+    getSongs,
     getSong,
     navigateToSong,
     jumpToSong,
