@@ -156,6 +156,9 @@ async function onNavigateToSong() {
   if (isValid.value) {
     // Reset validation errors
     errors.value = {};
+    // Reset stanzas and font sizes
+    stanzaLineCounts.value = [];
+    fontSizes.value = [];
     navigateToSong();
     recreateRevealInstance();
   }
