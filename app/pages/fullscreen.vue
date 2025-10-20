@@ -2,6 +2,9 @@
 import { marked } from "marked";
 import { z } from "zod";
 
+// Color mode
+const colorMode = useColorMode();
+
 // Song store
 const songStore = useSongStore();
 const { songs, songId, isLoading } = storeToRefs(songStore);
@@ -253,6 +256,21 @@ onKeyStroke("ArrowDown", () => {
   fontSizes.value[slideIndex] = Math.max(fontSizes.value[slideIndex] - 2, 12);
 });
 
+// Navigate to about page
+onKeyStroke("a", () => {
+  navigateTo("/about");
+}, { target: document, dedupe: true });
+
+// Navigate to search songs by number and title
+onKeyStroke("t", () => {
+  navigateTo("/search");
+}, { target: document, dedupe: true });
+
+// Navigate to full text search songs
+onKeyStroke("s", () => {
+  navigateTo("/fully-search");
+}, { target: document, dedupe: true });
+
 // Go to next song with n key
 onKeyStroke("n", () => {
   navigateToNextSong();
@@ -269,6 +287,9 @@ onKeyStroke("g", () => {
 }, { target: document, dedupe: true });
 
 onMounted(async () => {
+  // Set light mode in fullscreen by default
+  colorMode.preference = "light";
+
   await songStore.getSongs();
 
   if (!isLoading.value) {
@@ -348,8 +369,22 @@ watchEffect(() => {
       </section>
     </div>
 
+    <!-- Shortcuts for font size settings -->
+    <div v-if="isFabNavVisible" class="fixed left-4 bottom-4 flex flex-col gap-2 z-50">
+      <div>
+        Preciona
+        <kbd class="kbd kbd-sm">▲</kbd>
+        para aumentar el tamaño del texto
+      </div>
+      <div>
+        Preciona
+        <kbd class="kbd kbd-sm">▼</kbd>
+        para disminuir el tamaño del texto
+      </div>
+    </div>
+
     <!-- Fab Navigation -->
-    <div v-if="isFabNavVisible" class="fab bottom-20">
+    <div v-if="isFabNavVisible" class="fab bottom-18 right-8">
       <!-- a focusable div with tabindex is necessary to work on all browsers. role="button" is necessary for accessibility -->
       <div tabindex="0" role="button" class="btn btn-lg btn-circle btn-secondary">
         <Icon name="tabler:brand-netease-music" size="32" />
@@ -361,36 +396,72 @@ watchEffect(() => {
       </div>
 
       <!-- buttons that show up when FAB is open -->
-      <button :disabled="songs.length === songId" class="btn btn-circle btn-lg" @click="navigateToNextSong()">
-        <Icon name="tabler:player-track-next-filled" size="24" />
-      </button>
-      <button
-        :disabled="songId === 1"
-        class="btn btn-circle btn-lg"
-        @click="navigateToPrevSong()"
-      >
-        <Icon name="tabler:player-track-prev-filled" size="24" />
-      </button>
-      <button class="btn btn-circle btn-lg" @click="showUpSongNumberModal()">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="32"
-          height="32"
-          viewBox="0 0 24 24"
-        ><path fill="currentColor" d="M20 9c0-.55-.45-1-1-1h-3V5c0-.55-.45-1-1-1s-1 .45-1 1v3h-4V5c0-.55-.45-1-1-1s-1 .45-1 1v3H5c-.55 0-1 .45-1 1s.45 1 1 1h3v4H5c-.55 0-1 .45-1 1s.45 1 1 1h3v3c0 .55.45 1 1 1s1-.45 1-1v-3h4v3c0 .55.45 1 1 1s1-.45 1-1v-3h3c.55 0 1-.45 1-1s-.45-1-1-1h-3v-4h3c.55 0 1-.45 1-1m-6 5h-4v-4h4z" /></svg>
-      </button>
-      <button class="btn btn-circle btn-lg" @click="navigateTo('/search')">
-        <Icon name="tabler:music-search" size="24" />
-      </button>
+      <div class="flex items-center gap-2">
+        <div>
+          Preciona
+          <kbd class="kbd">n</kbd>
+        </div>
+        <button :disabled="songs.length === songId" class="btn btn-circle btn-lg" @click="navigateToNextSong()">
+          <Icon name="tabler:player-track-next-filled" size="24" />
+        </button>
+      </div>
+      <div class="flex items-center gap-2">
+        <div>
+          Preciona
+          <kbd class="kbd">p</kbd>
+        </div>
+        <button
+          :disabled="songId === 1"
+          class="btn btn-circle btn-lg"
+          @click="navigateToPrevSong()"
+        >
+          <Icon name="tabler:player-track-prev-filled" size="24" />
+        </button>
+      </div>
+      <div class="flex items-center gap-2">
+        <div>
+          Preciona
+          <kbd class="kbd">g</kbd>
+        </div>
+        <button class="btn btn-circle btn-lg" @click="showUpSongNumberModal()">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="32"
+            height="32"
+            viewBox="0 0 24 24"
+          ><path fill="currentColor" d="M20 9c0-.55-.45-1-1-1h-3V5c0-.55-.45-1-1-1s-1 .45-1 1v3h-4V5c0-.55-.45-1-1-1s-1 .45-1 1v3H5c-.55 0-1 .45-1 1s.45 1 1 1h3v4H5c-.55 0-1 .45-1 1s.45 1 1 1h3v3c0 .55.45 1 1 1s1-.45 1-1v-3h4v3c0 .55.45 1 1 1s1-.45 1-1v-3h3c.55 0 1-.45 1-1s-.45-1-1-1h-3v-4h3c.55 0 1-.45 1-1m-6 5h-4v-4h4z" /></svg>
+        </button>
+      </div>
+      <div class="flex items-center gap-2">
+        <p class="">
+          Preciona
+          <kbd class="kbd">t</kbd>
+        </p>
+        <button class="btn btn-circle btn-lg" @click="navigateTo('/search')">
+          <Icon name="tabler:music-search" size="24" />
+        </button>
+      </div>
       <button class="btn btn-circle btn-lg" @click="navigateTo('/fully-search')">
         <Icon name="tabler:search" size="24" />
       </button>
-      <button class="btn btn-circle btn-lg" @click="navigateTo('/fully-search')">
-        <Icon name="tabler:search" size="24" />
-      </button>
-      <button class="btn btn-circle btn-lg" @click="navigateTo('/about')">
-        <Icon name="tabler:music-cog" size="24" />
-      </button>
+      <div class="flex items-center gap-2">
+        <div>
+          Preciona
+          <kbd class="kbd">s</kbd>
+        </div>
+        <button class="btn btn-circle btn-lg" @click="navigateTo('/fully-search')">
+          <Icon name="tabler:search" size="24" />
+        </button>
+      </div>
+      <div class="flex items-center gap-2">
+        <div>
+          Preciona
+          <kbd class="kbd">a</kbd>
+        </div>
+        <button class="btn btn-circle btn-lg" @click="navigateTo('/about')">
+          <Icon name="tabler:music-cog" size="24" />
+        </button>
+      </div>
     </div>
 
     <!-- Song number modal with transition -->
@@ -439,7 +510,7 @@ watchEffect(() => {
 
 <style>
 .reveal .slide-number {
-  right: 100px !important;
+  right: 110px !important;
   bottom: 22px !important;
   padding: 12px !important;
 }
