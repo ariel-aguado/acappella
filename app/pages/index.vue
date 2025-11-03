@@ -36,15 +36,14 @@ function onSwiper(swiper: any) {
 
 // New song schema validation
 const validationSchema = z.object({
-  newSongId: z.preprocess(
-    val => (val === null || val === undefined || val === "" ? undefined : val),
+  newSongId:
     z.number({
-      required_error: "El número del himno es requerido",
-      invalid_type_error: "El número del himno debe ser un número",
+      error: issue => issue.input === undefined || issue.input === null || issue.input === ""
+        ? "El número del himno es requerido"
+        : "El número del himno debe ser un número",
     })
-      .min(1, "El número del himno debe ser mayor que 0")
-      .max(380, "El número del himno debe ser menor o igual a 380"),
-  ),
+      .min(1, { error: "El número del himno debe ser mayor que 0" })
+      .max(380, { error: "El número del himno debe ser menor o igual a 380" }),
 });
 
 // Populate the validation composable
@@ -184,7 +183,7 @@ onMounted(async () => {
             <h3 class="text-lg font-bold">
               Elija un himno
             </h3>
-            <button class="btn btn-ghost rounded-full p-0 w-8 h-8" @click="showDialog = false">
+            <button class="btn btn-ghost rounded-full p-0 w-8 h-8" @click="cancelSongNumberModal">
               <Icon name="tabler:x" size="20" />
             </button>
           </div>

@@ -257,43 +257,44 @@ watch(
     </Transition>
 
     <!-- Tabs -->
-    <div class="tabs tabs-border flex justify-center text-secondary mt-2 border-b border-base-300">
+    <div
+      class="tabs tabs-border flex justify-center text-secondary border-b border-base-300"
+      :class="{
+        'mt-2': isFiltering,
+      }"
+    >
       <!-- Tab by number -->
-      <div class="flex-1 flex flex-col">
-        <label for="by_number" class="mb-2 flex justify-center items-center gap-2">
-          <Icon name="tabler:sort-ascending-numbers" size="28" />
-          <span class="uppercase">Por número</span>
-        </label>
+      <label class="tab flex-1 flex flex-col">
         <input
           id="by_number"
           v-model="currentTab"
           type="radio"
           name="by_number"
-          class="tab h-fit p-0"
+          class="h-fit p-0"
           value="byNumber"
           :checked="currentTab === 'byNumber'"
         >
-      </div>
+        <Icon name="tabler:sort-ascending-numbers" size="28" />
+        <span class="uppercase">Por número</span>
+      </label>
       <!-- Tab by title -->
-      <div class="flex-1 flex flex-col">
-        <label for="by_title" class="mb-2 flex justify-center items-center gap-2">
-          <Icon name="tabler:sort-ascending-letters" size="28" />
-          <span class="uppercase">Por título</span>
-        </label>
+      <label class="tab flex-1 flex flex-col">
         <input
           id="by_title"
           v-model="currentTab"
           type="radio"
           name="by_title"
-          class="tab h-fit p-0"
+          class="h-fit p-0"
           value="byTitle"
           :checked="currentTab === 'byTitle'"
         >
-      </div>
+        <Icon name="tabler:sort-ascending-letters" size="28" />
+        <span class="uppercase">Por título</span>
+      </label>
     </div>
 
     <!-- Content with smooth height transition -->
-    <div v-if="currentTab === 'byNumber'" key="byNumber" class="context flex-1 flex overflow-y-auto">
+    <div v-if="currentTab === 'byNumber'" key="byNumber" class="tab-context flex-1 flex overflow-y-auto">
       <SongsByNumber v-if="filteredSongsByNumber.length" @favorite-off="onFavoriteOff" />
       <EmptyState v-else />
     </div>
@@ -305,6 +306,7 @@ watch(
 </template>
 
 <style scoped>
+/* Tabs border full width */
 .tabs-border {
   & .tab {
     &:before {
