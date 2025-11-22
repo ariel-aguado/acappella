@@ -13,11 +13,11 @@ export function usePwaInstall() {
       return;
 
     installPrompt.value.prompt();
-    const { outcome } = await installPrompt.value.userChoice;
+    // const { outcome } = await installPrompt.value.userChoice;
 
-    if (outcome === "accepted") {
-      console.log("App instalada");
-    }
+    // if (outcome === "accepted") {
+    //   console.log("App instalada");
+    // }
 
     installPrompt.value = null;
     canInstall.value = false;

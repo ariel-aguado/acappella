@@ -11,8 +11,6 @@ export function setupPageHeader() {
   //   return acc
   // }, {} as Record<string, Directions>)
 
-  console.log("Setting up page header");
-
   useHead({
     htmlAttrs: {
       lang: () => "es",
