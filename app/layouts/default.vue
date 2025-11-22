@@ -1,28 +1,21 @@
 <script lang="ts" setup>
-const { $pwa } = useNuxtApp();
 const isLargeScreen = useMediaQuery("(min-width: 1024px)");
 const route = useRoute();
 const router = useRouter();
 
 const showFontSidebar = ref(false);
 
-onMounted(() => {
-  if ($pwa?.offlineReady) {
-    push.success("¡Nuevo contenido disponible!");
-  }
-});
-
-watchEffect(() => {
+watchEffect(async () => {
   if (isLargeScreen.value) {
     if (route.name === "index") {
-      // navigateTo("/fullscreen");
       router.replace("/fullscreen");
+      // await navigateTo("/fullscreen");
     }
   }
   else {
     if (route.name === "fullscreen") {
-      // navigateTo("/");
       router.replace("/");
+      // await navigateTo("/");
     }
   }
 });
