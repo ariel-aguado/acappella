@@ -1,4 +1,5 @@
 import tailwindcss from "@tailwindcss/vite";
+import { isDevelopment } from "std-env";
 
 import "./lib/env";
 
@@ -8,6 +9,28 @@ export default defineNuxtConfig({
   ssr: false,
   devtools: { enabled: true },
   app: {
+    head: {
+      viewport: "width=device-width,initial-scale=1,viewport-fit=cover",
+      link: [
+        { rel: "icon", href: "/favicon.ico", sizes: "any" },
+        { rel: "icon", type: "image/svg+xml", href: "/logo.svg" },
+        { rel: "apple-touch-icon", href: "/apple-touch-icon.png" },
+        // { rel: "manifest", href: "/manifest.json" },
+      ],
+      meta: [
+        { name: "apple-mobile-web-app-status-bar-style", content: "default" },
+        // open graph social image
+        { property: "og:title", content: "Acappella" },
+        { property: "og:description", content: "Himnos y cánticos espirituales para la adoración" },
+        { property: "og:type", content: "website" },
+        { property: "og:image", content: "https://acappella-montevideo/acappella-og.png" },
+        { property: "og:image:width", content: "3800" },
+        { property: "og:image:height", content: "1900" },
+        { property: "og:site_name", content: "Acappella" },
+        { name: "twitter:site", content: "@acappella" },
+        { name: "twitter:card", content: "summary_large_image" },
+      ],
+    },
     pageTransition: {
       name: "android",
       mode: "out-in",
@@ -21,7 +44,6 @@ export default defineNuxtConfig({
     "@nuxtjs/mdc",
     "@vueuse/nuxt",
     "@nuxt/fonts",
-    "@vite-pwa/nuxt",
     "notivue/nuxt",
   ],
   css: [
@@ -53,103 +75,5 @@ export default defineNuxtConfig({
       },
     ],
   },
-  pwa: {
-    registerType: "autoUpdate",
-    manifest: {
-      name: "Acappella",
-      short_name: "Acappella",
-      theme_color: "#422ad5",
-      background_color: "#ffffff",
-      icons: [
-        {
-          src: "pwa-192x192.png",
-          sizes: "192x192",
-          type: "image/png",
-        },
-        {
-          src: "pwa-512x512.png",
-          sizes: "512x512",
-          type: "image/png",
-          purpose: "any",
-        },
-        {
-          src: "pwa-512x512.png",
-          sizes: "512x512",
-          type: "image/png",
-          purpose: "maskable",
-        },
-      ],
-      screenshots: [
-        {
-          src: "screenshot-desktop.png",
-          sizes: "1280x800",
-          type: "image/png",
-          form_factor: "wide",
-        },
-        {
-          src: "screenshot-mobile.png",
-          sizes: "375x667",
-          type: "image/png",
-          // form_factor not set, counts as mobile
-        },
-      ],
-    },
-    workbox: {
-      navigateFallback: "/",
-      globPatterns: ["**/*.{js,css,html,png,svg,ico,woff2}"],
-      cleanupOutdatedCaches: true,
-      runtimeCaching: [
-        {
-          urlPattern: /^https:\/\/fonts\.(googleapis|gstatic)\.com/,
-          handler: "CacheFirst",
-          options: {
-            cacheName: "google-fonts-cache",
-            expiration: {
-              maxEntries: 20,
-              maxAgeSeconds: 60 * 60 * 24 * 365, // 1 year
-            },
-          },
-        },
-        // {
-        //   urlPattern: ({ url }) => url.pathname.startsWith("/_nuxt/"),
-        //   handler: "CacheFirst",
-        //   options: {
-        //     cacheName: "nuxt-assets",
-        //     expiration: {
-        //       maxEntries: 100,
-        //       maxAgeSeconds: 60 * 60 * 24 * 30,
-        //     },
-        //   },
-        // },
-        // {
-        //   urlPattern: ({ url }) => url.pathname.startsWith("/api/"),
-        //   handler: "NetworkFirst",
-        //   options: {
-        //     cacheName: "api-cache",
-        //     networkTimeoutSeconds: 5,
-        //     expiration: {
-        //       maxEntries: 30,
-        //       maxAgeSeconds: 60 * 60 * 24,
-        //     },
-        //     cacheableResponse: {
-        //       statuses: [0, 200],
-        //     },
-        //   },
-        // },
-      ],
-    },
-    injectManifest: {
-      globPatterns: ["**/*.{js,css,html,png,svg,ico,woff2}"],
-    },
-    client: {
-      installPrompt: true,
-    },
-    devOptions: {
-      enabled: true,
-      suppressWarnings: true,
-      navigateFallback: "/",
-      navigateFallbackAllowlist: [/^\/$/],
-      type: "module",
-    },
-  },
+  sourcemap: isDevelopment,
 });

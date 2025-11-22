@@ -33,9 +33,9 @@ export const useSongStore = defineStore("useSongStore", () => {
     return song;
   }
 
-  function navigateToSong(id: number) {
+  async function navigateToSong(id: number) {
     songId.value = id;
-    navigateTo("/");
+    await navigateTo("/");
   }
 
   function jumpToSong(id: number | string) {
