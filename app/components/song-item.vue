@@ -4,7 +4,10 @@ import type { FilteredSong } from "~~/lib/db/schema/song";
 const { song } = defineProps<{
   song: FilteredSong;
 }>();
+
 const emit = defineEmits(["favoriteOff"]);
+
+const route = useRoute();
 
 const songStore = useSongStore();
 </script>
@@ -21,14 +24,18 @@ const songStore = useSongStore();
     >
       {{ song.songId }}
     </button>
-    <div class="flex-1 flex justify-between items-center gap-2">
+    <div class="flex-1 flex justify-between gap-2">
       <button
         type="button"
-        class="flex-1 flex flex-col items-start hover:cursor-pointer"
+        class="flex-1 flex flex-col hover:cursor-pointer"
+        :class="{
+          'justify-center items-center': route.name === 'fully-search',
+          'justify-center items-start': route.name === 'search',
+        }"
         @click="songStore.navigateToSong(song.songId)"
       >
         <!-- Title -->
-        <p class="text-start font-bold">
+        <p class="w-full text-start font-bold">
           {{ song.title }}
         </p>
         <!-- First line -->

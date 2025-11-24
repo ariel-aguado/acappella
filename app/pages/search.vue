@@ -294,7 +294,7 @@ watch(
     </div>
 
     <!-- Content with smooth height transition -->
-    <div v-if="currentTab === 'byNumber'" key="byNumber" class="tab-context flex-1 flex overflow-y-auto">
+    <div v-if="currentTab === 'byNumber'" key="byNumber" class="context flex-1 flex overflow-y-auto">
       <SongsByNumber v-if="filteredSongsByNumber.length" @favorite-off="onFavoriteOff" />
       <EmptyState v-else />
     </div>

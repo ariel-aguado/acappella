@@ -1,21 +1,21 @@
 <script lang="ts" setup>
 const isLargeScreen = useMediaQuery("(min-width: 1024px)");
 const route = useRoute();
-const router = useRouter();
+// const router = useRouter();
 
 const showFontSidebar = ref(false);
 
 watchEffect(async () => {
   if (isLargeScreen.value) {
     if (route.name === "index") {
-      router.replace("/fullscreen");
-      // await navigateTo("/fullscreen");
+      // router.replace("/fullscreen");
+      navigateTo("/fullscreen");
     }
   }
   else {
     if (route.name === "fullscreen") {
-      router.replace("/");
-      // await navigateTo("/");
+      // router.replace("/");
+      navigateTo("/");
     }
   }
 });
