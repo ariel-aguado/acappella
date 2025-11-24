@@ -224,6 +224,9 @@ async function recreateRevealInstance() {
     Reveal.value = null;
   }
 
+  // Wait for DOM update
+  await nextTick();
+
   // Create a new RevealJS instance on the new song
   const revealModule = await import("reveal.js");
   const RevealDefault = revealModule.default;
@@ -243,6 +246,8 @@ async function recreateRevealInstance() {
     },
   });
 
+  // Force layout and navigate
+  await nextTick();
   Reveal.value.layout();
   Reveal.value.slide(0);
 }
@@ -296,7 +301,7 @@ onMounted(async () => {
   await songStore.getSongs();
 
   if (!isLoading.value) {
-    await nextTick(); // Wait the DOM to be updated
+    await nextTick();
 
     loadRevealCss();
 
@@ -318,19 +323,24 @@ onMounted(async () => {
       },
     });
 
+    Reveal.value.layout();
+
+    // Workaround: Force layout recalculation after a delay
+    // to fix rendering issues when navigating from search pages
     setTimeout(() => {
-      Reveal.value.layout();
-    }, 500);
+      if (Reveal.value) {
+        Reveal.value.layout();
+      }
+    }, 100);
   }
 });
 
 onBeforeUnmount(() => {
-  // isLoading.value = true;
-  setTimeout(() => {
-    unloadRevealCss();
+  unloadRevealCss();
+  if (Reveal.value) {
     Reveal.value.destroy();
     Reveal.value = null;
-  }, 200);
+  }
 });
 
 watchEffect(() => {
@@ -373,7 +383,7 @@ watchEffect(() => {
     </div>
 
     <!-- Shortcuts for font size settings -->
-    <div v-if="isFabNavVisible" class="fixed left-4 bottom-4 flex flex-col gap-2 z-50">
+    <!-- <div v-if="isFabNavVisible" class="fixed left-4 bottom-4 flex flex-col gap-2 z-50">
       <div>
         Preciona
         <kbd class="kbd kbd-sm">▲</kbd>
@@ -384,7 +394,7 @@ watchEffect(() => {
         <kbd class="kbd kbd-sm">▼</kbd>
         para disminuir el tamaño del texto
       </div>
-    </div>
+    </div> -->
 
     <!-- Fab Navigation -->
     <div v-if="isFabNavVisible" class="fab bottom-18 right-8">
@@ -444,9 +454,9 @@ watchEffect(() => {
           <Icon name="tabler:music-search" size="24" />
         </button>
       </div>
-      <button class="btn btn-circle btn-lg" @click="navigateTo('/fully-search')">
+      <!-- <button class="btn btn-circle btn-lg" @click="navigateTo('/fully-search')">
         <Icon name="tabler:search" size="24" />
-      </button>
+      </button> -->
       <div class="flex items-center gap-2">
         <div>
           Preciona

@@ -14,7 +14,7 @@ const emit = defineEmits(["update:open"]);
           <span class="leading-6 font-bold">
             Acappella
           </span>
-          <span class="text-xs font-normal">Himnos Montevideo</span>
+          <span class="text-xs font-normal">Cánticos Espirituales</span>
         </div>
       </div>
     </div>

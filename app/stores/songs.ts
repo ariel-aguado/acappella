@@ -1,4 +1,4 @@
-import type { FilteredSong, Song } from "~~/lib/db/schema";
+import type { FilteredSong, LyricLine, Song, SongFromDB } from "~~/lib/db/schema";
 
 export const useSongStore = defineStore("useSongStore", () => {
   const isLoading = ref(false);
@@ -11,26 +11,46 @@ export const useSongStore = defineStore("useSongStore", () => {
   const songId = useLocalStorage<number>("songId", 1);
   const currentSong = useLocalStorage<Song>("currentSong", {} as Song);
   const searchHistory = useLocalStorage<string[]>("searchHistory", []);
-  const songsData = ref<Song[]>([]);
+
+  // Ensure songId is always a sane number (>=1). localStorage may contain null/"" or non-numeric values.
+  function sanitizeSongId(val: any) {
+    const n = Number(val);
+    if (!Number.isFinite(n) || Number.isNaN(n))
+      return 1;
+    const i = Math.floor(n);
+    return i >= 1 ? i : 1;
+  }
+
+  // Sanitize initial value read from localStorage
+  try {
+    songId.value = sanitizeSongId(songId.value as unknown as any);
+  }
+  catch {
+    songId.value = 1;
+  }
+
+  // Watch and coerce any future assignments that are not numeric
+  watch(
+    () => songId.value,
+    (v) => {
+      const sane = sanitizeSongId(v as unknown as any);
+      if (sane !== v)
+        songId.value = sane;
+    },
+  );
+  const songsData = ref<(SongFromDB & { lyricParsed: any; lyricLines: LyricLine[] })[]>([]);
   const songsCount = computed(() => songs.value.length);
   const currentTab = ref("byNumber");
 
   async function getSongs() {
     isLoading.value = true;
-    if (songs.value.length === 0) {
-      const data = await $fetch("/api/songs");
-      songsData.value = data;
-    }
+    const data: any = await loadSongsFromPublic();
+    songsData.value = data;
     isLoading.value = false;
   }
 
-  function getSong(songId: number) {
-    let song = null;
-    const songIndex = songs.value.findIndex((s: any) => s.songId === songId);
-    if (songIndex !== -1) {
-      song = songs.value[songIndex];
-    }
-    return song;
+  function getSongById(id: number) {
+    return songs.value ? songs.value[id - 1] : songs.value[0];
   }
 
   async function navigateToSong(id: number) {
@@ -88,12 +108,28 @@ export const useSongStore = defineStore("useSongStore", () => {
   }
 
   function toggleFavorite(song: Song | FilteredSong) {
-    // song.favorite = !song.favorite;
+    // Use songId - 1 to get the correct index (songs are 1-indexed)
+    const songIndex = song.songId - 1;
 
-    const songIndex = songs.value.findIndex((s: any) => s.songId === song.songId);
-    if (songIndex !== -1 && songs.value[songIndex]) {
-      favoriteSongs.value.push(song.songId);
-      songs.value[songIndex].favorite = !songs.value[songIndex].favorite;
+    if (songIndex >= 0 && songIndex < songs.value.length && songs.value[songIndex]) {
+      // Toggle the favorite flag
+      const newFavoriteState = !songs.value[songIndex].favorite;
+      songs.value[songIndex].favorite = newFavoriteState;
+
+      // Update favoriteSongs array in localStorage
+      if (newFavoriteState) {
+        // Add to favorites if not already there
+        if (!favoriteSongs.value.includes(song.songId)) {
+          favoriteSongs.value.push(song.songId);
+        }
+      }
+      else {
+        // Remove from favorites
+        const favoriteIndex = favoriteSongs.value.indexOf(song.songId);
+        if (favoriteIndex !== -1) {
+          favoriteSongs.value.splice(favoriteIndex, 1);
+        }
+      }
     }
   }
 
@@ -104,24 +140,25 @@ export const useSongStore = defineStore("useSongStore", () => {
 
   watch(() => songsData.value, (newData) => {
     if (newData) {
-      isLoading.value = false;
-      if (songs.value.length === 0) {
-        songs.value = (songsData.value as any[]).map((s: any) => {
-          const isFavorite = favoriteSongs.value.includes(s.songId);
-          return {
-            ...s,
-            lyricParsed: {
-              ...s.lyricParsed,
-              data: {
-                title: s.lyricParsed?.data?.title ?? "",
-                description: s.lyricParsed?.data?.description ?? "",
-                ...(s.lyricParsed?.data ?? {}),
-              },
+      // if (songs.value.length === 0) {
+      songs.value = (songsData.value as any[]).map((s: any) => {
+        const isFavorite = favoriteSongs.value.includes(s.songId);
+        return {
+          ...s,
+          lyricParsed: {
+            ...s.lyricParsed,
+            data: {
+              title: s.lyricParsed?.data?.title ?? "",
+              description: s.lyricParsed?.data?.description ?? "",
+              ...(s.lyricParsed?.data ?? {}),
             },
-            favorite: isFavorite,
-          };
-        });
-      }
+          },
+          favorite: isFavorite,
+          scrollTitle: s.scrollTitle,
+        };
+      });
+      // }
+      isLoading.value = false;
     }
   });
 
@@ -139,7 +176,7 @@ export const useSongStore = defineStore("useSongStore", () => {
     isLoading,
     currentTab,
     getSongs,
-    getSong,
+    getSongById,
     navigateToSong,
     jumpToSong,
     generateAnchorsFromSongIds,

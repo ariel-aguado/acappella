@@ -54,7 +54,7 @@ const route = useRoute();
           }"
           @click="navigateTo('/about')"
         >
-          <Icon name="tabler:music-cog" size="24" />
+          <Icon name="tabler:music-exclamation" size="24" />
         </button>
       </li>
     </ul>

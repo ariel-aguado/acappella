@@ -11,7 +11,7 @@ const swiperModules = [Navigation];
 
 // Song store
 const songStore = useSongStore();
-const { songs, songId, currentSong, isLoading } = storeToRefs(songStore);
+const { songs, songId, isLoading } = storeToRefs(songStore);
 
 // Font store
 const fontStore = useFontStore();
@@ -25,13 +25,49 @@ const newSongInput = shallowRef<HTMLInputElement | null>(null);
 const songNumberModal = shallowRef<HTMLDialogElement>();
 const showDialog = ref(false);
 
+// Title visibility / sticky header
+// const showSticky = ref(false);
+let _titleObserver: IntersectionObserver | null = null;
+
+function observeActiveTitle() {
+  if (typeof window === "undefined")
+    return;
+  const STICKY_HIDE_OFFSET = 24; // pixels before the title re-enters the viewport to hide the sticky
+
+  const song: any = songStore.getSongById(songId.value);
+
+  _titleObserver?.disconnect();
+  _titleObserver = new IntersectionObserver(
+    (entries) => {
+      const e = entries[0];
+      song.scrollTitle = e ? !e.isIntersecting : false;
+    },
+    // Move the bottom edge of the root up so the title is considered "intersecting"
+    // a bit before it visually enters; that lets us hide the sticky earlier.
+    { threshold: 0, rootMargin: `0px 0px -${STICKY_HIDE_OFFSET}px 0px` },
+  );
+
+  const el = document.querySelector(".swiper .swiper-slide-active h2") as Element | null;
+  if (el) {
+    _titleObserver.observe(el);
+  }
+  else {
+    if (song) {
+      song.scrollTitle = false;
+    }
+  }
+}
+
 // Swiper reference
 const swiper = shallowRef();
+let _ignoreNextActiveChange = false;
 
 // Init swiper instance
 function onSwiper(swiper: any) {
   swiper.value = swiper;
-  swiper.value.slideTo(Number(songId.value) - 1, 0);
+  // Prevent the initial active-index-change event from overwriting the persisted songId
+  _ignoreNextActiveChange = true;
+  swiper.value.slideTo((Number(songId.value) || 1) - 1, 0);
 };
 
 // New song schema validation
@@ -80,8 +116,18 @@ function navigateToSong() {
 
 async function onActiveIndexChange(swiper: any) {
   setTimeout(() => {
-    // Update the current song index
-    songId.value = swiper.activeIndex + 1;
+    // If we set the slide programmatically during init, ignore the first event
+    if (_ignoreNextActiveChange) {
+      _ignoreNextActiveChange = false;
+      // still ensure we observe the active title
+      observeActiveTitle();
+      return;
+    }
+
+    // Update the current song index (coerce to number)
+    songId.value = Number(swiper.activeIndex) + 1;
+    // Update observed title (active slide changed)
+    observeActiveTitle();
   }, 50);
 }
 
@@ -89,10 +135,12 @@ async function onActiveIndexChange(swiper: any) {
 async function showUpSongNumberModal() {
   errors.value = {};
   showDialog.value = true;
+  await nextTick();
+  songNumberModal.value?.showModal();
+  // Wait for modal and transition to be fully visible before focusing
   setTimeout(() => {
-    songNumberModal.value?.showModal();
     newSongInput.value?.focus();
-  }, 50);
+  }, 150);
 }
 
 // Function to hide the song number modal
@@ -118,7 +166,31 @@ async function onNavigateToSong() {
 }
 
 onMounted(async () => {
-  await songStore.getSongs();
+  // Only fetch songs if:
+  // 1. Songs are not yet loaded (empty array)
+  // 2. Arriving via page refresh (no navigation state)
+  // 3. Not coming from internal search pages
+  const router = useRouter();
+  const fromInternalPage = router.options.history.state.back;
+  const fromPath = typeof fromInternalPage === "string" ? fromInternalPage : "";
+  const isFromSearchPages = fromPath
+    && (fromPath.includes("/search") || fromPath.includes("/fully-search"));
+
+  // Fetch songs only if they're empty OR if we're NOT coming from search pages
+  if (songs.value.length === 0 || !isFromSearchPages) {
+    await songStore.getSongs();
+  }
+
+  // Observe the active slide title and toggle the sticky header when it leaves/enters viewport
+  if (typeof window !== "undefined") {
+    await nextTick();
+    observeActiveTitle();
+  }
+});
+
+onBeforeUnmount(() => {
+  _titleObserver?.disconnect();
+  _titleObserver = null;
 });
 </script>
 
@@ -141,20 +213,22 @@ onMounted(async () => {
           v-for="song in songs"
           :key="song.id"
         >
-          <div class="max-w-[calc(100dvw)] h-[calc(100dvh-64px-52px)] overflow-y-auto p-4 pb-18">
+          <div v-if="song" class="flex flex-col max-w-[calc(100dvw)] h-[calc(100dvh-64px-52px)] overflow-y-auto">
+            <transition name="slide-down">
+              <div v-show="song.scrollTitle" class="fixed top-0 left-0 right-0 px-4 py-2 bg-(--root-bg) text-xl line-clamp-1 z-10">
+                <strong>{{ song.songId }}.</strong> {{ song.title }}
+              </div>
+            </transition>
             <h2
-              v-if="currentSong"
-              class="text-left md:text-center"
+              class="text-left md:text-center px-4 pt-4"
               :style="{ fontSize: `${fontSize * 1.5}px`, lineHeight: `${fontSize * 1.5 * 1.2}px` }"
             >
               <strong :style="{ fontSize: `${fontSize * 2}px`, lineHeight: `${fontSize * 2 * 1.1}px` }">{{ song.songId }}.</strong> {{ song.title }}
             </h2>
-            <MDCRenderer
-              v-if="song"
-              :body="song.lyricParsed.body"
-              :data="song.lyricParsed.data"
-              class="[&>p]:my-4 [&>p:has(em)]:flex [&>p:has(em)]:justify-center [&>p:has(em)]:!leading-[1px] text-left md:text-center mt-6"
+            <div
+              class="[&>p]:my-4 [&>p:has(em)]:flex [&>p:has(em)]:justify-center [&>p:has(em)]:text-sm [&>p:has(em)]:leading-5! [&>p:has(em)]:mt-4 [&>p:has(em)]:-mb-2 text-left md:text-center mt-6 px-4 pb-18"
               :style="{ fontSize: `${fontSize}px`, lineHeight: `${fontSize * 1.6}px` }"
+              v-html="song.lyricParsed.body"
             />
           </div>
         </SwiperSlide>
@@ -176,7 +250,7 @@ onMounted(async () => {
     </button>
 
     <!-- Song number modal with transition -->
-    <transition name="modal-fade">
+    <transition name="slide-down">
       <dialog v-if="showDialog" ref="songNumberModal" class="modal">
         <div class="modal-box">
           <div class="flex justify-between items-center">
@@ -231,5 +305,29 @@ onMounted(async () => {
 .swiper-button-prev,
 .swiper-button-next {
   display: none;
+}
+
+/* Slide down transition for scroll title */
+.slide-down-enter-active {
+  transition: all 0.1s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.slide-down-leave-active {
+  transition: all 0.1s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.slide-down-enter-from {
+  opacity: 0;
+  transform: translateY(-32px);
+}
+.slide-down-enter-to {
+  opacity: 1;
+  transform: translateY(0);
+}
+.slide-down-leave-from {
+  opacity: 1;
+  transform: translateY(0);
+}
+.slide-down-leave-to {
+  opacity: 0;
+  transform: translateY(-32px);
 }
 </style>

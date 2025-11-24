@@ -32,6 +32,7 @@ export type Song = SongFromDB & {
   lyricParsed: MDCParserResult;
   lyricLines: LyricLine[];
   favorite: boolean;
+  scrollTitle: boolean;
 };
 export type FilteredSong = {
   songId: number;
