@@ -23,7 +23,7 @@ export default defineNuxtConfig({
         { property: "og:title", content: "Acappella" },
         { property: "og:description", content: "Himnos y cánticos espirituales para la adoración" },
         { property: "og:type", content: "website" },
-        { property: "og:image", content: "https://acappella-montevideo/acappella-og.png" },
+        { property: "og:image", content: "https://acappella-montevideo.vercel.app/acappella-og.png" },
         { property: "og:image:width", content: "3800" },
         { property: "og:image:height", content: "1900" },
         { property: "og:site_name", content: "Acappella" },

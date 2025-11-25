@@ -385,12 +385,12 @@ watchEffect(() => {
     <!-- Shortcuts for font size settings -->
     <!-- <div v-if="isFabNavVisible" class="fixed left-4 bottom-4 flex flex-col gap-2 z-50">
       <div>
-        Preciona
+        Presiona
         <kbd class="kbd kbd-sm">▲</kbd>
         para aumentar el tamaño del texto
       </div>
       <div>
-        Preciona
+        Presiona
         <kbd class="kbd kbd-sm">▼</kbd>
         para disminuir el tamaño del texto
       </div>
@@ -411,7 +411,7 @@ watchEffect(() => {
       <!-- buttons that show up when FAB is open -->
       <div class="flex items-center gap-2">
         <div>
-          Preciona
+          Presiona
           <kbd class="kbd">n</kbd>
         </div>
         <button :disabled="songs.length === songId" class="btn btn-circle btn-lg" @click="navigateToNextSong()">
@@ -420,7 +420,7 @@ watchEffect(() => {
       </div>
       <div class="flex items-center gap-2">
         <div>
-          Preciona
+          Presiona
           <kbd class="kbd">p</kbd>
         </div>
         <button
@@ -433,7 +433,7 @@ watchEffect(() => {
       </div>
       <div class="flex items-center gap-2">
         <div>
-          Preciona
+          Presiona
           <kbd class="kbd">g</kbd>
         </div>
         <button class="btn btn-circle btn-lg" @click="showUpSongNumberModal()">
@@ -447,7 +447,7 @@ watchEffect(() => {
       </div>
       <div class="flex items-center gap-2">
         <p class="">
-          Preciona
+          Presiona
           <kbd class="kbd">t</kbd>
         </p>
         <button class="btn btn-circle btn-lg" @click="navigateTo('/search')">
@@ -459,7 +459,7 @@ watchEffect(() => {
       </button> -->
       <div class="flex items-center gap-2">
         <div>
-          Preciona
+          Presiona
           <kbd class="kbd">s</kbd>
         </div>
         <button class="btn btn-circle btn-lg" @click="navigateTo('/fully-search')">
@@ -468,7 +468,7 @@ watchEffect(() => {
       </div>
       <div class="flex items-center gap-2">
         <div>
-          Preciona
+          Presiona
           <kbd class="kbd">a</kbd>
         </div>
         <button class="btn btn-circle btn-lg" @click="navigateTo('/about')">
