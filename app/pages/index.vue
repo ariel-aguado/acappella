@@ -25,39 +25,6 @@ const newSongInput = shallowRef<HTMLInputElement | null>(null);
 const songNumberModal = shallowRef<HTMLDialogElement>();
 const showDialog = ref(false);
 
-// Title visibility / sticky header
-// const showSticky = ref(false);
-let _titleObserver: IntersectionObserver | null = null;
-
-function observeActiveTitle() {
-  if (typeof window === "undefined")
-    return;
-  const STICKY_HIDE_OFFSET = 24; // pixels before the title re-enters the viewport to hide the sticky
-
-  const song: any = songStore.getSongById(songId.value);
-
-  _titleObserver?.disconnect();
-  _titleObserver = new IntersectionObserver(
-    (entries) => {
-      const e = entries[0];
-      song.scrollTitle = e ? !e.isIntersecting : false;
-    },
-    // Move the bottom edge of the root up so the title is considered "intersecting"
-    // a bit before it visually enters; that lets us hide the sticky earlier.
-    { threshold: 0, rootMargin: `0px 0px -${STICKY_HIDE_OFFSET}px 0px` },
-  );
-
-  const el = document.querySelector(".swiper .swiper-slide-active h2") as Element | null;
-  if (el) {
-    _titleObserver.observe(el);
-  }
-  else {
-    if (song) {
-      song.scrollTitle = false;
-    }
-  }
-}
-
 // Swiper reference
 const swiper = shallowRef();
 let _ignoreNextActiveChange = false;
@@ -119,15 +86,11 @@ async function onActiveIndexChange(swiper: any) {
     // If we set the slide programmatically during init, ignore the first event
     if (_ignoreNextActiveChange) {
       _ignoreNextActiveChange = false;
-      // still ensure we observe the active title
-      observeActiveTitle();
       return;
     }
 
     // Update the current song index (coerce to number)
     songId.value = Number(swiper.activeIndex) + 1;
-    // Update observed title (active slide changed)
-    observeActiveTitle();
   }, 50);
 }
 
@@ -180,17 +143,6 @@ onMounted(async () => {
   if (songs.value.length === 0 || !isFromSearchPages) {
     await songStore.getSongs();
   }
-
-  // Observe the active slide title and toggle the sticky header when it leaves/enters viewport
-  if (typeof window !== "undefined") {
-    await nextTick();
-    observeActiveTitle();
-  }
-});
-
-onBeforeUnmount(() => {
-  _titleObserver?.disconnect();
-  _titleObserver = null;
 });
 </script>
 
@@ -214,19 +166,14 @@ onBeforeUnmount(() => {
           :key="song.id"
         >
           <div v-if="song" class="flex flex-col max-w-[calc(100dvw)] h-[calc(100dvh-64px-52px)] overflow-y-auto">
-            <transition name="slide-down">
-              <div v-show="song.scrollTitle" class="fixed top-0 left-0 right-0 px-4 py-2 bg-(--root-bg) text-xl line-clamp-1 z-10">
-                <strong>{{ song.songId }}.</strong> {{ song.title }}
-              </div>
-            </transition>
             <h2
-              class="text-left md:text-center px-4 pt-4"
+              class="sticky top-0 z-10 bg-(--root-bg) text-left md:text-center px-4 pt-4"
               :style="{ fontSize: `${fontSize * 1.5}px`, lineHeight: `${fontSize * 1.5 * 1.2}px` }"
             >
               <strong :style="{ fontSize: `${fontSize * 2}px`, lineHeight: `${fontSize * 2 * 1.1}px` }">{{ song.songId }}.</strong> {{ song.title }}
             </h2>
             <div
-              class="[&>p]:my-4 [&>p:has(em)]:flex [&>p:has(em)]:justify-center [&>p:has(em)]:text-sm [&>p:has(em)]:leading-5! [&>p:has(em)]:mt-4 [&>p:has(em)]:-mb-2 text-left md:text-center mt-6 px-4 pb-18"
+              class="[&>p]:my-4 [&>p:has(em)]:flex [&>p:has(em)]:justify-center [&>p:has(em)]:text-sm [&>p:has(em)]:leading-5! [&>p:has(em)]:mt-4 [&>p:has(em)]:-mb-2 text-left md:text-center mt-6 px-4 pb-20"
               :style="{ fontSize: `${fontSize}px`, lineHeight: `${fontSize * 1.6}px` }"
               v-html="song.lyricParsed.body"
             />
