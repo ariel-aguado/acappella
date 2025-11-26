@@ -37,7 +37,7 @@ Una aplicación web progresiva para gestionar y presentar himnos y cánticos esp
 
 Este proyecto es completamente **gratuito y de código abierto**. Cualquier persona puede:
 
-- ✅ Clonar o hacer fork de este repositorio
+- ✅ Clonar o hacer copia de este repositorio
 - ✅ Personalizar el himnario con sus propios cantos
 - ✅ Adaptar la interfaz a sus necesidades
 - ✅ Desplegar su propia versión en cualquier plataforma como [Vercel](https://vercel.com) gratuitamente
@@ -177,12 +177,12 @@ Las contribuciones son bienvenidas. Si deseas mejorar esta aplicación:
 
 ## 📧 Contacto
 
-Ariel Aguado Albear - [ariel.841207@ariel-aguado](emailto:ariel.841207@gmail.com)
+[Ariel Aguado Albear](mailto:ariel.841207@gmail.com)
 
 ---
 
 <div align="center">
 
-**Hecho con ❤️ para la comunidad de la Iglesia de Cristo**
+**Hecho con ❤️ en especial para la comunidad de la Iglesia de Cristo**
 
 </div>
