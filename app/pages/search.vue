@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import type { FilteredSong } from "~~/lib/db/schema/song";
+import type { FilteredSong } from "~~/lib/types";
 
 import Fuse from "fuse.js";
 import Mark from "mark.js";

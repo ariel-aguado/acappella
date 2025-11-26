@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import type { FilteredSong } from "~~/lib/db/schema";
+import type { FilteredSong } from "~~/lib/types";
 
 const emit = defineEmits<{
   (e: "favoriteOff", favoriteOff: boolean): void;

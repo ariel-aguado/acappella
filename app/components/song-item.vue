@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import type { FilteredSong } from "~~/lib/db/schema/song";
+import type { FilteredSong } from "~~/lib/types";
 
 const { song } = defineProps<{
   song: FilteredSong;

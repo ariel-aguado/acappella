@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import type { LyricLine } from "~~/lib/db/schema";
+import type { LyricLine } from "~~/lib/types";
 
 import Fuse from "fuse.js";
 import Mark from "mark.js";

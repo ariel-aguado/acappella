@@ -51,12 +51,9 @@ export default defineNuxtConfig({
     "@nuxtjs/mdc",
     "@vueuse/nuxt",
     "@nuxt/fonts",
-    "notivue/nuxt",
   ],
   css: [
     "~/assets/css/main.css",
-    "notivue/notification.css",
-    "notivue/animations.css",
   ],
   eslint: {
     config: {
