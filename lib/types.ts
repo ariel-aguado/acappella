@@ -1,5 +1,3 @@
-import type { MDCParserResult } from "@nuxtjs/mdc";
-
 /**
  * Represents a single line in a song's lyrics
  */
@@ -8,9 +6,21 @@ export type LyricLine = {
 };
 
 /**
- * Base song data structure from database/storage
+ * Parsed lyric content with metadata
  */
-export type SongFromDB = {
+export type ParsedLyric = {
+  body: string;
+  data: {
+    title: string;
+    description?: string;
+    [key: string]: any;
+  };
+};
+
+/**
+ * Base song data structure
+ */
+export type SongData = {
   id: number;
   songId: number;
   title: string;
@@ -21,8 +31,8 @@ export type SongFromDB = {
 /**
  * Extended song with parsed markdown and UI state
  */
-export type Song = SongFromDB & {
-  lyricParsed: MDCParserResult;
+export type Song = SongData & {
+  lyricParsed: ParsedLyric;
   lyricLines: LyricLine[];
   favorite: boolean;
   scrollTitle: boolean;

@@ -1,11 +1,11 @@
-import type { LyricLine, SongFromDB } from "~~/lib/types";
+import type { LyricLine, ParsedLyric, SongData } from "~~/lib/types";
 
 import { marked } from "marked";
 
 /**
  * Split the big songbook text into individual song blocks and extract id/title/raw lyric
  */
-function parseSongbook(text: string): SongFromDB[] {
+function parseSongbook(text: string): SongData[] {
   return text
     .split(/(?=^\d+\.\s*[^\n]*)/m)
     .map((block) => {
@@ -17,9 +17,9 @@ function parseSongbook(text: string): SongFromDB[] {
       const songId = Number.parseInt(num[0], 10);
       const title = first.replace(/^\d+\.?\s*/, "").trim();
       const lyric = lines.slice(1).join("\n").trim();
-      return { id: songId, songId, title, lyric, createdAt: Date.now() } as unknown as SongFromDB;
+      return { id: songId, songId, title, lyric, createdAt: Date.now() } as unknown as SongData;
     })
-    .filter(Boolean) as SongFromDB[];
+    .filter(Boolean) as SongData[];
 }
 
 function isChorusLine(line: string) {
@@ -160,7 +160,7 @@ function lyricToLines(content: string): LyricLine[] {
 /**
  * Load songs from `public/songs/songbook.txt`, parse + format, save into localStorage
  */
-export async function loadSongsFromPublic(): Promise<(SongFromDB & { lyricParsed: any; lyricLines: LyricLine[] })[]> {
+export async function loadSongsFromPublic(): Promise<(SongData & { lyricParsed: ParsedLyric; lyricLines: LyricLine[] })[]> {
   try {
     const res = await fetch("/songs/songbook.txt");
     if (!res.ok)
@@ -184,7 +184,7 @@ export async function loadSongsFromPublic(): Promise<(SongFromDB & { lyricParsed
         lyricParsed,
         lyricLines,
         scrollTitle: false,
-      } as unknown as SongFromDB & { lyricParsed: any; lyricLines: LyricLine[]; scrollTitle: boolean };
+      } as SongData & { lyricParsed: ParsedLyric; lyricLines: LyricLine[]; scrollTitle: boolean };
     });
 
     return songs;

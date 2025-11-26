@@ -1,4 +1,4 @@
-import type { FilteredSong, LyricLine, Song, SongFromDB } from "~~/lib/types";
+import type { FilteredSong, LyricLine, ParsedLyric, Song, SongData } from "~~/lib/types";
 
 export const useSongStore = defineStore("useSongStore", () => {
   const isLoading = ref(false);
@@ -38,7 +38,7 @@ export const useSongStore = defineStore("useSongStore", () => {
         songId.value = sane;
     },
   );
-  const songsData = ref<(SongFromDB & { lyricParsed: any; lyricLines: LyricLine[] })[]>([]);
+  const songsData = ref<(SongData & { lyricParsed: ParsedLyric; lyricLines: LyricLine[] })[]>([]);
   const songsCount = computed(() => songs.value.length);
   const currentTab = ref("byNumber");
 
