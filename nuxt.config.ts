@@ -48,7 +48,6 @@ export default defineNuxtConfig({
     "@nuxt/icon",
     "@nuxtjs/color-mode",
     "@pinia/nuxt",
-    "@nuxtjs/mdc",
     "@vueuse/nuxt",
     "@nuxt/fonts",
   ],
