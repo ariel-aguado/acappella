@@ -1,4 +1,4 @@
-import type { FilteredSong, LyricLine, Song, SongFromDB } from "~~/lib/db/schema";
+import type { FilteredSong, LyricLine, Song, SongFromDB } from "~~/lib/types";
 
 export const useSongStore = defineStore("useSongStore", () => {
   const isLoading = ref(false);

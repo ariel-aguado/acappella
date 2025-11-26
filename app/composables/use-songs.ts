@@ -1,4 +1,4 @@
-import type { LyricLine, SongFromDB } from "~~/lib/db/schema";
+import type { LyricLine, SongFromDB } from "~~/lib/types";
 
 import { marked } from "marked";
 
