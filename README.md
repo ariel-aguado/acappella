@@ -4,7 +4,7 @@
 
 <img src="public/acappella-og-optimized.png" alt="ACAPPELLA" width="800" />
 
-### Himnario Digital Moderno para la alabanza
+### Himnario Digital para la alabanza
 
 Una aplicación web progresiva para gestionar y presentar himnos y cánticos espirituales desde cualquier dispositivo.
 
@@ -153,7 +153,7 @@ pnpm preview
 
 ## 💡 Inspiración
 
-Esta aplicación está inspirada en [**Aleluya**](https://play.google.com/store/apps/details?id=com.aleluya), una excelente aplicación móvil para himnarios disponible en Google Play Store.
+Esta aplicación está inspirada en [**Aleluya**](https://play.google.com/store/apps/details?id=com.diguits.hallelujah&hl=es_419), una excelente aplicación móvil para himnarios de la Iglesia de Cristo disponible en Google Play Store.
 
 ## 📄 Licencia
 
@@ -169,7 +169,7 @@ Tu apoyo ayuda a mantener este proyecto activo y a desarrollar nuevas caracterí
 
 Las contribuciones son bienvenidas. Si deseas mejorar esta aplicación:
 
-1. Haz fork del proyecto
+1. Haz copia del proyecto
 2. Crea una rama para tu característica (`git checkout -b feature/NuevaCaracteristica`)
 3. Haz commit de tus cambios (`git commit -m 'Agregar nueva característica'`)
 4. Haz push a la rama (`git push origin feature/NuevaCaracteristica`)
