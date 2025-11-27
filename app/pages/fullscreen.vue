@@ -38,17 +38,19 @@ const stanzas = computed(() => {
   return parseSong(song.lyric);
 });
 
-// New song schema validation
+// New song schema validation (dynamic max based on loaded songs)
+const maxSongId = computed(() => Math.max(songs.value.length, 1));
 const validationSchema = z.object({
-  newSongId: z.preprocess(
-    val => (val === null || val === undefined || val === "" ? undefined : val),
-    z.number({
-      required_error: "El número del himno es requerido",
-      invalid_type_error: "El número del himno debe ser un número",
+  newSongId: z.coerce
+    .number()
+    // Empty string coerces to NaN; treat as required error
+    .refine(val => !Number.isNaN(val), {
+      message: "El número del himno es requerido",
     })
-      .min(1, "El número del himno debe ser mayor que 0")
-      .max(380, "El número del himno debe ser menor o igual a 380"),
-  ),
+    .min(1, { message: "El número del himno debe ser mayor que 0" })
+    .refine(val => val <= maxSongId.value, {
+      message: `El número del himno debe ser menor o igual a ${maxSongId.value}`,
+    }),
 });
 
 // Populate the validation composable
@@ -151,6 +153,10 @@ async function navigateToSong() {
 async function onNavigateToSong() {
   // Validate the song ID
   await validateSongId();
+
+  // If schema failed, stop; useValidation will surface the error
+  if (!isValid.value)
+    return;
 
   // If the song ID is valid, navigate to the song
   if (isValid.value) {
@@ -496,7 +502,7 @@ watchEffect(() => {
             <form class="w-full" @submit.prevent="onNavigateToSong">
               <input
                 ref="newSongInput"
-                v-model="newSongId"
+                v-model.number="newSongId"
                 name="newSongId"
                 type="number"
                 class="input w-full"

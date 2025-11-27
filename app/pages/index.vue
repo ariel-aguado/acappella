@@ -37,16 +37,19 @@ function onSwiper(swiper: any) {
   swiper.value.slideTo((Number(songId.value) || 1) - 1, 0);
 };
 
-// New song schema validation
+// New song schema validation (dynamic max based on loaded songs)
+const maxSongId = computed(() => Math.max(songs.value.length, 1));
 const validationSchema = z.object({
-  newSongId:
-    z.number({
-      error: issue => issue.input === undefined || issue.input === null || issue.input === ""
-        ? "El número del himno es requerido"
-        : "El número del himno debe ser un número",
+  newSongId: z.coerce
+    .number()
+    // Empty string coerces to NaN; treat as required error
+    .refine(val => !Number.isNaN(val), {
+      message: "El número del himno es requerido",
     })
-      .min(1, { error: "El número del himno debe ser mayor que 0" })
-      .max(380, { error: "El número del himno debe ser menor o igual a 380" }),
+    .min(1, { message: "El número del himno debe ser mayor que 0" })
+    .refine(val => val <= maxSongId.value, {
+      message: `El número del himno debe ser menor o igual a ${maxSongId.value}`,
+    }),
 });
 
 // Populate the validation composable
@@ -68,7 +71,9 @@ async function validateSongId() {
 function navigateToSong() {
   // Initialize the swiper for the first time
   if (!swiper.value) {
-    swiper.value = document.querySelector(".swiper").swiper;
+    const el = document.querySelector(".swiper") as any;
+    if (el && el.swiper)
+      swiper.value = el.swiper;
   }
 
   // Navigate to the song with the given ID
@@ -119,6 +124,10 @@ function cancelSongNumberModal() {
 async function onNavigateToSong() {
   // Validate the song ID
   await validateSongId();
+
+  // If schema failed, stop; useValidation will surface the error
+  if (!isValid.value)
+    return;
 
   // If the song ID is valid, navigate to the song
   if (isValid.value) {
@@ -185,7 +194,7 @@ onMounted(async () => {
     <!-- Show the song number modal -->
     <button
       type="button"
-      class="btn btn-secondary btn-sm absolute w-14 h-14 aspect-square bottom-[20px] right-[20px] p-0 rounded-xl z-20"
+      class="btn btn-secondary btn-sm absolute w-14 h-14 aspect-square bottom-5 right-5 p-0 rounded-xl z-20"
       @click="showUpSongNumberModal()"
     >
       <svg
@@ -215,7 +224,7 @@ onMounted(async () => {
             <form class="w-full" @submit.prevent="onNavigateToSong">
               <input
                 ref="newSongInput"
-                v-model="newSongId"
+                v-model.number="newSongId"
                 name="newSongId"
                 type="number"
                 class="input w-full"
