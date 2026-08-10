@@ -1734,10 +1734,13 @@ Oh, Cristo mío haz de mi alma un altar
 Para adorarte con todo el corazón.
 
 97.DIOS ESTA AQUÍ (2)
-Dios está aquí tan cierto como el aire que respiro
-Tan cierto como la mañana se levanta
+Dios está aquí.
+Tan cierto como el aire que respiro.
+Tan cierto como la mañana se levanta.
 Tan cierto como le hablo y me puede oír.
-Dios está aquí me guía por senderos de justicia.
+
+Dios está aquí.
+Me guía por senderos de justicia.
 En Él encuentro paz y alegría,
 Y la victoria siempre me concederá.
 
@@ -1949,7 +1952,9 @@ Es mi Pastor y no tengo temor.
 El gozo del Señor mi fuerza es.
 
 CORO:
-///El gozo del Señor/// Mi fuerza es.
+///El gozo del Señor///
+Mi fuerza es.
+
 El gozo del Señor mi fuerza es,
 Él va conmigo donde quiera que esté.
 Siempre disfruto de gracia y perdón.
@@ -2442,7 +2447,7 @@ Demandan gran tesón.
 
 /Estad siempre gozosos. Orad sin cesar/.
 Dad gracias en todo, porque ésta es la voluntad
-/De Dios para vosotros en Cristo Jesús/.
+/De Dios para con vosotros en Cristo Jesús/.
 
 140.ESTAMOS JUNTOS
 Estamos juntos otra vez, alabando al Señor.
@@ -2670,11 +2675,6 @@ Muéstrame tu Santo ser;
 Infunde en mi tu gran poder.
 Quiero de tu amor hablar,
 Y por tu senda andar.
-
-¡Gracias Dios por tu bondad!
-¡Gracias, por tu gran fidelidad! ¡Aleluya!
-¡Gracias Dios por tu bondad!
-¡Gracias, por tu gran fidelidad!
 
 154.GRACIAS POR TODAS LA MAÑANAS
 ¡Gracias por todas las mañanas!
@@ -3721,7 +3721,7 @@ Sus alas levantarán/.
 211.LOS QUE CONFIAN EN JEHOVÁ
 (Salmos 125:1,2)
 
-Los que confían en Jehová, son como el monte Sion,
+Los que confían en Jehová, son como los montes Sion,
 Que no se mueve, sino que permanece para siempre.
 Como Jerusalén tiene montes alrededor de ella,
 Así Jehová está alrededor de su pueblo,
@@ -4136,15 +4136,15 @@ Habitar juntos los hermanos en armonía!/
 Su amor vida eterna y santidad/.
 
 238.MÍRAME
-Oye Jehová mi voz con que a ti clamo
-Ten misericordia de mi y respóndeme
+Oye Jehová mi voz con que a ti clamo.
+Ten misericordia de mi y respóndeme.
 Mi corazón habla mucho de ti y busco tu rostro.
 
-Me acordaré de ti todas las noches
+Me acordaré de ti todas las noches.
 Y mis ojos ven con tu luz todos los días.
 Mi corazón medita en ti y en todas tus obras.
 
-Mírame y ten misericordia de mi porque estoy solo
+Mírame y ten misericordia de mi porque estoy solo.
 Y mi alma necesita de ti Señor.
 Pruébame según tu palabra transfórmame.
 Te necesito, tu eres el principio y el fin, Mírame.
@@ -5009,30 +5009,36 @@ Quiero ver a (persona o ciudad) allá...
 Quiero ver a todos allá...
 
 293.REDIMIDO SOY
-Redimido soy (Eco), Por Cristo Jesús (Eco)
+Redimido soy (Eco),
+Por Cristo Jesús (Eco)
 Redimido soy, Por Cristo Jesús
 Redimido soy por Cristo Jesús
 Y yo ando en la luz,
 Mis pecados son lavados por Jesús.
 
-Mi Dios y yo (Eco), Andamos juntos (Eco)
+Mi Dios y yo (Eco),
+Andamos juntos (Eco)
 Mi Dios y yo, andamos juntos
 Mi Dios y yo, andamos juntos
 Y el Espíritu me dió.
 Mis pecados son lavados por Jesús.
 
-Y además (Eco)  Te contaré (Eco)
-Y además, te contaré, Y además, te contaré
+Y además (Eco)
+Te contaré (Eco)
+Y además, te contaré,
+Y además, te contaré
 Baje al río y me bauticé
 Mis pecados son lavados por Jesús.
 
-Si quiere ver (Eco)  A Satanás correr ( Eco)
-Si quieres ver, Satanás correr
-Si quieres ver, Satanás correr
+Si quiere ver (Eco)
+A Satanás correr ( Eco)
+Si quieres ver, a Satanás correr
+Si quieres ver, a Satanás correr
 La palabra te dará poder
 Mis pecados son lavados por Jesús.
 
-Cristo Volverá (Eco),Por segunda Vez (Eco)
+Cristo Volverá (Eco),
+Por segunda Vez (Eco)
 Cristo Volverá, por segunda Vez
 Cristo Volverá, por segunda Vez
 Y al cielo me iré
@@ -5061,9 +5067,9 @@ Dentro de mi corazón,
 
 296.REY DE REYES
 /Rey de reyes, Señor de Señores,
-Gloria Aleluya/.
+Gloria aleluya/.
 /Cristo príncipe de paz,
-Gloria Aleluya/.
+Gloria aleluya/.
 
 297.ROCA DE LA ETERNIDAD
 Roca de la eternidad, Fuiste abierta para mí.
@@ -5080,7 +5086,7 @@ Se mi escondedero fiel, Roca de la Eternidad.
 
 298.ROSA DE SARÓN
 Tú eres, tú eres Señor, la rosa de Sarón.
-Tú eres tú eres Señor, el lirio de los valles.
+Tú eres, tú eres Señor, el lirio de los valles.
 
 Tú eres, tú eres Señor, el amor de mi corazón.
 /Porque tú eres Señor, el Hijo de Dios/.
@@ -5102,7 +5108,8 @@ A fin de que ellos vean nuestras buenas obras Y glorifiquen al Padre.
 300.SAL DE MI TIERRA
 //Yo soy sal de mi tierra//
 Sabor a Cristo le voy a dar.
-¡Qué bien! Sal para dar sabor,
+¡Qué bien!
+Sal para dar sabor,
 Sabor a Cristiandad,
 A mi tierra querida,
 Sabor a Cristo le voy a dar.
