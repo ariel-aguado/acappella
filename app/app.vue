@@ -11,4 +11,5 @@ const { status } = useSongbookWorker();
     <NuxtPage />
   </NuxtLayout>
   <AppInstallBanner />
+  <AppUpdateToast />
 </template>
