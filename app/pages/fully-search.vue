@@ -1,11 +1,10 @@
 <script lang="ts" setup>
-import type { LyricLine } from "~~/lib/types";
-
-import Fuse from "fuse.js";
 import Mark from "mark.js";
 
 const songStore = useSongStore();
-const { songs, searchHistory } = storeToRefs(songStore);
+const { favoriteSongs, searchHistory } = storeToRefs(songStore);
+
+const { search: workerSearch } = useSongbookWorker();
 
 const query = ref("");
 const queryRef = shallowRef();
@@ -14,53 +13,41 @@ const vFocus = {
   mounted: (el: HTMLElement) => el.focus(),
 };
 
-const searchOptions = {
-  includeScore: true,
-  includeMatches: true,
-  threshold: 0.0,
-  // distance: 0,
-  ignoreLocation: true,
-  ignoreDiacritics: true,
-  minMatchCharLength: 1,
-};
+const searchResult = ref<FullSearchResult[]>([]);
+let searchSeq = 0;
 
-const allSongs = new Fuse(toValue(songs), {
-  keys: [
-    { name: "title", weight: 2 },
-    { name: "lyric", weight: 1 },
-  ],
-  ...searchOptions,
-});
-
-const searchResult = computed(() => allSongs.search(toValue(query)).slice(0, 15));
-
-function handleSongLines(lines: LyricLine[]) {
-  const allLines = new Fuse(lines, {
-    keys: [
-      { name: "line", weight: 1 },
-    ],
-    ...searchOptions,
-  });
-
-  return allLines.search(toValue(query));
+async function runSearch(text: string) {
+  if (!text || !text.trim()) {
+    searchResult.value = [];
+    return;
+  }
+  const mySeq = ++searchSeq;
+  const results = (await workerSearch(text, {
+    mode: "full",
+    favoriteIds: favoriteSongs.value.slice(),
+    limit: 15,
+  })) as FullSearchResult[];
+  if (mySeq !== searchSeq)
+    return;
+  searchResult.value = results;
 }
 
 function performMark() {
   const context = document.querySelector(".context");
+  if (!context)
+    return;
   const markOptions = {
     diacritics: true,
     separateWordSearch: false,
   };
   const markInstance = new Mark(context);
 
-  // Remove previous marked elements and mark
-  // the new keyword inside the context
   markInstance.unmark({
     done() {
       markInstance.mark(query.value, markOptions);
     },
   });
-};
+}
 
 function saveSearchHistory() {
   if (query.value.length > 0) {
@@ -83,14 +70,28 @@ function clearSearchHistory() {
 async function setQuery(history: string) {
   query.value = history;
   queryRef.value.focus();
+  // Wait for the search triggered by `query` change to complete AND the DOM
+  // to reflect the new results — then apply the highlight.
   await nextTick();
+  await new Promise(r => setTimeout(r, 0));
   performMark();
 }
+
+watch(query, (newQuery) => {
+  runSearch(newQuery);
+});
+
+// Re-apply highlight whenever the results change. This covers:
+//   - typing in the input (via @input="performMark" too, but that's a hot path)
+//   - clicking a recent search item (no @input event, so we need this watcher)
+//   - any other code path that mutates searchResult
+watch(searchResult, () => {
+  nextTick().then(() => performMark());
+});
 </script>
 
 <template>
   <div class="flex flex-col h-[calc(100dvh-64px-52px)] max-w-screen min-w-0 md:min-w-2xl md:max-w-2xl md:mx-auto md:pt-8">
-    <!-- Search results -->
     <div class="sticky top-0 z-10 shadow-md md:shadow-none p-4 bg-base-100 dark:bg-content backdrop-blur-sm">
       <span>Introduzca cualquier palabra:</span>
       <label class="input w-full mt-2">
@@ -110,21 +111,19 @@ async function setQuery(history: string) {
     <div v-if="query.length && searchResult.length" class="context flex flex-col overflow-y-auto">
       <div
         v-for="song in searchResult"
-        :key="song.item.id"
+        :key="song.songId"
         class="[&:not(:first-child)]:border-t [&:not(:first-child)]:border-base-300"
       >
-        <SongItem :song="song.item" @favorite-off="songStore.toggleFavorite($event)" />
-        <!-- Lyrics -->
+        <SongItem :song="song" @favorite-off="songStore.toggleFavorite($event)" />
         <div
-          v-for="(songLine, index) in handleSongLines(song.item.lyricLines)"
-          :key="`line-${index}`"
+          v-for="(songLine, index) in song.matchedLines"
+          :key="`line-${song.songId}-${index}`"
           class="[&:not(:first-child)]:border-t [&:not(:first-child)]:border-base-300 py-1 px-4"
         >
-          {{ songLine.item.line }}
+          {{ songLine.line }}
         </div>
       </div>
     </div>
-    <!-- Empty state -->
     <div
       v-else-if="query.length && !searchResult.length"
       class="flex flex-col justify-center items-center mt-8"
@@ -133,7 +132,6 @@ async function setQuery(history: string) {
       <span class="text-xl font-bold mt-4">No se encontraron resultados</span>
       <span>Intenta otra búsqueda</span>
     </div>
-    <!-- Search history -->
     <div v-else-if="searchHistory.length" class="flex flex-col gap-2 px-4">
       <div class="flex justify-between items-center border-b-2 border-base-300 py-4">
         <span class="text-base font-normal">Búsquedas recientes</span>

@@ -49,6 +49,35 @@ export type FilteredSong = {
 };
 
 /**
+ * Full-text search result item — includes the lines that matched.
+ */
+export type FullSearchResult = {
+  songId: number;
+  title: string;
+  firstLine: string;
+  favorite: boolean;
+  matchedLines: Array<{ line: string }>;
+};
+
+/**
+ * Search mode for the worker search API.
+ *  - "byNumber" / "byTitle": match songs against title (title-only fuzzy search)
+ *  - "full":                 match across title + lyric, return top results with matched lines
+ */
+export type SearchMode = "byNumber" | "byTitle" | "full";
+
+/**
+ * Options for worker.search()
+ */
+export type SearchOptions = {
+  mode: SearchMode;
+  favoritesOnly?: boolean;
+  /** IDs of songs the user has favorited — used to set the `favorite` flag on results. */
+  favoriteIds?: number[];
+  limit?: number;
+};
+
+/**
  * Data for inserting a new song (omits auto-generated fields)
  */
 export type InsertSong = {

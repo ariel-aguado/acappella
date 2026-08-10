@@ -1,18 +1,87 @@
-import type { FilteredSong, LyricLine, ParsedLyric, Song, SongData } from "~~/lib/types";
+import type { FilteredSong, Song } from "~~/lib/types";
 
 export const useSongStore = defineStore("useSongStore", () => {
-  const isLoading = ref(false);
-  const songs = useLocalStorage<Song[]>("songs", []);
+  const songs = ref<Song[]>([]);
   const filteredSongsByNumber = ref<FilteredSong[]>([]);
   const filteredSongsByTitle = ref<FilteredSong[]>([]);
   const filteredSongIdsByNumber = ref<number[]>([]);
   const filteredSongIdsByTitle = ref<string[]>([]);
+
   const favoriteSongs = useLocalStorage<number[]>("favoriteSongs", []);
   const songId = useLocalStorage<number>("songId", 1);
-  const currentSong = useLocalStorage<Song>("currentSong", {} as Song);
   const searchHistory = useLocalStorage<string[]>("searchHistory", []);
 
-  // Ensure songId is always a sane number (>=1). localStorage may contain null/"" or non-numeric values.
+  const { status: workerStatus, songs: workerSongs, setFavoriteIds } = useSongbookWorker();
+
+  const isLoading = computed(() => workerStatus.value !== "ready");
+  const songsCount = computed(() => songs.value.length);
+  const currentSong = computed<Song | null>(() => songs.value[songId.value - 1] ?? null);
+  const currentTab = ref("byNumber");
+
+  function applyFavorites(parsedSongs: Song[]): Song[] {
+    const favSet = new Set(favoriteSongs.value);
+    return parsedSongs.map(s => ({ ...s, favorite: favSet.has(s.songId) }));
+  }
+
+  watch(
+    workerSongs,
+    (next) => {
+      if (next && next.length > 0 && songs.value.length === 0) {
+        songs.value = applyFavorites(next);
+      }
+    },
+    { immediate: true },
+  );
+
+  watch(
+    () => songs.value.length,
+    () => {
+      if (songs.value.length > 0) {
+        songs.value = applyFavorites(songs.value);
+      }
+    },
+  );
+
+  watch(
+    () => favoriteSongs.value.length,
+    () => {
+      if (songs.value.length > 0) {
+        songs.value = applyFavorites(songs.value);
+      }
+      // Keep the worker in sync so search results carry the correct
+      // favorite flag and the favorites-only filter works.
+      setFavoriteIds(favoriteSongs.value.slice());
+    },
+  );
+
+  // Initial sync to worker (covers the case where favoriteSongs has values
+  // persisted from a previous session, before this watcher fires).
+  // Uses `immediate: true` because the worker plugin finishes initializing
+  // BEFORE the store is constructed — so songs.length is already > 0 when
+  // the watcher is created, and we need the watcher to fire right away.
+  watch(
+    () => songs.value.length,
+    (len) => {
+      if (len > 0) {
+        setFavoriteIds(favoriteSongs.value.slice());
+      }
+    },
+    { immediate: true },
+  );
+
+  // Re-sync favorites whenever workerStatus flips to "ready". This handles the
+  // case where the worker is recreated (e.g., page reload) and needs the
+  // current favorites re-applied before the first search runs.
+  watch(
+    () => workerStatus.value,
+    (status) => {
+      if (status === "ready") {
+        setFavoriteIds(favoriteSongs.value.slice());
+      }
+    },
+    { immediate: true },
+  );
+
   function sanitizeSongId(val: any) {
     const n = Number(val);
     if (!Number.isFinite(n) || Number.isNaN(n))
@@ -21,7 +90,6 @@ export const useSongStore = defineStore("useSongStore", () => {
     return i >= 1 ? i : 1;
   }
 
-  // Sanitize initial value read from localStorage
   try {
     songId.value = sanitizeSongId(songId.value as unknown as any);
   }
@@ -29,7 +97,6 @@ export const useSongStore = defineStore("useSongStore", () => {
     songId.value = 1;
   }
 
-  // Watch and coerce any future assignments that are not numeric
   watch(
     () => songId.value,
     (v) => {
@@ -38,15 +105,12 @@ export const useSongStore = defineStore("useSongStore", () => {
         songId.value = sane;
     },
   );
-  const songsData = ref<(SongData & { lyricParsed: ParsedLyric; lyricLines: LyricLine[] })[]>([]);
-  const songsCount = computed(() => songs.value.length);
-  const currentTab = ref("byNumber");
 
   async function getSongs() {
-    isLoading.value = true;
-    const data: any = await loadSongsFromPublic();
-    songsData.value = data;
-    isLoading.value = false;
+    if (workerStatus.value === "ready")
+      return;
+    const { init } = useSongbookWorker();
+    await init();
   }
 
   function getSongById(id: number) {
@@ -70,14 +134,9 @@ export const useSongStore = defineStore("useSongStore", () => {
     if (!Array.isArray(ids) || ids.length === 0)
       return [];
 
-    // Ordenar y quitar duplicados
     const uniqueSorted = Array.from(new Set(ids)).sort((a, b) => a - b);
     const n = uniqueSorted.length;
-
-    // Ajustar secciones al total de elementos disponibles
     const k = Math.min(sections, n);
-
-    // Selección uniforme por posición, incluyendo primero y último
     const step = (n - 1) / (k - 1);
     const anchors: number[] = [];
 
@@ -107,24 +166,30 @@ export const useSongStore = defineStore("useSongStore", () => {
     return Array.from(initials).sort() as string[];
   }
 
+  function applyFavoriteToFiltered(arr: FilteredSong[], songId: number, isFav: boolean): void {
+    const idx = arr.findIndex(s => s.songId === songId);
+    if (idx >= 0)
+      arr[idx] = { ...arr[idx], favorite: isFav };
+  }
+
   function toggleFavorite(song: Song | FilteredSong) {
-    // Use songId - 1 to get the correct index (songs are 1-indexed)
     const songIndex = song.songId - 1;
 
     if (songIndex >= 0 && songIndex < songs.value.length && songs.value[songIndex]) {
-      // Toggle the favorite flag
       const newFavoriteState = !songs.value[songIndex].favorite;
-      songs.value[songIndex].favorite = newFavoriteState;
+      songs.value[songIndex] = { ...songs.value[songIndex], favorite: newFavoriteState };
 
-      // Update favoriteSongs array in localStorage
+      // Keep the search results in sync so the heart icon updates immediately
+      // without waiting for a re-search.
+      applyFavoriteToFiltered(filteredSongsByNumber.value, song.songId, newFavoriteState);
+      applyFavoriteToFiltered(filteredSongsByTitle.value, song.songId, newFavoriteState);
+
       if (newFavoriteState) {
-        // Add to favorites if not already there
         if (!favoriteSongs.value.includes(song.songId)) {
           favoriteSongs.value.push(song.songId);
         }
       }
       else {
-        // Remove from favorites
         const favoriteIndex = favoriteSongs.value.indexOf(song.songId);
         if (favoriteIndex !== -1) {
           favoriteSongs.value.splice(favoriteIndex, 1);
@@ -134,33 +199,10 @@ export const useSongStore = defineStore("useSongStore", () => {
   }
 
   async function updateSongsData() {
+    const { refresh } = useSongbookWorker();
     songs.value = [];
-    await getSongs();
+    await refresh();
   }
-
-  watch(() => songsData.value, (newData) => {
-    if (newData) {
-      // if (songs.value.length === 0) {
-      songs.value = (songsData.value as any[]).map((s: any) => {
-        const isFavorite = favoriteSongs.value.includes(s.songId);
-        return {
-          ...s,
-          lyricParsed: {
-            ...s.lyricParsed,
-            data: {
-              title: s.lyricParsed?.data?.title ?? "",
-              description: s.lyricParsed?.data?.description ?? "",
-              ...(s.lyricParsed?.data ?? {}),
-            },
-          },
-          favorite: isFavorite,
-          scrollTitle: s.scrollTitle,
-        };
-      });
-      // }
-      isLoading.value = false;
-    }
-  });
 
   return {
     songId,
@@ -170,11 +212,11 @@ export const useSongStore = defineStore("useSongStore", () => {
     filteredSongIdsByNumber,
     filteredSongIdsByTitle,
     favoriteSongs,
-    currentSong,
     searchHistory,
     songsCount,
     isLoading,
     currentTab,
+    currentSong,
     getSongs,
     getSongById,
     navigateToSong,
@@ -183,5 +225,6 @@ export const useSongStore = defineStore("useSongStore", () => {
     generateAnchorFromInitials,
     toggleFavorite,
     updateSongsData,
+    setFavoriteIds,
   };
 });

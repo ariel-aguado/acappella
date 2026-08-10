@@ -158,7 +158,7 @@ onMounted(async () => {
 <template>
   <div class="flex-1 flex flex-col justify-center items-center relative">
     <div v-if="isLoading">
-      <span class="loading loading-dots loading-xl" />
+      <span class="loading loading-spinner loading-xl" />
     </div>
     <div v-else class="max-w-screen">
       <Swiper

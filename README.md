@@ -4,7 +4,7 @@
 
 <img src="public/acappella-og-optimized.png" alt="ACAPPELLA" width="800" />
 
-### Himnario Digital para la alabanza
+## Himnario Digital para la alabanza
 
 Una aplicación web progresiva para gestionar y presentar himnos y cánticos espirituales desde cualquier dispositivo.
 

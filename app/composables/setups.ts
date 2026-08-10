@@ -25,14 +25,5 @@ export function setupPageHeader() {
       // content: () => `width=device-width,initial-scale=1${enablePinchToZoom.value ? '' : ',maximum-scale=1,user-scalable=0'},viewport-fit=cover`,
     }],
     titleTemplate: c => c ? `${c} - Acappella` : "Acappella",
-    link: import.meta.client
-    // link: (import.meta.client && useAppConfig().pwaEnabled)
-      ? () => [{
-          key: "webmanifest",
-          rel: "manifest",
-          href: `/manifest.json`,
-          // href: `/manifest-${locale.value}${colorMode.value === 'dark' ? '-dark' : ''}.webmanifest`,
-        }]
-      : [],
   });
 }
