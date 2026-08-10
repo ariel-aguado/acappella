@@ -365,14 +365,14 @@ watchEffect(() => {
 
 <template>
   <section v-if="isLoading" class="w-full h-full flex justify-center items-center">
-    <span class="loading loading-dots loading-xl" />
+    <span class="loading loading-spinner loading-xl" />
   </section>
   <div v-else class="reveal">
     <div class="slides">
       <section
         v-for="(stanza, index) in stanzas"
         :key="`stanza-${index + 1}`"
-        class="h-full !perspective-distant !flex flex-col justify-between"
+        class="h-full perspective-distant! flex! flex-col justify-between"
         data-background-image="/img/background-fullscreen.webp"
         data-background-size="cover"
       >

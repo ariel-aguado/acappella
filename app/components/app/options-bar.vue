@@ -25,7 +25,7 @@ const emit = defineEmits(["update:open"]);
         aria-label="Ajustar fuente"
         @click="emit('update:open')"
       >
-        <Icon name="tabler:text-size" size="28" />
+        <Icon name="tabler:text-size" size="28" class="text-white" />
       </button>
       <AppThemeToggle />
     </div>

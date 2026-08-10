@@ -1,12 +1,12 @@
-import type { LyricLine, ParsedLyric, SongData } from "~~/lib/types";
-
-import { marked } from "marked";
+import type { LyricLine, SongData } from "~~/lib/types";
 
 /**
- * Split the big songbook text into individual song blocks and extract id/title/raw lyric
+ * Split the big songbook text into individual song blocks and extract id/title/raw lyric.
+ * Pure function — no I/O, no side effects. Safe to use in workers.
  */
-function parseSongbook(text: string): SongData[] {
+export function parseSongbook(text: string): SongData[] {
   return text
+    // eslint-disable-next-line regexp/optimal-lookaround-quantifier -- kept verbatim from legacy parser
     .split(/(?=^\d+\.\s*[^\n]*)/m)
     .map((block) => {
       const lines = block.split(/\r?\n/);
@@ -27,9 +27,11 @@ function isChorusLine(line: string) {
 }
 
 /**
- * Format marks stanzas, numbers, and handles CORO
+ * Format marks stanzas, numbers, and handles CORO.
+ * Returns a Markdown string suitable for `marked.parse`.
+ * Pure function — safe to use in workers.
  */
-function formatSongContent(content: string): string {
+export function formatSongContent(content: string): string {
   const lines = content.split(/\r?\n/) as string[];
   const out: string[] = [];
   let stanzaIdx = 1;
@@ -121,9 +123,10 @@ function formatSongContent(content: string): string {
 }
 
 /**
- * Convert formatted lyric string into array of LyricLine objects used by the UI
+ * Convert formatted lyric string into array of LyricLine objects used by the UI.
+ * Pure function — safe to use in workers.
  */
-function lyricToLines(content: string): LyricLine[] {
+export function lyricToLines(content: string): LyricLine[] {
   const lines = content.split("\n");
   let inChorus = false;
   const parsed: LyricLine[] = [];
@@ -155,42 +158,4 @@ function lyricToLines(content: string): LyricLine[] {
   }
 
   return parsed;
-}
-
-/**
- * Load songs from `public/songs/songbook.txt`, parse + format, save into localStorage
- */
-export async function loadSongsFromPublic(): Promise<(SongData & { lyricParsed: ParsedLyric; lyricLines: LyricLine[] })[]> {
-  try {
-    const res = await fetch("/songs/songbook.txt");
-    if (!res.ok)
-      throw new Error("Failed to fetch songbook");
-    const txt = await res.text();
-
-    const parsed = parseSongbook(txt);
-
-    const songs = parsed.map((s) => {
-      const formatted = formatSongContent(s.lyric || "");
-      const html = marked.parse(formatted || s.lyric || "");
-      const lyricParsed = { body: html, data: { title: s.title } };
-      const lyricLines = lyricToLines(formatted || s.lyric || "");
-
-      return {
-        id: s.songId,
-        songId: s.songId,
-        title: s.title,
-        lyric: formatted,
-        createdAt: Date.now(),
-        lyricParsed,
-        lyricLines,
-        scrollTitle: false,
-      } as SongData & { lyricParsed: ParsedLyric; lyricLines: LyricLine[]; scrollTitle: boolean };
-    });
-
-    return songs;
-  }
-  catch (err) {
-    console.error("Error loading songs from public:", err);
-    return [] as any;
-  }
 }
