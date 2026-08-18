@@ -134,10 +134,10 @@ watch(status, (s) => {
         <Icon name="tabler:brand-netease-music" size="40" class="text-primary" />
         <div class="flex flex-col">
           <h2 id="songbook-overlay-title" class="text-xl font-bold leading-tight">
-            Elegí tu himnario
+            Elige tu himnario
           </h2>
           <p class="text-sm opacity-70">
-            Seleccioná la colección que usarás en este dispositivo.
+            Selecciona la colección que usarás en este dispositivo.
           </p>
         </div>
       </div>
@@ -175,7 +175,7 @@ watch(status, (s) => {
       </ul>
 
       <p class="text-xs opacity-60 text-center">
-        Podés cambiar de himnario más tarde desde el menú superior.
+        Puedes cambiar de himnario más tarde desde el menú superior.
       </p>
     </div>
   </div>
