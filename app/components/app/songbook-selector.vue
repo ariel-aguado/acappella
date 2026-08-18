@@ -97,7 +97,7 @@ watch(status, (s) => {
       <li v-for="sb in manifest" :key="sb.id">
         <button
           type="button"
-          class="flex items-center gap-2"
+          class="flex items-center gap-2 py-3 px-4"
           :class="{ 'menu-active': sb.id === currentId }"
           :disabled="status === 'loading'"
           @click="onSelect(sb)"
@@ -105,7 +105,7 @@ watch(status, (s) => {
           <Icon
             v-if="sb.id === currentId"
             name="tabler:check"
-            size="16"
+            size="18"
             class="text-primary"
           />
           <span v-else class="w-4" />
@@ -113,7 +113,7 @@ watch(status, (s) => {
           <Icon
             v-if="status === 'loading' && sb.id === currentId"
             name="tabler:loader-2"
-            size="16"
+            size="18"
             class="animate-spin"
           />
         </button>
