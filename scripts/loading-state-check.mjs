@@ -104,6 +104,12 @@ try {
   const targetsRes = await fetch(`http://localhost:${PORT + 1}/json`)
   const targets = await targetsRes.json()
   const page = targets.find(t => t.type === "page" && t.url.startsWith(URL))
+  // Wait for the manifest to load on first run, then seed the songbook
+  // selection so the worker boots with a songbook (the app now requires the
+  // user to pick one on first run).
+  await sleep(2000)
+  await cdpEval(page.webSocketDebuggerUrl,
+    `localStorage.setItem('songbookId', 'songbook-montevideo'); location.reload();`)
   await sleep(8000)
 
   // Navigate to /search

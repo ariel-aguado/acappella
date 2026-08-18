@@ -15,16 +15,17 @@ const {
   currentTab,
 } = storeToRefs(songStore);
 
-const { search: workerSearch } = useSongbookWorker();
+const { search: workerSearch, isSearching } = useSongbookWorker();
 
 const query = ref("");
 const queryRef = shallowRef();
 const songsFiltered = ref<FilteredSong[]>([]);
 const isFiltering = ref(false);
 const isFavorites = ref(false);
-// True while a worker search is in flight. Used to distinguish "loading"
-// from "no results" so we don't flash the empty state during tab switches.
-const isSearching = ref(false);
+// Set synchronously when the tab changes so the spinner is shown before
+// the watcher's async body runs. Cleared once the search completes. This
+// prevents the previous tab's EmptyState from flashing during the switch.
+const isTransitioning = ref(false);
 
 const vFocus = {
   mounted: (el: HTMLElement) => el.focus(),
@@ -100,28 +101,22 @@ onMounted(() => {
 });
 
 async function updateFilteredSongs(newQuery: string) {
-  isSearching.value = true;
-  try {
-    const mode = currentTab.value === "byTitle" ? "byTitle" : "byNumber";
-    const results = (await workerSearch(newQuery, {
-      mode,
-      favoritesOnly: isFavorites.value,
-      favoriteIds: favoriteSongs.value.slice(),
-      limit: 380,
-    })) as FilteredSong[];
-    songsFiltered.value = results;
+  const mode = currentTab.value === "byTitle" ? "byTitle" : "byNumber";
+  const results = (await workerSearch(newQuery, {
+    mode,
+    favoritesOnly: isFavorites.value,
+    favoriteIds: favoriteSongs.value.slice(),
+    limit: 380,
+  })) as FilteredSong[];
+  songsFiltered.value = results;
 
-    if (currentTab.value === "byNumber") {
-      filteredSongsByTitle.value = [];
-      fillSongsFilteredByNumber();
-    }
-    else if (currentTab.value === "byTitle") {
-      filteredSongsByNumber.value = [];
-      fillSongsFilteredByTitle();
-    }
+  if (currentTab.value === "byNumber") {
+    filteredSongsByTitle.value = [];
+    fillSongsFilteredByNumber();
   }
-  finally {
-    isSearching.value = false;
+  else if (currentTab.value === "byTitle") {
+    filteredSongsByNumber.value = [];
+    fillSongsFilteredByTitle();
   }
 }
 
@@ -150,7 +145,13 @@ watch(
 
 watch(
   () => currentTab.value,
-  async (newValue) => {
+  async (newValue, oldValue) => {
+    // Skip the initial mount when currentTab is set by onMounted (oldValue
+    // is undefined); only mark a transition when the user actually changes
+    // the tab.
+    if (oldValue !== undefined && newValue !== oldValue) {
+      isTransitioning.value = true;
+    }
     await updateFilteredSongs(query.value);
     if (newValue === "byNumber") {
       if (filteredSongsByNumber.value.length === 0) {
@@ -166,6 +167,15 @@ watch(
     performMark();
   },
 );
+
+// Clear the transition flag once the worker search completes. At that point
+// the new tab's filteredSongs has been populated, so showing the EmptyState
+// or the song list is the correct next state.
+watch(isSearching, (searching) => {
+  if (!searching) {
+    isTransitioning.value = false;
+  }
+});
 </script>
 
 <template>
@@ -242,14 +252,14 @@ watch(
 
     <div v-if="currentTab === 'byNumber'" key="byNumber" class="context flex-1 flex overflow-y-auto">
       <SongsByNumber v-if="filteredSongsByNumber.length" @favorite-off="onFavoriteOff" />
-      <div v-else-if="isSearching" class="flex-1 flex justify-center items-center">
+      <div v-else-if="isSearching || isTransitioning" class="flex-1 flex justify-center items-center">
         <span class="loading loading-spinner loading-xl" />
       </div>
       <EmptyState v-else />
     </div>
     <div v-if="currentTab === 'byTitle'" key="byTitle" class="context flex-1 flex overflow-y-auto">
       <SongsByTitle v-if="filteredSongsByTitle.length" @favorite-off="onFavoriteOff" />
-      <div v-else-if="isSearching" class="flex-1 flex justify-center items-center">
+      <div v-else-if="isSearching || isTransitioning" class="flex-1 flex justify-center items-center">
         <span class="loading loading-spinner loading-xl" />
       </div>
       <EmptyState v-else />

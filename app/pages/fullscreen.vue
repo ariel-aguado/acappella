@@ -7,7 +7,10 @@ const colorMode = useColorMode();
 
 // Song store
 const songStore = useSongStore();
-const { songs, songId, isLoading } = storeToRefs(songStore);
+const { songs, songId } = storeToRefs(songStore);
+
+// Worker state (single source of truth for the songbook loading state)
+const { status } = useSongbookWorker();
 
 // Reactive Mouse Position
 const { x, y } = useMouse();
@@ -306,7 +309,7 @@ onMounted(async () => {
 
   await songStore.getSongs();
 
-  if (!isLoading.value) {
+  if (status.value !== "loading") {
     await nextTick();
 
     loadRevealCss();
@@ -364,7 +367,7 @@ watchEffect(() => {
 </script>
 
 <template>
-  <section v-if="isLoading" class="w-full h-full flex justify-center items-center">
+  <section v-if="status === 'loading'" class="w-full h-full flex justify-center items-center">
     <span class="loading loading-spinner loading-xl" />
   </section>
   <div v-else class="reveal">

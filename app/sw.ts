@@ -17,11 +17,27 @@ self.addEventListener("activate", (event) => {
 // Precache all injected assets
 precacheAndRoute(self.__WB_MANIFEST);
 
-// Songbook - SWR
+// Songbook files - SWR (one cache entry per songbook)
 registerRoute(
-  ({ url }) => url.pathname === "/songs/songbook.txt",
+  ({ url }) => /^\/songs\/songbook(?:-.+)?\.txt$/i.test(url.pathname),
   new StaleWhileRevalidate({
     cacheName: "songbook-cache-v1",
+    plugins: [
+      new CacheableResponsePlugin({ statuses: [0, 200] }),
+      new ExpirationPlugin({
+        maxEntries: 32,
+        maxAgeSeconds: 60 * 60 * 24 * 30,
+      }),
+    ],
+  }),
+  "GET",
+);
+
+// Songbook manifest - SWR
+registerRoute(
+  ({ url }) => url.pathname === "/songs/manifest.json",
+  new StaleWhileRevalidate({
+    cacheName: "songbook-manifest-cache-v1",
     plugins: [
       new CacheableResponsePlugin({ statuses: [0, 200] }),
       new ExpirationPlugin({

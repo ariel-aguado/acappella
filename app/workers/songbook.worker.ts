@@ -77,6 +77,8 @@ const api = {
   cache: null as Song[] | null,
   titleIndex: null as Fuse<Song> | null,
   fullIndex: null as Fuse<Song> | null,
+  /** Absolute path of the currently-loaded songbook file (e.g. `/songs/songbook-montevideo.txt`). */
+  currentFile: null as string | null,
 
   /**
    * Sync the user's favorite IDs from the store so search results can carry
@@ -94,14 +96,15 @@ const api = {
     return favoriteIds.size;
   },
 
-  async loadAndParse(): Promise<Song[]> {
-    if (this.cache) {
+  async loadAndParse(file: string): Promise<Song[]> {
+    // Already loaded this exact songbook — return the cached result.
+    if (this.cache && this.currentFile === file) {
       this.ready = true;
       return this.cache;
     }
-    const res = await fetch("/songs/songbook.txt");
+    const res = await fetch(file);
     if (!res.ok)
-      throw new Error("Failed to fetch songbook");
+      throw new Error(`Failed to fetch songbook: ${file}`);
     const txt = await res.text();
 
     const parsed = parseSongbook(txt);
@@ -128,12 +131,13 @@ const api = {
     this.cache = songs;
     this.titleIndex = buildTitleIndex(songs);
     this.fullIndex = buildFullIndex(songs);
+    this.currentFile = file;
     this.ready = true;
     return songs;
   },
 
   search(query: string, options: SearchOptions): FilteredSong[] | FullSearchResult[] {
-    if (!this.cache) {
+    if (!this.cache || !this.currentFile) {
       return [];
     }
     const trimmed = query.trim();

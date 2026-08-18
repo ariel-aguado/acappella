@@ -6,23 +6,24 @@ const props = defineProps<{
 
 const message = computed(() => {
   switch (props.status) {
-    case "idle":
     case "loading":
       return "Cargando himnario…";
     case "error":
       return "No se pudo cargar el himnario";
+    case "idle":
     case "ready":
-      return "";
     default:
       return "";
   }
 });
+
+const shouldRender = computed(() => props.status === "loading" || props.status === "error");
 </script>
 
 <template>
   <Transition name="boot-fade">
     <div
-      v-if="status !== 'ready'"
+      v-if="shouldRender"
       class="boot-loader"
       role="status"
       aria-live="polite"
@@ -117,7 +118,6 @@ const message = computed(() => {
 .boot-fade-leave-active {
   transition: opacity 280ms ease;
 }
-
 .boot-fade-leave-to {
   opacity: 0;
 }

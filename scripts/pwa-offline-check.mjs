@@ -111,7 +111,12 @@ try {
   const page = targets.find(t => t.type === "page" && t.url.startsWith(URL))
   if (!page) throw new Error("page target not found")
 
-  // Wait for SW to register
+  // Wait for the manifest to load on first run, then seed the songbook
+  // selection so the worker boots with a songbook (the app now requires the
+  // user to pick one on first run).
+  await sleep(2000)
+  await cdpEval(page.webSocketDebuggerUrl,
+    `localStorage.setItem('songbookId', 'songbook-montevideo'); location.reload();`)
   await sleep(3000)
 
   const swInfo = (await cdpEval(page.webSocketDebuggerUrl,
@@ -141,7 +146,7 @@ try {
 
   // Trigger songbook fetch
   const fetchRes = (await cdpEval(page.webSocketDebuggerUrl, `(async () => {
-    const r = await fetch('/songs/songbook.txt');
+    const r = await fetch('/songs/songbook-montevideo.txt');
     const ab = await r.arrayBuffer();
     return JSON.stringify({status: r.status, bytes: ab.byteLength});
   })()`, true)).result.value
@@ -155,7 +160,7 @@ try {
 
   const songbookCache = (await cdpEval(page.webSocketDebuggerUrl, `(async () => {
     const c = await caches.open('songbook-cache-v1');
-    const r = await c.match('/songs/songbook.txt');
+    const r = await c.match('/songs/songbook-montevideo.txt');
     if (!r) return JSON.stringify({cached: false});
     const ab = await r.arrayBuffer();
     return JSON.stringify({cached: true, status: r.status, bytes: ab.byteLength});

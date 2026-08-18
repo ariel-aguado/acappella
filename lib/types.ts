@@ -85,3 +85,16 @@ export type InsertSong = {
   title: string;
   lyric: string;
 };
+
+/**
+ * One entry in the songbook manifest. The manifest is auto-generated at build
+ * time from `public/songs/songbook*.txt` files (see scripts/generate-songbook-manifest.mjs).
+ *
+ * `id` and `name` are derived from the filename; `file` is the basename
+ * served from `/songs/` (e.g. `songbook-montevideo.txt`).
+ */
+export type Songbook = {
+  id: string;
+  name: string;
+  file: string;
+};
