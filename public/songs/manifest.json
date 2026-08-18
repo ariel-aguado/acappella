@@ -1,0 +1,17 @@
+[
+  {
+    "id": "songbook-chile",
+    "name": "Chile",
+    "file": "songbook-chile.txt"
+  },
+  {
+    "id": "songbook-montevideo",
+    "name": "Montevideo",
+    "file": "songbook-montevideo.txt"
+  },
+  {
+    "id": "songbook-nogales",
+    "name": "Nogales",
+    "file": "songbook-nogales.txt"
+  }
+]

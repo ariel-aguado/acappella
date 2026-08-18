@@ -39,7 +39,7 @@ const songStore = useSongStore();
           {{ song.title }}
         </p>
         <!-- First line -->
-        <p class="text-start text-sm clamped-line">
+        <p class="w-full text-start text-sm clamped-line">
           {{ song.firstLine }}
         </p>
       </button>

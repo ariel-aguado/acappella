@@ -108,7 +108,12 @@ try {
   const page = targets.find(t => t.type === "page" && t.url.startsWith(URL))
   if (!page) throw new Error("page target not found")
 
-  // Wait for boot (worker init + Vue mount + store hydration)
+  // Wait for the manifest to load on first run, then seed the songbook
+  // selection so the worker boots with a songbook (the app now requires the
+  // user to pick one on first run).
+  await sleep(2000)
+  await cdpEval(page.webSocketDebuggerUrl,
+    `localStorage.setItem('songbookId', 'songbook-montevideo'); location.reload();`)
   await sleep(6000)
 
   // Helper to evaluate Nuxt state + localStorage

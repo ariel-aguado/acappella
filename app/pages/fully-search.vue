@@ -2,7 +2,9 @@
 import Mark from "mark.js";
 
 const songStore = useSongStore();
+const songbookStore = useSongbookStore();
 const { favoriteSongs, searchHistory } = storeToRefs(songStore);
+const { currentFile } = storeToRefs(songbookStore);
 
 const { search: workerSearch } = useSongbookWorker();
 
@@ -15,6 +17,19 @@ const vFocus = {
 
 const searchResult = ref<FullSearchResult[]>([]);
 let searchSeq = 0;
+
+// When the songbook changes while on this page, drop the stale results
+// from the previous songbook and re-run the current search against the
+// new one. The query and history are kept; only the results are tied
+// to the corpus that was loaded at search time.
+watch(currentFile, async (newFile, oldFile) => {
+  if (!oldFile || newFile === oldFile)
+    return;
+  searchResult.value = [];
+  if (query.value.trim()) {
+    await runSearch(query.value);
+  }
+});
 
 async function runSearch(text: string) {
   if (!text || !text.trim()) {

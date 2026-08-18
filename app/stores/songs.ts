@@ -13,7 +13,6 @@ export const useSongStore = defineStore("useSongStore", () => {
 
   const { status: workerStatus, songs: workerSongs, setFavoriteIds } = useSongbookWorker();
 
-  const isLoading = computed(() => workerStatus.value !== "ready");
   const songsCount = computed(() => songs.value.length);
   const currentSong = computed<Song | null>(() => songs.value[songId.value - 1] ?? null);
   const currentTab = ref("byNumber");
@@ -26,18 +25,27 @@ export const useSongStore = defineStore("useSongStore", () => {
   watch(
     workerSongs,
     (next) => {
-      if (next && next.length > 0 && songs.value.length === 0) {
+      // Always adopt the worker's result, even when songs.value is already
+      // populated — this is how a songbook switch (which replaces the worker's
+      // cache) propagates to the UI.
+      if (next && next.length > 0) {
         songs.value = applyFavorites(next);
       }
     },
     { immediate: true },
   );
 
+  // When the song list changes (initial load OR songbook switch), clamp the
+  // current songId so it stays within the new range. Different songbooks can
+  // have different total counts, so an id that was valid before may be out of
+  // range after a switch.
   watch(
     () => songs.value.length,
-    () => {
-      if (songs.value.length > 0) {
+    (len) => {
+      if (len > 0) {
         songs.value = applyFavorites(songs.value);
+        if (songId.value > len)
+          songId.value = len;
       }
     },
   );
@@ -109,8 +117,8 @@ export const useSongStore = defineStore("useSongStore", () => {
   async function getSongs() {
     if (workerStatus.value === "ready")
       return;
-    const { init } = useSongbookWorker();
-    await init();
+    const { init, currentFile } = useSongbookWorker();
+    await init(currentFile.value || undefined);
   }
 
   function getSongById(id: number) {
@@ -214,7 +222,6 @@ export const useSongStore = defineStore("useSongStore", () => {
     favoriteSongs,
     searchHistory,
     songsCount,
-    isLoading,
     currentTab,
     currentSong,
     getSongs,

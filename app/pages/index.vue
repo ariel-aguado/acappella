@@ -11,7 +11,10 @@ const swiperModules = [Navigation];
 
 // Song store
 const songStore = useSongStore();
-const { songs, songId, isLoading } = storeToRefs(songStore);
+const { songs, songId } = storeToRefs(songStore);
+
+// Worker state (single source of truth for the songbook loading state)
+const { status } = useSongbookWorker();
 
 // Font store
 const fontStore = useFontStore();
@@ -157,7 +160,7 @@ onMounted(async () => {
 
 <template>
   <div class="flex-1 flex flex-col justify-center items-center relative">
-    <div v-if="isLoading">
+    <div v-if="status === 'loading'">
       <span class="loading loading-spinner loading-xl" />
     </div>
     <div v-else class="max-w-screen">
