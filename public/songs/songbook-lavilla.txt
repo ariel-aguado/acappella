@@ -4231,23 +4231,17 @@ Joya preciosa de mi hogar,
 Nunca te quiero abandonar.
 Vive en mí, Señor.
 
-Mujeres | Hombres
-Cristo salvador | Eres mi fuerza,
-Digno es | mi poder y mi
-tu nombre. | tesoro quieres ser
-eres todo para mi
-
-Cristo redentor | Joya preciosa de
-Digno es | Mi hogar nunca te
-tu nombre | quiero abandonar
-Vives en mi Señor
+| Mujeres                                    | Hombres                                                      |
+| ------------------------------------------ | ------------------------------------------------------------ |
+| Cristo salvador. <br />Digno es tu nombre. | Eres mi fuerza.<br />Mi poder y mi<br />tesoro quieres ser.<br />Eres todo para mi. |
+| Cristo redentor.<br />Digno es tu nombre.  | Joya preciosa de mi hogar.<br />Nunca te quiero abandonar.<br />Vives en mi Señor. |
 
 Cristo salvador,
-digno es tu nombre
+digno es tu nombre.
 
 Cristo redentor,
-Digno es tu nombre
-Digno es tu nombre
+Digno es tu nombre.
+Digno es tu nombre.
 Digno es tu nombre.
 
 198.A JEHOVÁ INVOCARÉ
@@ -4981,14 +4975,12 @@ Aleluya, aleluya,
 
 237.EL CIELO ES UN LINDO LUGAR
 Hombres | Mujeres
-El cielo es | El cielo es un lindo lugar
-un lindo lugar
-Lleno de | Lleno de gozo y paz
-gozo y paz
-Quiero ver | Quiero ver a Cristo allá
-a Cristo allá
-El cielo es | El cielo es un lindo lugar
-un lindo lugar
+El cielo es un lindo lugar | El cielo es un lindo lugar
+
+Lleno de gozo y paz | Lleno de gozo y paz
+Quiero ver a Cristo allá | Quiero ver a Cristo allá
+El cielo es un lindo lugar | El cielo es un lindo lugar
+
 Voy pronto.
 (Se repite 2 veces)
 
