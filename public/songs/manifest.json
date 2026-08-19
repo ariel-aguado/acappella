@@ -1,5 +1,10 @@
 [
   {
+    "id": "songbook-la-villa",
+    "name": "La-villa",
+    "file": "songbook-la-villa.txt"
+  },
+  {
     "id": "songbook-montevideo",
     "name": "Montevideo",
     "file": "songbook-montevideo.txt"
