@@ -78,7 +78,7 @@ watch(status, (s) => {
     @toggle="onDetailsToggle"
   >
     <summary
-      class="btn btn-sm rounded-full px-3 gap-1 bg-primary-content text-primary border-0 hover:bg-primary/25"
+      class="btn btn-sm rounded-full px-3 gap-1 bg-primary-content text-primary border-0"
       :class="{ 'menu-active': isOpen, 'opacity-70': status === 'loading' }"
       :aria-label="`Cambiar himnario. Actual: ${currentSongbook?.name ?? 'ninguno'}`"
     >
