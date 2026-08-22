@@ -106,10 +106,30 @@ onBeforeUnmount(() => {
       {{ a }}
     </div>
   </div>
+
+  <Transition name="bubble">
+    <div
+      v-if="dragging && lastIdx !== null"
+      class="fixed inset-0 z-100 flex items-center justify-center pointer-events-none"
+    >
+      <div class="w-20 h-20 flex items-center justify-center rounded-2xl bg-base-100/90 backdrop-blur-sm border-2 border-secondary shadow-xl text-4xl font-bold text-secondary">
+        {{ anchorsRef[lastIdx] }}
+      </div>
+    </div>
+  </Transition>
 </template>
 
 <style scoped>
   div[ref="railEl"] > div {
   padding: 6px 0;
+}
+
+.bubble-enter-active,
+.bubble-leave-active {
+  transition: opacity 0.12s ease;
+}
+.bubble-enter-from,
+.bubble-leave-to {
+  opacity: 0;
 }
 </style>
