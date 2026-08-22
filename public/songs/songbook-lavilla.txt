@@ -2865,7 +2865,7 @@ Y en plena gloria me despertará.
 123.¡ALÉGRENSE EN CRISTO!
 (FILIPENSES 4.4)
 
-Hombres
+**Hombres**
 ¡Alégrense en Cristo! ¡Alégrense siempre!
 ¡Alégrense en Cristo! ¡Alégrense siempre!
 
@@ -4731,7 +4731,7 @@ y reinaré con mi triunfante
 Salvador.
 
 225.JESÚS ME PASTOREA
-Hombres
+**Hombres**
 Jesús me pastorea yo voy con él
 hasta el fin.
 Jesús me pastorea yo voy con él
@@ -4766,7 +4766,7 @@ Un camino hará.
 Donde no lo hay. //x2
 
 228.SIEMPRE MEJORANDO
-Hombres
+**Hombres**
 Siempre mejorando, siempre mejorando,
 siempre mejorando en el Señor,
 siempre mejorando,
@@ -4897,13 +4897,13 @@ rayos brillantes salen de sus manos.//x2
 //Y allí está escondido su poder.//x2
 
 236.ALELUYA
-Todos
+**Todos**
 Aleluya, aleluya,
 Aleluya, aleluya,
 Aleluya, aleluya,
 Aleluya, aleluya,
 
-Hombres
+**Hombres**
 Dios y Padre yo te amo,
 Dios y Padre yo te amo,
 Dios y Padre yo te amo,
@@ -4914,7 +4914,7 @@ Dios y Padre yo te amo,
 | Jesucristo te alabo,<br />Jesucristo te alabo,<br />Jesucristo te alabo.<br />Aleluya, aleluya. | Jesucristo te alabo,<br />Jesucristo te alabo,<br />Jesucristo te alabo.<br />Aleluya, aleluya. |
 | Santo Espíritu te adoro.<br />Santo Espíritu te adoro.<br />Santo Espíritu te adoro.<br />Aleluya, aleluya. | Santo Espíritu te adoro.<br />Santo Espíritu te adoro.<br />Santo Espíritu te adoro.<br />Aleluya, aleluya. |
 
-Todos
+**Todos**
 Aleluya, aleluya.
 Aleluya, aleluya.
 Aleluya, aleluya.
@@ -4931,7 +4931,9 @@ Cristo en toda mi aflicción me dio consolación
 | Mujeres                                | Hombres                               |
 | -------------------------------------- | ------------------------------------- |
 | Me dio un cantar<br />Precioso cantar. | Me dio un cantar<br />Precioso cantar |
+
 Precioso cantar que entonaré con todo el corazón
+
 | Mujeres                                | Hombres                               |
 | -------------------------------------- | ------------------------------------- |
 | Me dio un cantar<br />Precioso cantar. | Me dio un cantar<br />Precioso cantar |
@@ -4940,14 +4942,14 @@ CORO:
 | Hombres                                                      | Mujeres                                                      |
 | ------------------------------------------------------------ | ------------------------------------------------------------ |
 | Me dio un cantar<br />para decir<br />Me levantó<br />de perdición. | Me dio un cantar<br />para decir<br />Me levantó<br />de perdición. |
-| Mujeres                                                      | Mujeres                                                      |
-| ------------------------------------------------------------ | ------------------------------------------------------------ |
+| **Mujeres**                                                  | **Mujeres**                                                  |
 | Oh gloria a él,<br />Él es mi rey.<br />Precioso cantar<br />Es para mí. | Oh gloria a él,<br />Él es mi rey.<br />Precioso cantar<br />Es para mí. |
 
 Su luz alumbra mi andar, quita todo pesar.
 | Mujeres                                | Hombres                               |
 | -------------------------------------- | ------------------------------------- |
 | Me dio un cantar<br />Precioso cantar. | Me dio un cantar<br />Precioso cantar |
+
 Precioso cantar que entonaré a Jesús que es mi Rey.
 | Mujeres                                | Hombres                               |
 | -------------------------------------- | ------------------------------------- |
@@ -4957,6 +4959,7 @@ Al redimirme el Señor no tendré más temor.
 | Mujeres                                | Hombres                               |
 | -------------------------------------- | ------------------------------------- |
 | Me dio un cantar<br />Precioso cantar. | Me dio un cantar<br />Precioso cantar |
+
 Precioso cantar que entonaré entonaré con coro celestial.
 | Mujeres                                | Hombres                               |
 | -------------------------------------- | ------------------------------------- |
