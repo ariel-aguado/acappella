@@ -2869,23 +2869,17 @@ Hombres
 ¡Alégrense en Cristo! ¡Alégrense siempre!
 ¡Alégrense en Cristo! ¡Alégrense siempre!
 
-Mujeres | Hombres
-¡Alégrense en Cristo! | ¡Alégrense!
-¡Alégrense siempre! | ¡Alégrense siempre!
-¡Alégrense en Cristo! | ¡Alégrense!
-¡Alégrense siempre! | ¡Alégrense siempre!
+| Mujeres                                                      | Hombres                                                      |
+| ------------------------------------------------------------ | ------------------------------------------------------------ |
+| ¡Alégrense en Cristo!<br />¡Alégrense siempre!<br />¡Alégrense siempre!<br />¡Alégrense siempre! | ¡Alégrense!<br />¡Alégrense siempre!<br />¡Alégrense!<br />¡Alégrense siempre! |
 
-Hombres | Mujeres
-¡Alégrense en Cristo! | ¡Alégrense!
-¡Alégrense siempre! | ¡Alégrense siempre!
-¡Alégrense en Cristo! | ¡Alégrense!
-¡Alégrense siempre! | ¡Alégrense siempre!
+| Mujeres                                                      | Hombres                                                      |
+| ------------------------------------------------------------ | ------------------------------------------------------------ |
+| ¡Alégrense en Cristo!<br />¡Alégrense siempre!<br />¡Alégrense siempre!<br />¡Alégrense siempre! | ¡Alégrense!<br />¡Alégrense siempre!<br />¡Alégrense!<br />¡Alégrense siempre! |
 
-Mujeres | Hombres
-¡Alégrense en Cristo! | ¡Alégrense!
-¡Alégrense siempre! | ¡Alégrense siempre!
-¡Alégrense en Cristo! | ¡Alégrense!
-¡Alégrense siempre! | ¡Alégrense siempre!
+| Mujeres                                                      | Hombres                                                      |
+| ------------------------------------------------------------ | ------------------------------------------------------------ |
+| ¡Alégrense en Cristo!<br />¡Alégrense siempre!<br />¡Alégrense siempre!<br />¡Alégrense siempre! | ¡Alégrense!<br />¡Alégrense siempre!<br />¡Alégrense!<br />¡Alégrense siempre! |
 
 124.¡OH, QUÉ AMIGO NOS ES CRISTO!
 ¡Oh, qué amigo nos es Cristo!
@@ -4484,11 +4478,9 @@ Llegaste a mi vida y el mismo no soy.
 Canto, canto solo a ti.
 Tú das la salvación, y me la das a mí.
 
-Mujeres | Hombres
-En las tinieblas. | Tú eres mi luz.
-Cuando me enfermo. | Me das salud.
-Te canto Cristo | Veo tu faz
-Y se mi pierdo
+| Mujeres                                                      | Hombres                                             |
+| ------------------------------------------------------------ | --------------------------------------------------- |
+| En las tinieblas.<br />Cuando me enfermo.<br />Te canto Cristo<br />Y se mi pierdo. | Tú eres mi luz.<br />Me das salud.<br />Veo tu faz. |
 
 Se bien que tú me guiarás
 (TODOS)
@@ -4498,11 +4490,9 @@ Llegaste a mi vida y el mismo no soy.
 Canto, canto solo a ti.
 Tú das la salvación, y me la das a mí.
 
-Mujeres | Hombres
-En las tinieblas. | Tú eres mi luz.
-Cuando me enfermo. | Me das salud.
-Te canto Cristo | Veo tu faz
-Y se mi pierdo
+| Mujeres                                                      | Hombres                                             |
+| ------------------------------------------------------------ | --------------------------------------------------- |
+| En las tinieblas.<br />Cuando me enfermo.<br />Te canto Cristo<br />Y se mi pierdo. | Tú eres mi luz.<br />Me das salud.<br />Veo tu faz. |
 
 Se bien que tú me guiarás
 (TODOS)
@@ -4544,11 +4534,9 @@ Cristo Eres mi Roca fuerte,
 Confío siempre en tu Santo amor.
 Confío siempre en tu Santo amor.
 
-Hombres | Mujeres
-Tengo Esperanza | Tengo Esperanza
-Tengo Futuro | Tengo Futuro
-Tiene algo para mi | Tiene algo para mi
-Seguro Estoy
+| Hombres                                                      | Mujeres                                                      |
+| ------------------------------------------------------------ | ------------------------------------------------------------ |
+| Tengo Esperanza.<br />Tengo Futuro.<br />Tiene algo para mi.<br />Seguro Estoy. | Tengo Esperanza.<br />Tengo Futuro.<br />Tiene algo para mi. |
 
 Seguro Estoy (TODOS)
 
@@ -4558,11 +4546,9 @@ Cristo Eres mi Roca fuerte,
 Confío siempre en tu Santo amor.
 Confío siempre en tu Santo amor.
 
-Hombres | Mujeres
-Fiel y muy fuerte | Fiel y muy fuerte
-Es tu Palabra | Es tu Palabra
-Tú me libertarás | Tú me libertarás
-Seguro Estoy
+| Hombres                                                      | Mujeres                                                      |
+| ------------------------------------------------------------ | ------------------------------------------------------------ |
+| Fiel y muy fuerte<br />Es tu Palabra.<br />Tú me libertarás.<br />Seguro Estoy. | Fiel y muy fuerte<br />Es tu Palabra.<br />Tú me libertarás. |
 
 Seguro Estoy (TODOS)
 
@@ -4696,17 +4682,17 @@ nunca faltará.
 Glorificad a Jehová porque su misericordia.
 Glorificad a Jehová porque su misericordia.
 
-Hombres | Mujeres
-Es para siempre amén | Es para siempre amén
-Es para siempre amén | Es para siempre amén
+| Hombres                                          | Mujeres                                          |
+| ------------------------------------------------ | ------------------------------------------------ |
+| Es para siempre amén.<br />Es para siempre amén. | Es para siempre amén.<br />Es para siempre amén. |
 (2 veces)
 
 Glorificad a Jehová porque su misericordia.
 Glorificad a Jehová porque su misericordia.
 
-Hombres | Mujeres
-Es para siempre amén | Es para siempre amén
-Es para siempre amén | Es para siempre amén
+| Hombres                                          | Mujeres                                          |
+| ------------------------------------------------ | ------------------------------------------------ |
+| Es para siempre amén.<br />Es para siempre amén. | Es para siempre amén.<br />Es para siempre amén. |
 (2 veces)
 
 ¡Glorificad a Jehová!
@@ -4751,29 +4737,17 @@ hasta el fin.
 Jesús me pastorea yo voy con él
 hasta el fin.
 
-Mujeres | Hombres
-Jesús me pastorea, | Yo voy con él,
-Yo voy con él | yo voy con él
-hasta el fin, | hasta el fin.
-Jesús me pastorea, | Yo voy con él,
-Yo voy con él | yo voy con él
-hasta el fin. | hasta el fin.
+| Mujeres                                                      | Hombres                                                      |
+| ------------------------------------------------------------ | ------------------------------------------------------------ |
+| Jesús me pastorea,<br />Yo voy con él<br />hasta el fin.<br />Jesús me pastorea,<br />Yo voy con él<br />hasta el fin. | Yo voy con él,<br />yo voy con él<br />hasta el fin.<br />Yo voy con él,<br />yo voy con él<br />hasta el fin. |
 
-Hombres | Mujeres
-Jesús me pastorea, | Yo voy con él,
-Yo voy con él | yo voy con él
-hasta el fin, | hasta el fin.
-Jesús me pastorea, | Yo voy con él,
-Yo voy con él | yo voy con él
-hasta el fin. | hasta el fin.
+| Hombres                                                      | Mujeres                                                      |
+| ------------------------------------------------------------ | ------------------------------------------------------------ |
+| Jesús me pastorea,<br />Yo voy con él<br />hasta el fin.<br />Jesús me pastorea,<br />Yo voy con él<br />hasta el fin. | Yo voy con él,<br />yo voy con él<br />hasta el fin.<br />Yo voy con él,<br />yo voy con él<br />hasta el fin. |
 
-Mujeres | Hombres
-Jesús me pastorea, | Yo voy con él,
-Yo voy con él | yo voy con él
-hasta el fin, | hasta el fin.
-Jesús me pastorea, | Yo voy con él,
-Yo voy con él | yo voy con él
-hasta el fin. | hasta el fin.
+| Mujeres                                                      | Hombres                                                      |
+| ------------------------------------------------------------ | ------------------------------------------------------------ |
+| Jesús me pastorea,<br />Yo voy con él<br />hasta el fin.<br />Jesús me pastorea,<br />Yo voy con él<br />hasta el fin. | Yo voy con él,<br />yo voy con él<br />hasta el fin.<br />Yo voy con él,<br />yo voy con él<br />hasta el fin. |
 
 226.MIRAD CUÁN AMOR
 //Mirad cuan amor nos ha dado el Padre
@@ -4798,32 +4772,17 @@ siempre mejorando en el Señor,
 siempre mejorando,
 siempre mejorando en el Señor.
 
-Mujeres | Hombres
-Siempre mejorando, | Cristo es mi vida real
-siempre mejorando, | Cristo es mi vida real
-siempre mejorando | Cristo es mi vida real
-en el Señor, | Siempre mejorando
-siempre mejorando, | en el Señor.
-siempre mejorando
-en el Señor.
+| Mujeres                                                      | Hombres                                                      |
+| ------------------------------------------------------------ | ------------------------------------------------------------ |
+| Siempre mejorando,<br />siempre mejorando,<br />siempre mejorando<br />en el Señor,<br />siempre mejorando,<br />siempre mejorando<br />en el Señor. | Cristo es mi vida real.<br />Cristo es mi vida real.<br />Cristo es mi vida real.<br />Siempre mejorando,<br />en el Señor. |
 
-Hombres | Mujeres
-Siempre mejorando, | Cristo es mi vida real
-siempre mejorando, | Cristo es mi vida real
-siempre mejorando | Cristo es mi vida real
-en el Señor, | Siempre mejorando
-siempre mejorando, | en el Señor.
-siempre mejorando
-en el Señor.
+| Hombres                                                      | Mujeres                                                      |
+| ------------------------------------------------------------ | ------------------------------------------------------------ |
+| Siempre mejorando,<br />siempre mejorando,<br />siempre mejorando<br />en el Señor,<br />siempre mejorando,<br />siempre mejorando<br />en el Señor. | Cristo es mi vida real.<br />Cristo es mi vida real.<br />Cristo es mi vida real.<br />Siempre mejorando,<br />en el Señor. |
 
-Mujeres | Hombres
-Siempre mejorando, | Cristo es mi vida real
-siempre mejorando, | Cristo es mi vida real
-siempre mejorando | Cristo es mi vida real
-en el Señor, | Siempre mejorando
-siempre mejorando, | en el Señor.
-siempre mejorando
-en el Señor.
+| Mujeres                                                      | Hombres                                                      |
+| ------------------------------------------------------------ | ------------------------------------------------------------ |
+| Siempre mejorando,<br />siempre mejorando,<br />siempre mejorando<br />en el Señor,<br />siempre mejorando,<br />siempre mejorando<br />en el Señor. | Cristo es mi vida real.<br />Cristo es mi vida real.<br />Cristo es mi vida real.<br />Siempre mejorando,<br />en el Señor. |
 
 229.COMO EL CIERVO
 Como el ciervo con sed busca al rio,
@@ -4866,22 +4825,20 @@ que viene de nuestro Señor,
 El amor que solo tiene el que ya,
 conoce a Jesús.
 
-Hombres | Mujeres
-¡Aleluya! ¡Aleluya! | La alegría está en el corazón
-de aquel que conoce a Jesús,
-¡Aleluya! ¡Aleluya! | La verdadera paz la tiene aquel,
-aquel que conoce a Jesús.
+| Hombres             | Mujeres                                                      |
+| ------------------- | ------------------------------------------------------------ |
+| ¡Aleluya! ¡Aleluya! | La alegría está en el corazón<br />de aquel que conoce a Jesús, |
+| ¡Aleluya! ¡Aleluya! | La verdadera paz la tiene aquel,<br />aquel que conoce a Jesús. |
 
 El sentimiento más precioso
 que viene de nuestro Señor,
 El amor que solo tiene el que ya,
 conoce a Jesús.
 
-Mujeres | Hombres
-¡Aleluya! ¡Aleluya! | La alegría está en el corazón
-de aquel que conoce a Jesús,
-¡Aleluya! ¡Aleluya! | La verdadera paz la tiene aquel,
-aquel que conoce a Jesús.
+| Hombres             | Mujeres                                                      |
+| ------------------- | ------------------------------------------------------------ |
+| ¡Aleluya! ¡Aleluya! | La alegría está en el corazón<br />de aquel que conoce a Jesús, |
+| ¡Aleluya! ¡Aleluya! | La verdadera paz la tiene aquel,<br />aquel que conoce a Jesús. |
 
 El sentimiento más precioso
 que viene de nuestro Señor,
@@ -4889,14 +4846,10 @@ que viene de nuestro Señor,
 conoce a Jesús.//x2
 
 232.EL QUE NO ESCATIMÓ
-Hombres | Mujeres
-¡El que no escatimó, | El que no escatimó
-Ni a su propio hijo | Ni a su hijo escatimó
-Sino que lo entregó | Sino que lo entregó
-Por todos nosotros | Por nosotros lo entregó
-Cómo no nos dará | Cómo no nos dará
-También con el | cada cosa nos dará
-Todas las cosas | Ciertamente las dará
+| Hombres                                                      | Mujeres                                                      |
+| ------------------------------------------------------------ | ------------------------------------------------------------ |
+| ¡El que no escatimó,<br />Ni a su propio hijo;<br />Sino que lo entregó<br />Por todos nosotros. | El que no escatimó,<br />Ni a su hijo escatimó;<br />Sino que lo entregó,<br />Por nosotros lo entregó. |
+| Cómo no nos dará<br />También con el<br />Todas las cosas.   | Cómo no nos dará,<br />Cada cosa nos dará,<br />Ciertamente las dará. |
 
 Todos juntos
 //Ciertamente las dará
@@ -4956,109 +4909,70 @@ Dios y Padre yo te amo,
 Dios y Padre yo te amo,
 Dios y Padre yo te amo,
 
-Hombres | Mujeres
-Jesucristo te alabo, | Jesucristo te alabo,
-Jesucristo te alabo | Jesucristo te alabo
-Jesucristo te alabo | Jesucristo te alabo
-Aleluya, aleluya. | Aleluya, aleluya.
-
-Santo Espíritu te adoro | Santo Espíritu te adoro
-Santo Espíritu te adoro | Santo Espíritu te adoro
-Santo Espíritu te adoro | Santo Espíritu te adoro
-Aleluya, aleluya. | Aleluya, aleluya.
+| Hombres                                                      | Mujeres                                                      |
+| ------------------------------------------------------------ | ------------------------------------------------------------ |
+| Jesucristo te alabo,<br />Jesucristo te alabo,<br />Jesucristo te alabo.<br />Aleluya, aleluya. | Jesucristo te alabo,<br />Jesucristo te alabo,<br />Jesucristo te alabo.<br />Aleluya, aleluya. |
+| Santo Espíritu te adoro.<br />Santo Espíritu te adoro.<br />Santo Espíritu te adoro.<br />Aleluya, aleluya. | Santo Espíritu te adoro.<br />Santo Espíritu te adoro.<br />Santo Espíritu te adoro.<br />Aleluya, aleluya. |
 
 Todos
-Aleluya, aleluya,
-Aleluya, aleluya,
-Aleluya, aleluya,
-Aleluya, aleluya,
+Aleluya, aleluya.
+Aleluya, aleluya.
+Aleluya, aleluya.
+Aleluya, aleluya.
 
 237.EL CIELO ES UN LINDO LUGAR
-Hombres | Mujeres
-El cielo es un lindo lugar | El cielo es un lindo lugar
-
-Lleno de gozo y paz | Lleno de gozo y paz
-Quiero ver a Cristo allá | Quiero ver a Cristo allá
-El cielo es un lindo lugar | El cielo es un lindo lugar
-
-Voy pronto.
+| Hombres                                                      | Mujeres                                                      |
+| ------------------------------------------------------------ | ------------------------------------------------------------ |
+| El cielo es un lindo lugar.<br />Lleno de gozo y paz.<br />Quiero ver a Cristo allá.<br />El cielo es un lindo lugar. | El cielo es un lindo lugar.<br />Lleno de gozo y paz.<br />Quiero ver a Cristo allá.<br />El cielo es un lindo lugar. |
 (Se repite 2 veces)
 
 238.ME DIO UN CANTAR
 Cristo en toda mi aflicción me dio consolación
-
-Mujeres | Hombres
-Me dio un cantar | Me dio un cantar
-Precioso cantar | Precioso cantar
+| Mujeres                                | Hombres                               |
+| -------------------------------------- | ------------------------------------- |
+| Me dio un cantar<br />Precioso cantar. | Me dio un cantar<br />Precioso cantar |
 Precioso cantar que entonaré con todo el corazón
-
-Mujeres | Hombres
-Me dio un cantar | Me dio un cantar
-Precioso cantar | Precioso cantar
+| Mujeres                                | Hombres                               |
+| -------------------------------------- | ------------------------------------- |
+| Me dio un cantar<br />Precioso cantar. | Me dio un cantar<br />Precioso cantar |
 
 CORO:
-Hombres | Mujeres
-Me dio un cantar | Me dio un cantar
-para decir para decir
-Me levantó | Me levantó
-de perdición de perdición
-Mujeres | Hombres
-Oh gloria a él, | Oh gloria a él,
-Él es mi rey | Él es mi rey
-Precioso cantar | Precioso cantar
-Es para mí. | Es para mí.
+| Hombres                                                      | Mujeres                                                      |
+| ------------------------------------------------------------ | ------------------------------------------------------------ |
+| Me dio un cantar<br />para decir<br />Me levantó<br />de perdición. | Me dio un cantar<br />para decir<br />Me levantó<br />de perdición. |
+| Mujeres                                                      | Mujeres                                                      |
+| ------------------------------------------------------------ | ------------------------------------------------------------ |
+| Oh gloria a él,<br />Él es mi rey.<br />Precioso cantar<br />Es para mí. | Oh gloria a él,<br />Él es mi rey.<br />Precioso cantar<br />Es para mí. |
 
-Su luz alumbra mi andar, quita todo pesar
-Mujeres | Hombres
-Me dio un cantar | Me dio un cantar
-Precioso cantar | Precioso cantar
-Precioso cantar que entonaré a Jesús que es mi Rey
-Mujeres | Hombres
-Me dio un cantar | Me dio un cantar
-Precioso cantar | Precioso cantar
+Su luz alumbra mi andar, quita todo pesar.
+| Mujeres                                | Hombres                               |
+| -------------------------------------- | ------------------------------------- |
+| Me dio un cantar<br />Precioso cantar. | Me dio un cantar<br />Precioso cantar |
+Precioso cantar que entonaré a Jesús que es mi Rey.
+| Mujeres                                | Hombres                               |
+| -------------------------------------- | ------------------------------------- |
+| Me dio un cantar<br />Precioso cantar. | Me dio un cantar<br />Precioso cantar |
 
-Al redimirme el Señor no tendré más temor
-Mujeres | Hombres
-Me dio un cantar | Me dio un cantar
-Precioso cantar | Precioso cantar
-Precioso cantar que entonaré con coro celestial
-Mujeres | Hombres
-Me dio un cantar | Me dio un cantar
-Precioso cantar | Precioso cantar
+Al redimirme el Señor no tendré más temor.
+| Mujeres                                | Hombres                               |
+| -------------------------------------- | ------------------------------------- |
+| Me dio un cantar<br />Precioso cantar. | Me dio un cantar<br />Precioso cantar |
+Precioso cantar que entonaré entonaré con coro celestial.
+| Mujeres                                | Hombres                               |
+| -------------------------------------- | ------------------------------------- |
+| Me dio un cantar<br />Precioso cantar. | Me dio un cantar<br />Precioso cantar |
 
 239.TU ERES SANTO
-Hombres | Mujeres
-
-//Tú eres Santo, | Tú eres Santo,
-poderoso | poderoso
-eres digno | eres digno
-de alabar | de alabar
-
-Voy a seguirte | A seguirte
-a escucharte | a escucharte
-voy a amarte | voy a amarte
-para siempre. | para siempre.
-
-Voy a cantarle | Señor de señores
-y adorarle | Él es Rey de reyes
-al Rey que, es digno | poderoso Dios,
-voy a amarlo | Creador es Él.
-y adorarlo | Él es Emmanuel,
-voy a postrarme | es el gran Yo Soy
-solo ante Él. | Príncipe de paz,
-Cordero de Dios.
-
-Voy a cantarle | Él es el Dios vivo
-y adorarle | gracia y salvación
-al Rey que, es digno | Anciano de días,
-voy a amarlo | siempre reinará
-y adorarlo | Él es alfa, omega,
-voy a postrarme | principio y final
-solo ante Él. | Mesías, salvador
-amigo y redentor.
+| Hombres                                                      | Mujeres                                                      |
+| ------------------------------------------------------------ | ------------------------------------------------------------ |
+| //Tú eres Santo,<br />poderoso,<br />eres digno<br />de alabar. | //Tú eres Santo,<br />poderoso,<br />eres digno<br />de alabar. |
+| Voy a seguirte,<br />a escucharte.<br />Voy a amarte<br />para siempre. | A seguirte,<br />a escucharte.<br />Voy a amarte<br />para siempre. |
+| Voy a cantarle<br />y adorarle<br />al Rey que, es digno.<br />Voy a amarlo<br />y adorarlo.<br />Voy a postrarme<br />solo ante Él. | Señor de señores.<br />Él es Rey de reyes.<br />poderoso Dios.<br />Creador es Él.<br />Él es Emmanuel,<br />es el gran Yo Soy.<br />Príncipe de paz,<br />Cordero de Dios. |
+| Voy a cantarle<br />y adorarle<br />al Rey que, es digno.<br />Voy a amarlo<br />y adorarlo.<br />Voy a postrarme<br />solo ante Él. | Él es el Dios vivo<br />gracia y salvación.<br />Anciano de días,<br />siempre reinará.<br />Él es alfa, omega,<br />principio y final.<br />Mesías, salvador<br />amigo y redentor. |
 
 TODOS
 Príncipe de paz, para ti yo viviré. // x2
+
 Príncipe de paz, para ti yo viviré.
 
 240.GLORIA A TI, SEÑOR
@@ -5112,17 +5026,13 @@ Dios vive por siempre en mi alma. (Bis)
 No temeré a los diez millares de enemigos
 que se han puesto en contra de mí. (Bis)
 
-Hombres | Mujeres
-No temeré a los | Levántate y sálvame
-diez millares de enemigos | Dios vive por siempre
-que se han puesto | en mi alma.
-en contra de mí.
+| Hombres                                                      | Mujeres                                                      |
+| ------------------------------------------------------------ | ------------------------------------------------------------ |
+| No temeré a los<br />diez millares de enemigos,<br />que se han puesto<br />en contra de mí. | Levántate y sálvame.<br />Dios vive por siempre<br />en mi alma. |
 
-Hombres | Mujeres
-No temeré a los | Levántate y sálvame
-diez millares de enemigos | Dios vive por siempre
-que se han puesto | en mi alma.
-en contra de mí.
+| Mujeres                                                      | Hombres                                                      |
+| ------------------------------------------------------------ | ------------------------------------------------------------ |
+| No temeré a los<br />diez millares de enemigos,<br />que se han puesto<br />en contra de mí. | Levántate y sálvame.<br />Dios vive por siempre<br />en mi alma. |
 
 No temeré a los diez millares de enemigos
 que se han puesto en contra de mí.
@@ -5174,22 +5084,18 @@ Quieto estaré sé que eres Dios.
 (Hosanna, hosanna,
 Hosanna en las alturas) x2
 
-Hombres | Mujeres
-Señor alzo mi voz | Señor alzo mi voz
-y mi corazón | y mi corazón
-te glorifico Señor | te glorifico Señor
-mi Dios mi Dios
-Hosanna en las alturas (todos)
+| Hombres                                                      | Mujeres                                                      |
+| ------------------------------------------------------------ | ------------------------------------------------------------ |
+| Señor alzo mi voz<br />y mi corazón,<br />te glorifico Señor<br />mi Dios. | Señor alzo mi voz<br />y mi corazón,<br />te glorifico Señor<br />mi Dios. |
+Hosanna en las alturas (**todos**)
 
 (Gloria, gloria
 Gloria al Rey de Reyes) x2
 
-Hombres | Mujeres
-Señor alzo mi voz | Señor alzo mi voz
-y mi corazón | y mi corazón
-te glorifico Señor | te glorifico Señor
-mi Dios | mi Dios
-Hosanna en las alturas (todos)
+| Hombres                                                      | Mujeres                                                      |
+| ------------------------------------------------------------ | ------------------------------------------------------------ |
+| Señor alzo mi voz<br />y mi corazón,<br />te glorifico Señor<br />mi Dios. | Señor alzo mi voz<br />y mi corazón,<br />te glorifico Señor<br />mi Dios. |
+Hosanna en las alturas (**todos**)
 (2 veces)
 
 246.ROPAJE ESPLÉNDIDO
@@ -5222,9 +5128,9 @@ Haz un canto alegre al Señor.
 Canta aleluya
 Canta aleluya ante al Señor) x2
 
-Hombres | Mujeres
-Del confín terrenal | Del confín terrenal
-Hasta el fondo del mar | hasta el fondo del mar
+| Hombres                                           | Mujeres                                           |
+| ------------------------------------------------- | ------------------------------------------------- |
+| Del confín terrenal,<br />Hasta el fondo del mar. | Del confín terrenal,<br />Hasta el fondo del mar. |
 Le alabe toda la creación (todos)
 (2 veces)
 
