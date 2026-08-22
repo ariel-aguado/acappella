@@ -4938,7 +4938,7 @@ Precioso cantar que entonaré con todo el corazón
 | -------------------------------------- | ------------------------------------- |
 | Me dio un cantar<br />Precioso cantar. | Me dio un cantar<br />Precioso cantar |
 
-CORO:
+**CORO**:
 | Hombres                                                      | Mujeres                                                      |
 | ------------------------------------------------------------ | ------------------------------------------------------------ |
 | Me dio un cantar<br />para decir<br />Me levantó<br />de perdición. | Me dio un cantar<br />para decir<br />Me levantó<br />de perdición. |
