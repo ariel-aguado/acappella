@@ -253,6 +253,11 @@ onMounted(async () => {
 </template>
 
 <style>
+td {
+  text-align: start;
+  vertical-align: top;
+}
+
 .swiper {
   width: 100%;
   height: 100%;
